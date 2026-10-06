@@ -34,7 +34,7 @@ All copy and contact details are in `src/content.js`. Search the project for `[`
 - `[SUBURB]` for each project caption
 - Trevor's portrait (Trevor section)
 - Schema placeholders in `index.html` (`telephone`, `email`, `areaServed`)
-- Values marked `CONFIRM` in `src/content.js`: the 900 mm worktop height and "Stone top" note on the hero photo
+- The hero dimension figures in `intro.annotations` (`src/content.js`) are illustrative; replace them with real measurements if you have them
 
 ## Images
 
@@ -79,3 +79,16 @@ and stored in `public/images`. To add a project, export the same two widths and 
 - No Figma reference was supplied, so no comparison was made.
 - The impeccable and motion skills were not installed in the editor, so their critique, audit and polish steps were followed by hand.
 - The site is not yet deployed. See "Content still needed before launch" above.
+
+### Update: hero intro video (6 October 2026)
+
+**Prepared for:** Dasendhran Subramoney
+
+- Replaced the hero photograph with a full-viewport intro video (`public/video`): desktop WebM/MP4, square MP4 under 768 px. No poster or still images. The hero ground is #E9EEF3 so there is no black flash.
+- The video plays on every page load (changed later the same day from once per session), then holds on its last frame (the empty room). A 1.2 s GSAP reveal follows: white overlay at 55%, dimension lines drawn onto the room, headline revealed line by line, then the supporting line and both CTAs.
+- "Skip intro", scroll, touch and nav clicks skip to the last frame. Scroll is locked during the intro.
+- Fallbacks: reduced motion and `#hash` links skip playback; autoplay blocked, video errors or nothing played after 2.5 s jump to the end; if the video can't load the copy still shows. A parse-time fallback shows the copy on slow connections without waiting for JavaScript.
+- Renamed `public/Video` to `public/video` (Netlify paths are case-sensitive).
+- Header is transparent over the top of the hero; its CTA appears after the intro. Fixed header wrapping at 1024 px.
+- Tests: 20 intro checks (normal play, skip, wheel and touch skip, replay on refresh, reduced motion, autoplay blocked on mobile emulation, slow 3G, video failing to load) and the 30 existing site checks all pass.
+- Lighthouse reports 99 mobile / 100 desktop, but it stops measuring before the reveal. Real first-visit LCP is likely to be the headline at about 7 s.

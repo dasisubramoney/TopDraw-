@@ -22,14 +22,18 @@
     <meta name="twitter:card" content="summary_large_image" />
 
     <link rel="preload" href="/fonts/newsreader-opsz-400.woff2" as="font" type="font/woff2" crossorigin />
-    <link
-      rel="preload"
-      as="image"
-      href="/images/kitchen-charcoal-island-1600.webp"
-      imagesrcset="/images/kitchen-charcoal-island-800.webp 800w, /images/kitchen-charcoal-island-1600.webp 1600w"
-      imagesizes="(min-width: 1024px) 50vw, 100vw"
-      fetchpriority="high"
-    />
+    <!-- Decides the hero intro mode before first paint (see src/components/Hero.jsx). -->
+    <script>
+      (function () {
+        var d = document.documentElement, m = 'play'
+        if (location.hash || matchMedia('(prefers-reduced-motion: reduce)').matches) m = 'still'
+        d.setAttribute('data-intro', m)
+        if (m === 'play') {
+          d.classList.add('intro-lock')
+          if ('scrollRestoration' in history) history.scrollRestoration = 'manual'
+        }
+      })()
+    </script>
 
     <!-- Placeholders in [BRACKETS] must be replaced with real details before launch. -->
     <script type="application/ld+json">

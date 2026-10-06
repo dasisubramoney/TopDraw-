@@ -81,7 +81,8 @@ Fonts are self-hosted from `public/fonts`, Latin-subset with fonttools: Newsread
 ## 5. The drawing system (components)
 - **Hairline**: `1px solid rule`. Divides lists, frames images, aligns content. Replaces cards entirely. No border-radius anywhere (`border-radius: 0` globally).
 - **Section marker**: `A-01 / Services` in `label` mono, ink.
-- **Dimension line**: HTML/CSS, 1px line with 8px clip-path arrowheads and extension ticks, label in `anno` mono ink on a paper knockout. Steel off-photo; **paper (white) when drawn over a photograph** so it reads against dark cabinetry. Positions are percentages of an uncropped photo. Used on the hero only; leader notes on the hero, Trevor figure and one gallery image.
+- **Dimension line (hero)**: SVG over the intro video's last frame, in the video's own pixel coordinates (`viewBox` = video size, `preserveAspectRatio="xMidYMid slice"` so it tracks `object-fit: cover`). Steel line, ticks and arrowheads; label in mono ink with a paper knockout stroke. Coordinates live in `intro.annotations` in `src/content.js`. Any dimension that would sit under the copy or run off screen is hidden, and none show until the video has a frame.
+- **Leader note**: used on the Trevor figure and one gallery image.
 - **Leader note**: short angled line from a point on an image to a mono note (`Oak veneer / 18 mm`). Max 1 per image.
 - **Title block**: footer echoes a drawing's title block: a ruled table with Drawn by / Project / Sheet / Contact cells.
 - **Buttons**: rectangular, no radius. Primary: steel fill, paper text 18px semibold, 1px steel border. Secondary: paper fill, ink 1px border, ink text. WhatsApp is secondary, with a small mono `↗` not a logo blob.
@@ -98,7 +99,10 @@ Quiet, precise, purposeful. Motion explains structure; it never decorates.
 - No bounce, no overshoot springs, no stagger above 60 ms, no more than 4 staggered items.
 
 **Allowed moments (the whole inventory)**
-1. **Hero load**: dimension lines draw (stroke-dashoffset) once, 700 ms, after the image is visible; labels fade in 200 ms after. Headline renders at rest (no animated text).
+1. **Hero intro** (every page load, refreshes included): a 6.7 s video builds a kitchen, removes it and holds on the empty room, which stays as the hero background. Nav and logo are visible throughout; the header CTA and the copy wait. At 6.6 s or on `ended`, a ~1.2 s GSAP timeline (power3.out): flat paper overlay to 55% behind the copy, dimension lines draw (stroke-dashoffset), headline reveals line by line behind a mask (SplitText), then the what/who/why line, then both CTAs. "Skip intro", a scroll, a touch or a nav click jumps to the last frame and runs the same reveal. Scroll is locked until the reveal.
+   - Reduced motion or a `#hash` link (e.g. `/#contact`): no playback; last frame and copy shown at once.
+   - Autoplay blocked, a video error, or nothing played after 2.5 s: last frame and reveal. If the video can't load, the #E9EEF3 hero ground stays and the copy shows.
+   - The mode is set on `<html data-intro>` by an inline script before first paint, and a parse-time fallback beside the `<video>` shows the copy without waiting for JavaScript on slow connections.
 2. **Rules draw**: section header rule scales X from 0→1 from the left, 600 ms, once, when it enters. This is the only scroll-triggered reveal on text sections.
 3. **Service rows**: real mouse movement, click, tap or arrow keys open a row (CSS grid-rows 260 ms; text opacity + 8px Y, 220 ms). Desktop image crossfades 180 ms in a sticky right column (AnimatePresence). `pointerenter` is deliberately not used: it fires when rows shift under a resting cursor and steals a tapped row.
 4. **Process line**: single continuous SVG path scrubbed to scroll (GSAP ScrollTrigger, scrub 0.6). Stage nodes switch from rule to steel as the line passes them.
@@ -121,7 +125,7 @@ Quiet, precise, purposeful. Motion explains structure; it never decorates.
 - [ ] No gradient, glow, shadow, blur, glass
 - [ ] No rounded corners, no pills, no badges
 - [ ] No identical card grids, no icon-in-square
-- [ ] No centred hero; hero is asymmetric (text 5 cols, image 7)
+- [ ] No centred hero; copy sits in the left half (bottom on mobile), the room fills the rest
 - [ ] Animations limited to the inventory in §6
 - [ ] No em dashes or stock phrases in copy
 - [ ] Every number on the page is either real or a marked placeholder

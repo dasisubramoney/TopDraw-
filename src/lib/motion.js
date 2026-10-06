@@ -6,10 +6,10 @@ import { useEffect, useState } from 'react'
 let motionPromise = null
 export function loadMotion() {
   if (!motionPromise) {
-    motionPromise = Promise.all([import('gsap'), import('gsap/ScrollTrigger'), import('lenis')]).then(
-      ([{ gsap }, { ScrollTrigger }, { default: Lenis }]) => {
-        gsap.registerPlugin(ScrollTrigger)
-        return { gsap, ScrollTrigger, Lenis }
+    motionPromise = Promise.all([import('gsap'), import('gsap/ScrollTrigger'), import('gsap/SplitText'), import('lenis')]).then(
+      ([{ gsap }, { ScrollTrigger }, { SplitText }, { default: Lenis }]) => {
+        gsap.registerPlugin(ScrollTrigger, SplitText)
+        return { gsap, ScrollTrigger, SplitText, Lenis }
       },
     )
   }
@@ -62,6 +62,8 @@ export function useSmoothScroll(reduced) {
       if (reduced) return
       // Lenis honours the html scroll-padding-top set in CSS, so no extra offset is needed.
       lenis = new Lenis({ lerp: 0.12, anchors: true })
+      // The hero intro locks scrolling until it reveals (see HeroIntro.jsx).
+      if (document.documentElement.classList.contains('intro-lock')) lenis.stop()
       lenis.on('scroll', ScrollTrigger.update)
       const tick = (time) => lenis.raf(time * 1000)
       gsap.ticker.add(tick)
@@ -82,4 +84,10 @@ export function scrollToId(id) {
   if (!el) return
   if (lenis) lenis.scrollTo(el, { duration: 1.1 })
   else el.scrollIntoView({ behavior: 'auto', block: 'start' })
+}
+
+// Hero intro: other components ask the intro to end (e.g. a nav click during playback).
+export const SKIP_INTRO = 'td:skip-intro'
+export const requestSkipIntro = () => {
+  if (document.documentElement.classList.contains('intro-lock')) window.dispatchEvent(new Event(SKIP_INTRO))
 }

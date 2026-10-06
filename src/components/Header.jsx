@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, m } from 'framer-motion'
 import { nav, whatsappHref } from '../content.js'
-import { getLenis, scrollToId, useReducedMotion } from '../lib/motion.js'
+import { getLenis, requestSkipIntro, scrollToId, useReducedMotion } from '../lib/motion.js'
 
 function useActiveSection() {
   const [active, setActive] = useState('')
@@ -20,6 +20,15 @@ function useActiveSection() {
 export default function Header() {
   const [open, setOpen] = useState(false)
   const active = useActiveSection()
+  // Transparent over the top of the hero, solid paper once the page scrolls.
+  const [atTop, setAtTop] = useState(true)
+  useEffect(() => {
+    const onScroll = () => setAtTop(window.scrollY < 8)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+  const solid = open || !atTop
   const reduced = useReducedMotion()
   const menuBtn = useRef(null)
   const panel = useRef(null)
@@ -53,6 +62,7 @@ export default function Header() {
 
   const go = (e, id) => {
     e.preventDefault()
+    requestSkipIntro()
     setOpen(false)
     // Wait a frame so the menu's scroll lock is released before scrolling.
     requestAnimationFrame(() => {
@@ -67,11 +77,13 @@ export default function Header() {
   }
 
   return (
-    <header className="sticky top-0 z-40 border-b border-rule bg-paper" style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}>
+    <header
+      className={`sticky top-0 z-40 border-b transition-colors duration-200 ${solid ? 'border-rule bg-paper' : 'border-transparent bg-transparent'}`}
+      style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}>
       <div className="wrap flex h-[var(--header-h)] items-center justify-between gap-6">
         <a href="#top" onClick={(e) => go(e, 'top')} className="flex items-baseline gap-3 no-underline">
-          <span className="font-display text-[1.375rem] leading-none tracking-[-0.01em] lg:text-[1.5rem]">Top Draw</span>
-          <span className="anno hidden md:inline">Bespoke interiors / Johannesburg</span>
+          <span className="whitespace-nowrap font-display text-[1.375rem] leading-none tracking-[-0.01em] lg:text-[1.5rem]">Top Draw</span>
+          <span className="anno hidden whitespace-nowrap md:inline lg:hidden xl:inline">Bespoke interiors / Johannesburg</span>
         </a>
 
         <nav aria-label="Main" className="hidden lg:block">
@@ -97,7 +109,7 @@ export default function Header() {
           <a
             href="#contact"
             onClick={(e) => go(e, 'contact')}
-            className="btn btn-secondary hidden !min-h-11 !px-4 !py-2 !text-base lg:inline-flex"
+            className="nav-cta btn btn-secondary hidden whitespace-nowrap !min-h-11 !px-4 !py-2 !text-base lg:inline-flex"
           >
             Book a consultation
           </a>
@@ -107,7 +119,10 @@ export default function Header() {
             className="label -mr-3 inline-flex min-h-11 items-center gap-2 px-3 lg:hidden"
             aria-expanded={open}
             aria-controls="mobile-menu"
-            onClick={() => setOpen((o) => !o)}
+            onClick={() => {
+              requestSkipIntro()
+              setOpen((o) => !o)
+            }}
           >
             {open ? 'Close' : 'Menu'}
             <span aria-hidden="true" className="relative block h-[9px] w-4">

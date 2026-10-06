@@ -104,6 +104,34 @@
   ::selection { background: var(--color-ink); color: var(--color-paper); }
 }
 
+/* Hero intro video. States are set on <html> by the inline script in index.html. */
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.hero-overlay { opacity: 0.55; }
+.hero-dim-label {
+  font-family: var(--font-mono);
+  fill: var(--color-ink);
+  paint-order: stroke;
+  stroke: var(--color-paper);
+  stroke-width: 0.4em;
+  stroke-linejoin: round;
+  letter-spacing: 0.02em;
+}
+#top:not([data-frame]) [data-hero-dims] { visibility: hidden; }
+.skip-intro { display: none; }
+html.intro-lock { overflow: hidden; }
+html[data-intro="play"] .hero-overlay { opacity: 0; }
+html[data-intro="play"] .hero-reveal,
+html[data-intro="play"] [data-hero-dims],
+html[data-intro="play"] .nav-cta { visibility: hidden; }
+html[data-intro="play"] .skip-intro { display: inline-flex; align-items: center; }
+
 /* Lenis */
 html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
@@ -200,37 +228,6 @@ html.lenis, html.lenis body { height: auto; }
     object-fit: cover;
   }
 
-  /* Dimension lines. Positions are percentages of the photograph. */
-  .dim { position: absolute; pointer-events: none; }
-  .dim { --dim-color: var(--color-steel); }
-  .plate .dim { --dim-color: var(--color-paper); }
-  .dim-line { position: absolute; background: var(--dim-color); }
-  .dim-v .dim-line { left: 0; top: 0; bottom: 0; width: 1px; }
-  .dim-h .dim-line { top: 0; left: 0; right: 0; height: 1px; }
-  .dim-line::before, .dim-line::after {
-    content: "";
-    position: absolute;
-    width: 8px;
-    height: 8px;
-    background: var(--dim-color);
-  }
-  .dim-v .dim-line::before { top: 0; left: -3.5px; clip-path: polygon(50% 0, 100% 100%, 0 100%); }
-  .dim-v .dim-line::after { bottom: 0; left: -3.5px; clip-path: polygon(50% 100%, 100% 0, 0 0); }
-  .dim-h .dim-line::before { left: 0; top: -3.5px; clip-path: polygon(0 50%, 100% 0, 100% 100%); }
-  .dim-h .dim-line::after { right: 0; top: -3.5px; clip-path: polygon(100% 50%, 0 0, 0 100%); }
-  .dim-ext { position: absolute; background: var(--color-paper); }
-  .dim-v .dim-ext { height: 1px; width: 14px; left: -11px; }
-  .dim-h .dim-ext { width: 1px; height: 14px; top: -11px; }
-  .dim-label {
-    position: absolute;
-    background: var(--color-paper);
-    color: var(--color-ink);
-    padding: 3px 6px;
-    white-space: nowrap;
-  }
-  .dim-v .dim-label { top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-90deg); }
-  .dim-h .dim-label { left: 50%; top: 0; transform: translate(-50%, -50%); }
-
   .leader { position: absolute; display: flex; align-items: center; pointer-events: none; }
   .leader-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--color-paper); outline: 1px solid var(--color-ink); flex: none; }
   .leader-line { width: clamp(20px, 4vw, 48px); height: 1px; background: var(--color-paper); flex: none; }
@@ -240,16 +237,6 @@ html.lenis, html.lenis body { height: auto; }
   .leader[data-dir="right"] .leader-dot { margin-left: -3.5px; }
   .leader { transform: translateY(-50%); }
   .leader[data-dir="left"] { transform: translate(-100%, -50%); }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .annotated .dim-line { clip-path: inset(-6px 100% -6px 0); }
-    .annotated .dim-v .dim-line { clip-path: inset(100% -6px 0 -6px); }
-    .annotated .dim-label, .annotated .leader, .annotated .dim-ext { opacity: 0; }
-    .annotated[data-ready="true"] .dim-line { clip-path: inset(-6px -6px -6px -6px); transition: clip-path 700ms var(--ease-io) 150ms; }
-    .annotated[data-ready="true"] .dim-label,
-    .annotated[data-ready="true"] .leader,
-    .annotated[data-ready="true"] .dim-ext { opacity: 1; transition: opacity 200ms linear 850ms; }
-  }
 
   /* Blueprint grid: Process section only. */
   .blueprint {

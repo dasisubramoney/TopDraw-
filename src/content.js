@@ -38,8 +38,7 @@ export const nav = [
 
 // Images: `sizes` lists the widths actually exported to /public/images.
 export const img = {
-  heroKitchen: { name: 'kitchen-charcoal-island', widths: [800, 1600], w: 2400, h: 1800, alt: 'Charcoal kitchen with a white stone-topped island, open shelving at the island end, and a tall unit housing a built-in microwave and display shelves' },
-  kitchen2: { name: 'kitchen-charcoal-island-2', widths: [800, 1600], w: 2400, h: 1800, alt: 'The same charcoal kitchen from the other side, showing the island, a full-height panel and the fridge recess' },
+  kitchen2: { name: 'kitchen-charcoal-island-2', widths: [800, 1600], w: 2400, h: 1800, alt: 'Charcoal kitchen with a white stone-topped island, pendant lights, a full-height panel and a fridge recess' },
   newBuild: { name: 'kitchen-new-build', widths: [800, 1000], w: 1000, h: 750, alt: 'Open-plan new-build kitchen with a dark waterfall island, timber-faced units and a wine rack, pendant lights still wrapped before handover' },
   library: { name: 'library-ladder', widths: [750], w: 750, h: 1000, alt: 'Floor-to-ceiling painted library shelving with a rolling ladder and cupboards below' },
   loftShell: { name: 'loft-shell-in-progress', widths: [800, 1600], w: 2400, h: 1800, alt: 'Thatched double-volume room mid-renovation, with a stone chimney, timber loft balustrade and new kitchen base units' },
@@ -58,19 +57,43 @@ export const hero = {
   audienceLine: 'For homeowners, interior designers and architects',
   headline: 'Bespoke kitchens, bathrooms and interiors. Designed, built and installed by one team.',
   lead: "Trevor trained as a stainless steel fabricator, where a millimetre out means it doesn't fit. He runs every job himself, from the first site measure to the final hinge adjustment, so it's right the first time.",
-  audiences: [
-    { label: 'For homeowners', text: 'Kitchens, bathrooms, dressing rooms and full turnkey interiors.' },
-    { label: 'For the trade', text: 'Designers and architects who need it built to spec and installed properly.' },
-  ],
+  // Shown under 640px so the copy fits above the fold on small phones.
+  leadShort: "A steel fabricator turned cabinetmaker, Trevor runs every job himself, so it's right the first time.",
   primaryCta: 'Book a site consultation',
   secondaryCta: 'WhatsApp Trevor',
-  caption: { fig: 'Fig. 01', text: 'Kitchen, Johannesburg' },
-  // CONFIRM: 900 mm is the standard worktop height; confirm for this kitchen. Notes read from the photo.
+}
+
+// Hero intro video: plays on every page load, then holds on its last frame (the empty room).
+export const intro = {
+  sources: {
+    mobile: '/video/intro-mobile.mp4', // 720 x 720, used under 768px
+    webm: '/video/intro-desktop.webm', // 1920 x 1080
+    mp4: '/video/intro-desktop.mp4',
+  },
+  revealAt: 6.6, // seconds; the reveal starts here or on "ended", whichever comes first
+  // Dimension lines drawn onto the last frame, in the video's own pixel coordinates.
+  // The figures are illustrative "measuring up" notes, not survey data. If the final
+  // video frames the room differently, adjust these against its last frame.
   annotations: {
-    height: { x: 73.5, y1: 64.5, y2: 92, label: '900 mm' },
-    notes: [
-      { x: 56, y: 61, dir: 'right', label: 'Stone top' },
-    ],
+    desktop: {
+      w: 1920,
+      h: 1080,
+      font: 15,
+      dims: [
+        { dir: 'v', x: 1560, y1: 175, y2: 790, label: '2 700 mm' },
+        { dir: 'v', x: 1150, y1: 300, y2: 625, label: '2 032 mm' },
+        { dir: 'h', y: 262, x1: 1262, x2: 1520, label: '1 450 mm' },
+      ],
+    },
+    mobile: {
+      w: 720,
+      h: 720,
+      font: 11,
+      dims: [
+        { dir: 'v', x: 340, y1: 206, y2: 312, label: '1 050 mm' },
+        { dir: 'v', x: 448, y1: 202, y2: 415, label: '2 032 mm' },
+      ],
+    },
   },
 }
 
