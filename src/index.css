@@ -1,0 +1,268 @@
+@import "tailwindcss";
+
+/* Self-hosted, Latin-subset fonts (see public/fonts). Newsreader is pinned to
+   weight 400 with its optical-size axis kept; Schibsted keeps its weight axis. */
+@font-face {
+  font-family: "Newsreader";
+  src: url("/fonts/newsreader-opsz-400.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Schibsted Grotesk";
+  src: url("/fonts/schibsted-grotesk-wght.woff2") format("woff2");
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("/fonts/plex-mono-400.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  src: url("/fonts/plex-mono-500.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+}
+
+/* Closed palette and type tokens. See DESIGN.md. */
+@theme {
+  --color-*: initial;
+  --color-paper: #ffffff;
+  --color-mist: #e9eef3;
+  --color-rule: #b7c6d6;
+  --color-steel: #4a7fb0;
+  --color-ink: #2b3642;
+
+  --font-*: initial;
+  --font-display: "Newsreader", "Iowan Old Style", Georgia, serif;
+  --font-sans: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --text-display-xl: clamp(2.125rem, 1.45rem + 2.9vw, 4.25rem);
+  --text-display-xl--line-height: 1.03;
+  --text-display-xl--letter-spacing: -0.02em;
+  --text-display-l: clamp(1.875rem, 1.3rem + 2.4vw, 3.5rem);
+  --text-display-l--line-height: 1.05;
+  --text-display-l--letter-spacing: -0.015em;
+  --text-display-m: clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem);
+  --text-display-m--line-height: 1.32;
+  --text-body-l: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
+  --text-body-l--line-height: 1.5;
+  --text-label: 0.75rem;
+  --text-label--line-height: 1.4;
+  --text-label--letter-spacing: 0.08em;
+  --text-anno: 0.75rem;
+  --text-anno--line-height: 1.45;
+  --text-anno--letter-spacing: 0.01em;
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-io: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+:root {
+  --margin: clamp(20px, 5vw, 80px);
+  --gutter: clamp(16px, 2vw, 24px);
+  --header-h: 56px;
+}
+@media (min-width: 1024px) {
+  :root { --header-h: 72px; }
+}
+
+@layer base {
+  * { border-radius: 0; }
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: var(--header-h);
+  }
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    text-wrap: balance;
+    font-variation-settings: "opsz" 72;
+  }
+  p { text-wrap: pretty; }
+  img { max-width: 100%; display: block; }
+  :focus-visible {
+    outline: 2px solid var(--color-steel);
+    outline-offset: 3px;
+  }
+  .on-dark :focus-visible { outline-color: var(--color-paper); }
+  ::selection { background: var(--color-ink); color: var(--color-paper); }
+}
+
+/* Lenis */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+@utility wrap {
+  max-width: 1360px;
+  margin-inline: auto;
+  padding-inline: var(--margin);
+}
+
+@utility label {
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  line-height: var(--text-label--line-height);
+  letter-spacing: var(--text-label--letter-spacing);
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+@utility anno {
+  font-family: var(--font-mono);
+  font-size: var(--text-anno);
+  line-height: var(--text-anno--line-height);
+  letter-spacing: var(--text-anno--letter-spacing);
+  font-variant-numeric: tabular-nums;
+}
+
+@utility grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  column-gap: var(--gutter);
+}
+
+@utility section-pad {
+  padding-block: clamp(80px, 10vw, 144px);
+}
+
+@layer components {
+  /* Buttons: rectangular, 18px semibold so paper on steel meets large-text contrast. */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    min-height: 54px;
+    padding: 14px 24px;
+    /* 19px bold: WCAG large text (>= 18.67px bold), so paper on steel at 4.24:1 passes. */
+    font: 700 1.1875rem/1.2 var(--font-sans);
+    text-decoration: none;
+    border: 1px solid var(--color-ink);
+    color: var(--color-ink);
+    background: var(--color-paper);
+    cursor: pointer;
+    transition: background-color 180ms var(--ease-out), color 180ms var(--ease-out), border-color 180ms var(--ease-out), transform 120ms var(--ease-out);
+  }
+  .btn:active { transform: scale(0.98); }
+  .btn-primary {
+    background: var(--color-steel);
+    border-color: var(--color-steel);
+    color: var(--color-paper);
+  }
+  @media (hover: hover) {
+    .btn-primary:hover { background: var(--color-ink); border-color: var(--color-ink); }
+    .btn-secondary:hover { background: var(--color-ink); color: var(--color-paper); }
+    .on-dark .btn-secondary:hover { background: var(--color-paper); color: var(--color-ink); }
+    .on-dark .btn-primary:hover { background: var(--color-paper); border-color: var(--color-paper); color: var(--color-ink); }
+  }
+  .on-dark .btn-secondary {
+    background: var(--color-ink);
+    border-color: var(--color-paper);
+    color: var(--color-paper);
+  }
+
+  .link-underline {
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+    text-decoration-color: var(--color-rule);
+    transition: text-decoration-color 180ms var(--ease-out);
+  }
+  .link-underline:hover { text-decoration-color: currentColor; }
+
+  /* Photograph frame: hard edges, hairline, mist while loading. */
+  .plate {
+    position: relative;
+    background: var(--color-mist);
+    outline: 1px solid var(--color-rule);
+    outline-offset: -1px;
+  }
+  .plate img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  /* Dimension lines. Positions are percentages of the photograph. */
+  .dim { position: absolute; pointer-events: none; }
+  .dim { --dim-color: var(--color-steel); }
+  .plate .dim { --dim-color: var(--color-paper); }
+  .dim-line { position: absolute; background: var(--dim-color); }
+  .dim-v .dim-line { left: 0; top: 0; bottom: 0; width: 1px; }
+  .dim-h .dim-line { top: 0; left: 0; right: 0; height: 1px; }
+  .dim-line::before, .dim-line::after {
+    content: "";
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: var(--dim-color);
+  }
+  .dim-v .dim-line::before { top: 0; left: -3.5px; clip-path: polygon(50% 0, 100% 100%, 0 100%); }
+  .dim-v .dim-line::after { bottom: 0; left: -3.5px; clip-path: polygon(50% 100%, 100% 0, 0 0); }
+  .dim-h .dim-line::before { left: 0; top: -3.5px; clip-path: polygon(0 50%, 100% 0, 100% 100%); }
+  .dim-h .dim-line::after { right: 0; top: -3.5px; clip-path: polygon(100% 50%, 0 0, 0 100%); }
+  .dim-ext { position: absolute; background: var(--color-paper); }
+  .dim-v .dim-ext { height: 1px; width: 14px; left: -11px; }
+  .dim-h .dim-ext { width: 1px; height: 14px; top: -11px; }
+  .dim-label {
+    position: absolute;
+    background: var(--color-paper);
+    color: var(--color-ink);
+    padding: 3px 6px;
+    white-space: nowrap;
+  }
+  .dim-v .dim-label { top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-90deg); }
+  .dim-h .dim-label { left: 50%; top: 0; transform: translate(-50%, -50%); }
+
+  .leader { position: absolute; display: flex; align-items: center; pointer-events: none; }
+  .leader-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--color-paper); outline: 1px solid var(--color-ink); flex: none; }
+  .leader-line { width: clamp(20px, 4vw, 48px); height: 1px; background: var(--color-paper); flex: none; }
+  .leader-note { background: var(--color-paper); color: var(--color-ink); padding: 5px 8px; white-space: nowrap; outline: 1px solid var(--color-rule); outline-offset: -1px; }
+  .leader[data-dir="left"] { flex-direction: row-reverse; }
+  .leader[data-dir="left"] .leader-dot { margin-right: -3.5px; }
+  .leader[data-dir="right"] .leader-dot { margin-left: -3.5px; }
+  .leader { transform: translateY(-50%); }
+  .leader[data-dir="left"] { transform: translate(-100%, -50%); }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .annotated .dim-line { clip-path: inset(-6px 100% -6px 0); }
+    .annotated .dim-v .dim-line { clip-path: inset(100% -6px 0 -6px); }
+    .annotated .dim-label, .annotated .leader, .annotated .dim-ext { opacity: 0; }
+    .annotated[data-ready="true"] .dim-line { clip-path: inset(-6px -6px -6px -6px); transition: clip-path 700ms var(--ease-io) 150ms; }
+    .annotated[data-ready="true"] .dim-label,
+    .annotated[data-ready="true"] .leader,
+    .annotated[data-ready="true"] .dim-ext { opacity: 1; transition: opacity 200ms linear 850ms; }
+  }
+
+  /* Blueprint grid: Process section only. */
+  .blueprint {
+    background-color: var(--color-paper);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath d='M24 .5H.5V24' fill='none' stroke='%23E9EEF3'/%3E%3C/svg%3E");
+  }
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0ms !important;
+    animation-duration: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+}

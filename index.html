@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en-ZA">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Top Draw | Bespoke kitchens, bathrooms and interiors, Johannesburg</title>
+    <meta name="description" content="Bespoke cabinetry, kitchens, bathrooms and full turnkey interiors in Johannesburg. Designed, built and installed by one team, led by craftsman Trevor. Book a site consultation." />
+    <meta name="theme-color" content="#FFFFFF" />
+    <link rel="canonical" href="%VITE_SITE_URL%/" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_ZA" />
+    <meta property="og:site_name" content="Top Draw" />
+    <meta property="og:title" content="Top Draw | Bespoke kitchens, bathrooms and interiors" />
+    <meta property="og:description" content="Designed, built and installed by one team in Johannesburg. Book a site consultation or WhatsApp Trevor." />
+    <meta property="og:url" content="%VITE_SITE_URL%/" />
+    <meta property="og:image" content="%VITE_SITE_URL%/images/og.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Charcoal kitchen with a stone-topped island, built and installed by Top Draw" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="preload" href="/fonts/newsreader-opsz-400.woff2" as="font" type="font/woff2" crossorigin />
+    <link
+      rel="preload"
+      as="image"
+      href="/images/kitchen-charcoal-island-1600.webp"
+      imagesrcset="/images/kitchen-charcoal-island-800.webp 800w, /images/kitchen-charcoal-island-1600.webp 1600w"
+      imagesizes="(min-width: 1024px) 50vw, 100vw"
+      fetchpriority="high"
+    />
+
+    <!-- Placeholders in [BRACKETS] must be replaced with real details before launch. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "HomeAndConstructionBusiness",
+        "name": "Top Draw",
+        "description": "Bespoke cabinetry, furniture and interiors. Kitchens, bathrooms, dressing rooms and full turnkey projects, designed, built and installed by one team.",
+        "url": "%VITE_SITE_URL%/",
+        "image": "%VITE_SITE_URL%/images/og.jpg",
+        "telephone": "[PHONE]",
+        "email": "[EMAIL]",
+        "founder": { "@type": "Person", "name": "Trevor", "jobTitle": "Owner and lead craftsman" },
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Johannesburg",
+          "addressRegion": "Gauteng",
+          "addressCountry": "ZA"
+        },
+        "areaServed": "[AREA]",
+        "knowsAbout": [
+          "Bespoke cabinetry",
+          "Kitchen design",
+          "Bathroom design",
+          "Built-in cupboards and dressing rooms",
+          "Custom furniture",
+          "Balustrading",
+          "Project management"
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <noscript>
+      <p style="padding:24px;font-family:Georgia,serif">Top Draw: bespoke kitchens, bathrooms and interiors in Johannesburg. Phone [PHONE] or email [EMAIL] to book a site consultation.</p>
+    </noscript>
+    <!-- Static copy of the contact form so Netlify Forms can detect it at build time. -->
+    <form name="consultation" data-netlify="true" netlify-honeypot="company" hidden>
+      <input name="name" /><input name="phone" /><input name="email" /><input name="suburb" />
+      <input name="projectType" /><textarea name="message"></textarea><input name="company" />
+    </form>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
