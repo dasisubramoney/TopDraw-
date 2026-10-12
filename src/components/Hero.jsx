@@ -190,7 +190,7 @@ export default function Hero() {
           <p data-hero-first className="hero-reveal label">
             {hero.eyebrow}
           </p>
-          <h1 id="hero-title" tabIndex={-1} className="hero-reveal mt-3 text-display-xl outline-none lg:mt-5">
+          <h1 id="hero-title" tabIndex={-1} className="hero-reveal mt-3 text-display-xl outline-none lg:mt-5 lg:text-[length:clamp(2.125rem,6.2svh,var(--text-display-xl))]">
             {hero.headline}
           </h1>
           <p data-hero-after className="hero-reveal mt-4 max-w-[46ch] text-body-l lg:mt-6">

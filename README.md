@@ -130,8 +130,17 @@ and stored in `public/images`. To add a project, export the same two widths and 
 
 - Footer and structured data: Monday to Friday 08:00 to 17:00, closed on weekends.
 
+### Fix: hero headline overlapping the nav on short windows (12 October 2026)
+
+- On wide but short desktop windows (for example 1833 x 900) the five-line headline grew taller than the hero and pushed the "Interiors / Johannesburg" label up under the logo and nav. On large screens the headline size is now also capped by window height (6.2% of the height, never below 34 px or above the existing size), so it only shrinks when the window is short. Tall screens, tablets and phones are unchanged.
+- Checked at 1366 x 650 and 1833 x 900: the copy now clears the header with room to spare.
+
+### Pending: Process section content (12 October 2026)
+
+- A five-stage process (Enquire, Site visit and quote, Agree and refine, Manufacture, Install and handover) with the R795 consultation fee, the 30% / 50% / 20% payment schedule, 7-10 working days to source materials and a 4-6 week project timeline has been drafted and sent to Trevor to confirm as a PDF. It is not on the site yet; the current Process copy in `src/content.js` stays until he replies.
+
 ### Session summary (12 October 2026)
 
 **Prepared for:** Dasendhran Subramoney
 
-Removed the hero measurement lines; made the intro play on every refresh; removed the portrait of Trevor at his request; rebuilt the Trevor section as a scroll-driven technical "section drawing" (steel, balustrading, timber); rewrote his bio from his own overview; moved the steel-frame bench photo to Selected work; added his real phone, email, service area, site visit fee and hours; added an Industry sector choice (Residential or Commercial) to the consultation form; labelled the footer contact details. Still to supply: Instagram and Facebook links, project suburbs, and confirmation that WhatsApp uses 082 332 1112.
+Removed the hero measurement lines; fixed the hero headline overlapping the nav on short windows; drafted the new Process copy for Trevor to confirm (not live yet); made the intro play on every refresh; removed the portrait of Trevor at his request; rebuilt the Trevor section as a scroll-driven technical "section drawing" (steel, balustrading, timber); rewrote his bio from his own overview; moved the steel-frame bench photo to Selected work; added his real phone, email, service area, site visit fee and hours; added an Industry sector choice (Residential or Commercial) to the consultation form; labelled the footer contact details. Still to supply: Instagram and Facebook links, project suburbs, and confirmation that WhatsApp uses 082 332 1112.
