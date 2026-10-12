@@ -44,7 +44,7 @@ export default function Trade({ onTradeEnquiry }) {
             <div className="plate aspect-[3/4]">
               <Picture k="tallUnit" sizes="(min-width: 1024px) 22vw, 60vw" />
             </div>
-            <figcaption className="anno mt-3 border-b border-rule pb-3">Fig. 04 / Full-height joinery and open shelving</figcaption>
+            <figcaption className="anno mt-3 border-b border-rule pb-3">Fig. 02 / Full-height joinery and open shelving</figcaption>
           </figure>
         </div>
       </div>

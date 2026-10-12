@@ -1,10 +1,10 @@
 import { useEffect, useId, useRef, useState } from 'react'
 import { AnimatePresence, m } from 'framer-motion'
-import { contact, projectTypes, whatsappHref } from '../content.js'
+import { contact, projectTypes, sectors, whatsappHref } from '../content.js'
 import { useReducedMotion } from '../lib/motion.js'
 import SectionHead from './SectionHead.jsx'
 
-const empty = { name: '', phone: '', email: '', suburb: '', projectType: '', message: '', company: '' }
+const empty = { name: '', phone: '', email: '', suburb: '', sector: '', projectType: '', message: '', company: '' }
 
 const rules = {
   name: (v) => (v.trim().length < 2 ? 'Enter your name.' : ''),
@@ -14,6 +14,7 @@ const rules = {
   },
   email: (v) => (/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) ? '' : 'Enter an email address, for example name@example.co.za.'),
   suburb: (v) => (v.trim().length < 2 ? 'Enter your suburb so Trevor can plan the site visit.' : ''),
+  sector: (v) => (v ? '' : 'Choose residential or commercial.'),
   projectType: (v) => (v ? '' : 'Choose the type of project.'),
   message: (v) => (v.length > 1500 ? 'Keep the message under 1500 characters.' : ''),
 }
@@ -167,7 +168,7 @@ export default function Contact({ presetType }) {
                   <Field name="name" label="Name" error={shown('name')}>
                     <input {...aria('name')} type="text" autoComplete="name" required className={inputCls(shown('name'))} />
                   </Field>
-                  <Field name="phone" label="Phone" error={shown('phone')}>
+                  <Field name="phone" label="Contact number" error={shown('phone')}>
                     <input {...aria('phone')} type="tel" inputMode="tel" autoComplete="tel" required className={inputCls(shown('phone'))} />
                   </Field>
                   <Field name="email" label="Email" error={shown('email')}>
@@ -176,6 +177,37 @@ export default function Contact({ presetType }) {
                   <Field name="suburb" label="Suburb" error={shown('suburb')}>
                     <input {...aria('suburb')} type="text" autoComplete="address-level3" required className={inputCls(shown('suburb'))} />
                   </Field>
+                  <fieldset
+                    className="flex flex-col gap-1.5 py-3 sm:col-span-2"
+                    aria-invalid={shown('sector') ? 'true' : undefined}
+                    aria-describedby={shown('sector') ? 'f-sector-err' : undefined}
+                  >
+                    <legend className="anno float-left mb-1.5 w-full text-rule">Industry sector</legend>
+                    <div className="flex flex-wrap gap-x-8">
+                      {sectors.map((s, i) => (
+                        <label key={s} className="inline-flex min-h-11 cursor-pointer items-center gap-3 text-[1.0625rem]">
+                          <input
+                            type="radio"
+                            name="sector"
+                            id={i === 0 ? 'f-sector' : undefined}
+                            value={s}
+                            checked={values.sector === s}
+                            onChange={set('sector')}
+                            onBlur={blur('sector')}
+                            required
+                            className="h-5 w-5 cursor-pointer accent-steel"
+                          />
+                          {s}
+                        </label>
+                      ))}
+                    </div>
+                    {shown('sector') && (
+                      <p id="f-sector-err" className="anno flex gap-2 text-paper normal-case">
+                        <span aria-hidden="true" className="font-medium">!</span>
+                        {shown('sector')}
+                      </p>
+                    )}
+                  </fieldset>
                   <div className="sm:col-span-2">
                     <Field name="projectType" label="Project type" error={shown('projectType')}>
                       <div className="relative">

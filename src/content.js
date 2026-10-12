@@ -3,18 +3,18 @@
 // photographs and need checking with Trevor.
 
 export const contact = {
-  phoneDisplay: '[PHONE]',
-  phoneHref: '', // e.g. 'tel:+27821234567'
-  email: '[EMAIL]',
-  // WhatsApp number in international format without + or spaces, e.g. '27821234567'.
-  whatsappNumber: '[WHATSAPP NUMBER]',
+  phoneDisplay: '082 332 1112',
+  phoneHref: 'tel:+27823321112',
+  email: 'topdraw19@gmail.com',
+  // WhatsApp number in international format without + or spaces.
+  // Assumed to be the same as the phone number; change it if Trevor uses another.
+  whatsappNumber: '27823321112',
   whatsappMessage: 'Hi Trevor, I found Top Draw online and would like to talk about a project.',
-  area: '[AREA]',
-  // e.g. 'Free within [AREA]' or 'R___, credited against the job'
-  siteVisit: '[SITE VISIT: FREE OR FEE]',
+  area: 'Greater Johannesburg',
+  siteVisit: 'R795',
   hours: [
-    { days: 'Mon to Fri', time: '[HOURS]' },
-    { days: 'Saturday', time: '[HOURS]' },
+    { days: 'Mon to Fri', time: '08:00 to 17:00' },
+    { days: 'Sat and Sun', time: 'Closed' },
   ],
   social: [
     { label: 'Instagram', href: '[INSTAGRAM URL]' },
@@ -71,30 +71,6 @@ export const intro = {
     mp4: '/video/intro-desktop.mp4',
   },
   revealAt: 6.6, // seconds; the reveal starts here or on "ended", whichever comes first
-  // Dimension lines drawn onto the last frame, in the video's own pixel coordinates.
-  // The figures are illustrative "measuring up" notes, not survey data. If the final
-  // video frames the room differently, adjust these against its last frame.
-  annotations: {
-    desktop: {
-      w: 1920,
-      h: 1080,
-      font: 15,
-      dims: [
-        { dir: 'v', x: 1560, y1: 175, y2: 790, label: '2 700 mm' },
-        { dir: 'v', x: 1150, y1: 300, y2: 625, label: '2 032 mm' },
-        { dir: 'h', y: 262, x1: 1262, x2: 1520, label: '1 450 mm' },
-      ],
-    },
-    mobile: {
-      w: 720,
-      h: 720,
-      font: 11,
-      dims: [
-        { dir: 'v', x: 340, y1: 206, y2: 312, label: '1 050 mm' },
-        { dir: 'v', x: 448, y1: 202, y2: 415, label: '2 032 mm' },
-      ],
-    },
-  },
 }
 
 export const services = [
@@ -146,25 +122,29 @@ export const process = {
   ],
 }
 
+// Based on Trevor's own overview (October 2026), edited to the site's voice.
 export const trevor = {
   title: 'From steel to timber',
   intro: 'Trevor didn’t start in a joinery shop. He started as a boilermaker.',
   chapters: [
     {
       label: 'Stainless steel',
-      text: 'Boilermaker and sheet metal worker, fabricating stainless steel for the food and beverage industry. Work where a poor weld or a millimetre out isn’t good enough.',
+      text: 'Trevor began as a boilermaker and sheet metal worker in the food and beverage industry. That’s where he built deep technical expertise in stainless steel fabrication.',
     },
     {
       label: 'Balustrading',
-      text: 'Into architectural work, specialising in custom balustrading. No two staircases are the same, so every piece is measured on site and made to fit.',
+      text: 'His career moved into the architectural industry, where custom-designed, bespoke balustrading became his speciality.',
     },
     {
       label: 'Timber',
-      text: 'Then high-end furniture, bespoke cabinetry and interior design. The material changed. The standard didn’t.',
+      text: 'From there he moved into high-end furniture, bespoke cabinetry and interior design, combining technical knowledge with a strong eye for detail and design.',
     },
   ],
-  close: 'He’s hands-on, he gets it right the first time, and he’ll go the extra mile to do it.',
-  figure: { image: 'benchFrame', caption: 'Steel frame, timber top', note: 'Welded box section' },
+  closing: 'The material changed. The standard didn’t.',
+  today:
+    'Today Trevor designs, builds and installs bespoke interiors across a wide range of home projects, with a focus on quality, precision and attention to detail.',
+  close:
+    'He takes pride in his workmanship and holds every project to a high standard. He’s hands-on, he gets it right the first time, and he’ll go the extra mile so the finished result exceeds what you expected.',
 }
 
 export const work = [
@@ -173,6 +153,7 @@ export const work = [
   { key: 'W-03', type: 'Furniture', image: 'dining', text: 'Dining table and bench, steel frames, timber tops', place: '[SUBURB]' },
   { key: 'W-04', type: 'Dressing room', image: 'wardrobe', text: 'Full-height wardrobe and desk under a sloping ceiling', place: '[SUBURB]' },
   { key: 'W-05', type: 'Balustrading', image: 'balustrade', text: 'Loft balustrade under thatch', place: '[SUBURB]' },
+  { key: 'W-06', type: 'Furniture', image: 'benchFrame', text: 'Steel frame, timber top', place: '[SUBURB]' },
 ]
 
 export const trade = {
@@ -186,5 +167,7 @@ export const trade = {
   ],
   cta: 'Send Trevor your drawings',
 }
+
+export const sectors = ['Residential', 'Commercial']
 
 export const projectTypes = ['Kitchen', 'Bathroom', 'Dressing room or built-in cupboards', 'Furniture', 'Full turnkey project', 'Trade project (to spec)', 'Something else']

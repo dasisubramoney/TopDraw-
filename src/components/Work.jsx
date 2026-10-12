@@ -11,7 +11,8 @@ const layout = {
   'W-02': ['col-span-10 col-start-3 sm:col-span-7 sm:col-start-6 lg:col-span-4 lg:col-start-9 lg:mt-40', 'aspect-[3/4]', '(min-width: 1024px) 30vw, 70vw'],
   'W-03': ['col-span-12 sm:col-span-9 lg:col-span-5 lg:col-start-2 lg:-mt-24', 'aspect-[4/3]', '(min-width: 1024px) 40vw, 90vw'],
   'W-04': ['col-span-11 col-start-2 sm:col-span-10 sm:col-start-3 lg:col-span-5 lg:col-start-8 lg:mt-24', 'aspect-[4/3]', '(min-width: 1024px) 40vw, 90vw'],
-  'W-05': ['col-span-12 lg:col-span-9 lg:col-start-1', 'aspect-[16/9]', '(min-width: 1024px) 70vw, 100vw'],
+  'W-05': ['col-span-12 lg:col-span-7 lg:col-start-1', 'aspect-[4/3]', '(min-width: 1024px) 56vw, 100vw'],
+  'W-06': ['col-span-10 col-start-3 sm:col-span-7 sm:col-start-6 lg:col-span-4 lg:col-start-9 lg:mt-40', 'aspect-[4/3]', '(min-width: 1024px) 30vw, 80vw'],
 }
 
 export default function Work() {

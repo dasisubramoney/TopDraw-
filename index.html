@@ -26,7 +26,10 @@
     <script>
       (function () {
         var d = document.documentElement, m = 'play'
-        if (location.hash || matchMedia('(prefers-reduced-motion: reduce)').matches) m = 'still'
+        if (matchMedia('(prefers-reduced-motion: reduce)').matches) m = 'still'
+        // Every load plays the intro from the top, so drop any #section left in the
+        // address bar by a nav click (otherwise a refresh would jump past the hero).
+        if (m === 'play' && location.hash) history.replaceState(null, '', location.pathname + location.search)
         d.setAttribute('data-intro', m)
         if (m === 'play') {
           d.classList.add('intro-lock')
@@ -44,8 +47,8 @@
         "description": "Bespoke cabinetry, furniture and interiors. Kitchens, bathrooms, dressing rooms and full turnkey projects, designed, built and installed by one team.",
         "url": "%VITE_SITE_URL%/",
         "image": "%VITE_SITE_URL%/images/og.jpg",
-        "telephone": "[PHONE]",
-        "email": "[EMAIL]",
+        "telephone": "+27 82 332 1112",
+        "email": "topdraw19@gmail.com",
         "founder": { "@type": "Person", "name": "Trevor", "jobTitle": "Owner and lead craftsman" },
         "address": {
           "@type": "PostalAddress",
@@ -53,7 +56,8 @@
           "addressRegion": "Gauteng",
           "addressCountry": "ZA"
         },
-        "areaServed": "[AREA]",
+        "areaServed": "Greater Johannesburg",
+        "openingHours": "Mo-Fr 08:00-17:00",
         "knowsAbout": [
           "Bespoke cabinetry",
           "Kitchen design",
@@ -68,12 +72,12 @@
   </head>
   <body>
     <noscript>
-      <p style="padding:24px;font-family:Georgia,serif">Top Draw: bespoke kitchens, bathrooms and interiors in Johannesburg. Phone [PHONE] or email [EMAIL] to book a site consultation.</p>
+      <p style="padding:24px;font-family:Georgia,serif">Top Draw: bespoke kitchens, bathrooms and interiors in Greater Johannesburg. Phone 082 332 1112 or email topdraw19@gmail.com to book a site consultation.</p>
     </noscript>
     <!-- Static copy of the contact form so Netlify Forms can detect it at build time. -->
     <form name="consultation" data-netlify="true" netlify-honeypot="company" hidden>
       <input name="name" /><input name="phone" /><input name="email" /><input name="suburb" />
-      <input name="projectType" /><textarea name="message"></textarea><input name="company" />
+      <input name="sector" /><input name="projectType" /><textarea name="message"></textarea><input name="company" />
     </form>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>

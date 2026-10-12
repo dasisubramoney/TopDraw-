@@ -37,7 +37,8 @@ South African English (specialise, colour, centre, metre). Confident, plain, spe
 Never: em dashes, "elevate", "seamless", "unlock", "transform your space", "dream", "passion", "world-class".
 
 ## Content rules
-- No invented testimonials, stats, years in business or project counts. Use marked placeholders: `[PHONE]`, `[EMAIL]`, `[AREA]`, `[WHATSAPP NUMBER]`, `[PROJECT PHOTO]`, `[PORTRAIT]`.
+- No photos of Trevor: he doesn't want his picture on the site. Tell his story through the work.
+- No invented testimonials, stats, years in business or project counts. Use marked placeholders: `[PHONE]`, `[EMAIL]`, `[AREA]`, `[WHATSAPP NUMBER]`, `[PROJECT PHOTO]`.
 - Project captions describe material and dimension only when real; placeholders are labelled as such.
 
 ## Page structure (single page, anchored nav)

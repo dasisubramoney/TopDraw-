@@ -81,13 +81,12 @@ Fonts are self-hosted from `public/fonts`, Latin-subset with fonttools: Newsread
 ## 5. The drawing system (components)
 - **Hairline**: `1px solid rule`. Divides lists, frames images, aligns content. Replaces cards entirely. No border-radius anywhere (`border-radius: 0` globally).
 - **Section marker**: `A-01 / Services` in `label` mono, ink.
-- **Dimension line (hero)**: SVG over the intro video's last frame, in the video's own pixel coordinates (`viewBox` = video size, `preserveAspectRatio="xMidYMid slice"` so it tracks `object-fit: cover`). Steel line, ticks and arrowheads; label in mono ink with a paper knockout stroke. Coordinates live in `intro.annotations` in `src/content.js`. Any dimension that would sit under the copy or run off screen is hidden, and none show until the video has a frame.
 - **Leader note**: used on the Trevor figure and one gallery image.
 - **Leader note**: short angled line from a point on an image to a mono note (`Oak veneer / 18 mm`). Max 1 per image.
 - **Title block**: footer echoes a drawing's title block: a ruled table with Drawn by / Project / Sheet / Contact cells.
 - **Buttons**: rectangular, no radius. Primary: steel fill, paper text 18px semibold, 1px steel border. Secondary: paper fill, ink 1px border, ink text. WhatsApp is secondary, with a small mono `↗` not a logo blob.
 - **Blueprint grid**: allowed on the **Process** section only, 24px `rule` grid at very low visual weight (lines drawn in mist on paper).
-- **Images**: hard edges, 1px rule frame, mist while loading. Responsive WebP in `public/images` (800/1600 widths). The portrait placeholder is a mist field with a drawn X (the drawing convention for an opening still to be filled).
+- **Images**: hard edges, 1px rule frame, mist while loading. Responsive WebP in `public/images` (800/1600 widths). No photos of Trevor (his wish); the Trevor section uses the steel-frame bench photo.
 
 ## 6. Motion (Krehel primary, Kowalski secondary)
 Quiet, precise, purposeful. Motion explains structure; it never decorates.
@@ -99,8 +98,8 @@ Quiet, precise, purposeful. Motion explains structure; it never decorates.
 - No bounce, no overshoot springs, no stagger above 60 ms, no more than 4 staggered items.
 
 **Allowed moments (the whole inventory)**
-1. **Hero intro** (every page load, refreshes included): a 6.7 s video builds a kitchen, removes it and holds on the empty room, which stays as the hero background. Nav and logo are visible throughout; the header CTA and the copy wait. At 6.6 s or on `ended`, a ~1.2 s GSAP timeline (power3.out): flat paper overlay to 55% behind the copy, dimension lines draw (stroke-dashoffset), headline reveals line by line behind a mask (SplitText), then the what/who/why line, then both CTAs. "Skip intro", a scroll, a touch or a nav click jumps to the last frame and runs the same reveal. Scroll is locked until the reveal.
-   - Reduced motion or a `#hash` link (e.g. `/#contact`): no playback; last frame and copy shown at once.
+1. **Hero intro** (every page load, refreshes included): a 6.7 s video builds a kitchen, removes it and holds on the empty room, which stays as the hero background. Nav and logo are visible throughout; the header CTA and the copy wait. At 6.6 s or on `ended`, a ~1.2 s GSAP timeline (power3.out): flat paper overlay to 55% behind the copy, headline reveals line by line behind a mask (SplitText), then the what/who/why line, then both CTAs. "Skip intro", a scroll, a touch or a nav click jumps to the last frame and runs the same reveal. Scroll is locked until the reveal.
+   - Reduced motion: no playback; last frame and copy shown at once.
    - Autoplay blocked, a video error, or nothing played after 2.5 s: last frame and reveal. If the video can't load, the #E9EEF3 hero ground stays and the copy shows.
    - The mode is set on `<html data-intro>` by an inline script before first paint, and a parse-time fallback beside the `<video>` shows the copy without waiting for JavaScript on slow connections.
 2. **Rules draw**: section header rule scales X from 0→1 from the left, 600 ms, once, when it enters. This is the only scroll-triggered reveal on text sections.
@@ -109,9 +108,14 @@ Quiet, precise, purposeful. Motion explains structure; it never decorates.
 5. **Gallery images**: clip-path inset reveal from the top edge, 700 ms, once. No parallax beyond 6% translate on the hero image only.
 6. **Press**: buttons `scale(0.98)` on active, 120 ms. No hover-scale on images or cards.
 
+7. **A-03 Trevor, "Section drawing"** (desktop, motion allowed): the stage pins for 250vh and a scrubbed timeline (scrub 0.6) moves one cross-section through three stages: stainless box section (45° hatch), balustrade (wider hatch), timber door edge (diagonals bend into grain with MorphSVG, one knot). Outlines undraw in 0.6 s and draw in over 0.8 s (power2.inOut), the next starting 0.2 s before the last has gone; hatch sweeps left to right; dimension lines grow from their centre, labels 0.1 s apart. The active chapter is ink, the others 35% opacity; a steel progress line fills down the chapter list. The closing statement reveals word by word behind a mask, once.
+   - Under 1024px: no pinning; each chapter's drawing draws in once at 40% in view.
+   - Reduced motion or no JavaScript: no pinning or drawing animation; every chapter shows its finished drawing. The prerendered markup is always the finished state.
+   - Drawings: `src/components/SectionDrawings.jsx`, stroke-only, 1.5px ink outlines, rule dimension lines with the primary dimension in steel, mono labels with a paper halo.
+
 **Banned**: fade-up on every element, blur transitions, magnetic buttons, cursor followers, marquee, pulsing dots, scroll-jacking, auto-playing carousels.
 
-**Reduced motion**: `prefers-reduced-motion: reduce` disables Lenis, all ScrollTrigger instances and clip reveals; dimension and process lines render fully drawn; transitions become instant but every state change still happens.
+**Reduced motion**: `prefers-reduced-motion: reduce` disables Lenis, all ScrollTrigger instances and clip reveals; the process line renders fully drawn; transitions become instant but every state change still happens.
 
 **Loading**: the page is prerendered to static HTML at build time (`scripts/prerender.mjs`) and hydrated. GSAP, ScrollTrigger and Lenis load as a separate chunk after hydration (`loadMotion()` in `src/lib/motion.js`), so the page is complete and readable before any motion code arrives. Framer Motion loads through `LazyMotion` with `domAnimation`.
 

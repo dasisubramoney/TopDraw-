@@ -4,7 +4,7 @@ import { SKIP_INTRO, getLenis, loadMotion } from '../lib/motion.js'
 
 // The intro mode is decided before first paint by the inline script in index.html:
 //   html[data-intro="play"]   every page load: video plays, copy hidden, scroll locked
-//   html[data-intro="still"]  reduced motion or a #hash link: last frame, copy shown
+//   html[data-intro="still"]  reduced motion: last frame, copy shown
 //   html[data-intro="reveal"] the reveal timeline is running
 //   html[data-intro="done"]   finished
 // With no JavaScript the attribute is absent and everything is visible.
@@ -23,65 +23,6 @@ const videoHtml = `<video class="hero-video" autoplay muted playsinline preload=
 <source src="${sources.mp4}" type="video/mp4">
 </video><script>(function(){var v=document.currentScript.previousElementSibling,d=document.documentElement;function end(){v.autoplay=false;v.pause();var s=function(){v.currentTime=Math.max(0,v.duration-0.05)};if(v.readyState>0)s();else v.addEventListener('loadedmetadata',s,{once:true})}if(d.getAttribute('data-intro')!=='play'){v.removeAttribute('autoplay');end();return}function bail(){if(window.__tdIntro||d.getAttribute('data-intro')!=='play')return;d.setAttribute('data-intro','still');d.classList.remove('intro-lock');end()}setTimeout(function(){if(v.currentTime<0.05)bail()},2500);v.addEventListener('ended',bail)})()</script>`
 
-function Dimensions({ set, className }) {
-  const { w, h, font, dims } = set
-  const tick = 12
-  const arrow = 9
-  return (
-    <svg
-      className={`pointer-events-none absolute inset-0 h-full w-full ${className}`}
-      viewBox={`0 0 ${w} ${h}`}
-      preserveAspectRatio="xMidYMid slice"
-      aria-hidden="true"
-      data-hero-dims
-    >
-      {dims.map((d) => {
-        const v = d.dir === 'v'
-        const [x1, y1, x2, y2] = v ? [d.x, d.y1, d.x, d.y2] : [d.x1, d.y, d.x2, d.y]
-        const mx = (x1 + x2) / 2
-        const my = (y1 + y2) / 2
-        const heads = v
-          ? [`M${x1} ${y1} l${-arrow / 2} ${arrow} h${arrow} z`, `M${x2} ${y2} l${-arrow / 2} ${-arrow} h${arrow} z`]
-          : [`M${x1} ${y1} l${arrow} ${-arrow / 2} v${arrow} z`, `M${x2} ${y2} l${-arrow} ${-arrow / 2} v${arrow} z`]
-        const ticks = v
-          ? [`M${x1 - tick} ${y1} h${tick * 2}`, `M${x2 - tick} ${y2} h${tick * 2}`]
-          : [`M${x1} ${y1 - tick} v${tick * 2}`, `M${x2} ${y2 - tick} v${tick * 2}`]
-        return (
-          <g key={d.label + d.x + d.y}>
-            {[`M${x1} ${y1} L${x2} ${y2}`, ...ticks].map((path) => (
-              <path
-                key={path}
-                d={path}
-                pathLength="1"
-                className="hero-dim-line"
-                fill="none"
-                stroke="#4A7FB0"
-                strokeWidth={font / 9}
-                data-dim-line
-              />
-            ))}
-            {heads.map((path) => (
-              <path key={path} d={path} fill="#4A7FB0" data-dim-mark />
-            ))}
-            <text
-              x={mx}
-              y={my}
-              transform={v ? `rotate(-90 ${mx} ${my})` : undefined}
-              textAnchor="middle"
-              dominantBaseline="central"
-              fontSize={font}
-              className="hero-dim-label"
-              data-dim-mark
-            >
-              {d.label}
-            </text>
-          </g>
-        )
-      })}
-    </svg>
-  )
-}
-
 export default function Hero() {
   const root = useRef(null)
   const media = useRef(null)
@@ -92,29 +33,6 @@ export default function Hero() {
     const mode = html.dataset.intro
     let finished = false
     const timers = []
-    const section = root.current
-
-    // Annotations only make sense once there is a room to draw on.
-    const markFrame = () => (section.dataset.frame = 'true')
-    if (video?.readyState >= 2) markFrame()
-    else video?.addEventListener('loadeddata', markFrame, { once: true })
-
-    // Hide any dimension that would sit under the copy or run off screen at this size.
-    const copy = section.querySelector('.hero-copy')
-    const fitDims = () => {
-      const limit = copy.getBoundingClientRect()
-      const box = section.getBoundingClientRect()
-      section.querySelectorAll('[data-hero-dims] g').forEach((g) => {
-        g.style.display = ''
-        const r = g.getBoundingClientRect()
-        const overlaps = r.right > limit.left - 12 && r.left < limit.right + 12 && r.bottom > limit.top - 12 && r.top < limit.bottom + 12
-        const offscreen = r.left < box.left + 8 || r.right > box.right - 8 || r.top < box.top + 8
-        if ((overlaps || offscreen) && r.width + r.height > 0) g.style.display = 'none'
-      })
-    }
-    fitDims()
-    window.addEventListener('resize', fitDims)
-    const offResize = () => window.removeEventListener('resize', fitDims)
     const listeners = []
     const on = (target, type, fn, opts) => {
       target.addEventListener(type, fn, opts)
@@ -136,7 +54,7 @@ export default function Hero() {
 
     if (mode !== 'play') {
       holdLastFrame()
-      return offResize
+      return () => {}
     }
     // React now owns the intro; the inline fallback in videoHtml stands down.
     window.__tdIntro = true
@@ -167,16 +85,13 @@ export default function Hero() {
           if (html.dataset.intro !== 'play') return
           const el = root.current
           const overlay = el.querySelector('[data-hero-overlay]')
-          const lines = [...el.querySelectorAll('[data-dim-line]')]
-          const marks = [...el.querySelectorAll('[data-dim-mark]')]
           const first = el.querySelectorAll('[data-hero-first]')
           const after = el.querySelectorAll('[data-hero-after]')
           const ctas = el.querySelectorAll('[data-hero-cta]')
           const split = SplitText.create(el.querySelector('h1'), { type: 'lines', mask: 'lines' })
 
           gsap.set(overlay, { opacity: 0 })
-          gsap.set(lines, { strokeDasharray: 1, strokeDashoffset: 1 })
-          gsap.set([...marks, ...first, ...after, ...ctas], { autoAlpha: 0 })
+          gsap.set([...first, ...after, ...ctas], { autoAlpha: 0 })
           gsap.set(split.lines, { yPercent: 105 })
           html.dataset.intro = 'reveal'
           moveFocus()
@@ -186,19 +101,16 @@ export default function Hero() {
               defaults: { ease: 'power3.out' },
               onComplete: () => {
                 split.revert()
-                gsap.set([overlay, ...lines, ...marks, ...first, ...after, ...ctas], { clearProps: 'all' })
+                gsap.set([overlay, ...first, ...after, ...ctas], { clearProps: 'all' })
                 html.dataset.intro = 'done'
               },
             })
             // 1. Flat white overlay behind the copy
             .to(overlay, { opacity: 0.55, duration: 0.45 }, 0)
             .to(first, { autoAlpha: 1, duration: 0.3 }, 0.1)
-            // 2. Dimension lines draw onto the room, then their arrowheads and figures
-            .to(lines, { strokeDashoffset: 0, duration: 0.55, stagger: 0.04, ease: 'power2.inOut' }, 0.1)
-            .to(marks, { autoAlpha: 1, duration: 0.2 }, 0.55)
-            // 3. Headline, line by line, from behind a mask
+            // 2. Headline, line by line, from behind a mask
             .to(split.lines, { yPercent: 0, duration: 0.6, stagger: 0.06 }, 0.25)
-            // 4. What/who/why, then the calls to action
+            // 3. What/who/why, then the calls to action
             .to(after, { autoAlpha: 1, duration: 0.35 }, 0.7)
             .to(ctas, { autoAlpha: 1, duration: 0.35 }, 0.85)
         })
@@ -221,7 +133,7 @@ export default function Hero() {
 
     if (!video) {
       finish('error')
-      return offResize
+      return () => {}
     }
 
     const revealAt = () => Math.min(intro.revealAt, (Number.isFinite(video.duration) ? video.duration : 99) - 0.05)
@@ -255,7 +167,6 @@ export default function Hero() {
     on(skipButton, 'click', skip)
 
     return () => {
-      offResize()
       timers.forEach(clearTimeout)
       listeners.forEach((off) => off())
     }
@@ -269,9 +180,6 @@ export default function Hero() {
       className="relative -mt-[calc(var(--header-h)+1px)] h-[100svh] min-h-[600px] overflow-hidden bg-mist"
     >
       <div ref={media} className="absolute inset-0" dangerouslySetInnerHTML={{ __html: videoHtml }} />
-
-      <Dimensions set={intro.annotations.desktop} className="hidden md:block" />
-      <Dimensions set={intro.annotations.mobile} className="md:hidden" />
 
       <div className="absolute inset-x-0 bottom-0 lg:inset-y-0 lg:left-0 lg:right-auto lg:w-[calc(50%+40px)]">
         {/* Flat white overlay behind the copy for legibility. Solid colour, no gradient. */}

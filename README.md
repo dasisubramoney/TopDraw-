@@ -28,13 +28,9 @@ It feeds the canonical URL, Open Graph tags and LocalBusiness schema.
 
 All copy and contact details are in `src/content.js`. Search the project for `[` to find placeholders.
 
-- `[PHONE]`, `[EMAIL]`, `[WHATSAPP NUMBER]` (international format, digits only, e.g. 27821234567)
-- `[AREA]` service area, `[HOURS]`, `[SITE VISIT: FREE OR FEE]`
 - `[INSTAGRAM URL]`, `[FACEBOOK URL]`
 - `[SUBURB]` for each project caption
-- Trevor's portrait (Trevor section)
-- Schema placeholders in `index.html` (`telephone`, `email`, `areaServed`)
-- The hero dimension figures in `intro.annotations` (`src/content.js`) are illustrative; replace them with real measurements if you have them
+- Confirm the WhatsApp number: it is set to the same number as the phone (082 332 1112)
 
 ## Images
 
@@ -85,10 +81,57 @@ and stored in `public/images`. To add a project, export the same two widths and 
 **Prepared for:** Dasendhran Subramoney
 
 - Replaced the hero photograph with a full-viewport intro video (`public/video`): desktop WebM/MP4, square MP4 under 768 px. No poster or still images. The hero ground is #E9EEF3 so there is no black flash.
-- The video plays on every page load (changed later the same day from once per session), then holds on its last frame (the empty room). A 1.2 s GSAP reveal follows: white overlay at 55%, dimension lines drawn onto the room, headline revealed line by line, then the supporting line and both CTAs.
+- The video plays on every page load (changed later the same day from once per session), then holds on its last frame (the empty room). A 1.2 s GSAP reveal follows: white overlay at 55%, headline revealed line by line, then the supporting line and both CTAs.
 - "Skip intro", scroll, touch and nav clicks skip to the last frame. Scroll is locked during the intro.
-- Fallbacks: reduced motion and `#hash` links skip playback; autoplay blocked, video errors or nothing played after 2.5 s jump to the end; if the video can't load the copy still shows. A parse-time fallback shows the copy on slow connections without waiting for JavaScript.
+- Fallbacks: reduced motion skips playback; autoplay blocked, video errors or nothing played after 2.5 s jump to the end; if the video can't load the copy still shows. A parse-time fallback shows the copy on slow connections without waiting for JavaScript.
 - Renamed `public/Video` to `public/video` (Netlify paths are case-sensitive).
 - Header is transparent over the top of the hero; its CTA appears after the intro. Fixed header wrapping at 1024 px.
 - Tests: 20 intro checks (normal play, skip, wheel and touch skip, replay on refresh, reduced motion, autoplay blocked on mobile emulation, slow 3G, video failing to load) and the 30 existing site checks all pass.
 - Lighthouse reports 99 mobile / 100 desktop, but it stops measuring before the reveal. Real first-visit LCP is likely to be the headline at about 7 s.
+
+### Update: hero measurement lines removed (12 October 2026)
+
+**Prepared for:** Dasendhran Subramoney
+
+- Removed the dimension lines drawn onto the empty room at the end of the intro. The reveal is now: white overlay, headline line by line, supporting line, then both CTAs.
+
+### Update: no portrait of Trevor (12 October 2026)
+
+- Trevor doesn't want his photo on the site. Removed the portrait placeholder from the Trevor section; the steel-frame bench photo now sits beside his story instead. Figures renumbered (Fig. 01 Trevor section, Fig. 02 trade section).
+
+### Fix: intro plays on every refresh (12 October 2026)
+
+- After a nav click the address ended in `#section`, and refreshing that address skipped the intro. Every load now clears the `#section` and plays the intro from the top. Reduced motion is the only exception.
+
+### Redesign: A-03 Trevor "Section drawing" (12 October 2026)
+
+**Prepared for:** Dasendhran Subramoney
+
+- Trevor's career is now told through one technical cross-section that changes on scroll: stainless steel box section (45° hatch, weld beads), balustrade (handrail on post, base plate, fixings), timber door edge (rebate, edge banding, hinge cup, grain with a knot). Chapter copy unchanged.
+- Desktop pins the section for 250vh with a scrubbed GSAP timeline; under 1024px each drawing draws in once; reduced motion and no-JS show all finished drawings.
+- New full-width closing statement, "The material changed. The standard didn’t.", revealed word by word.
+- The steel-frame bench photo moved to Selected work as W-06 Furniture, "Steel frame, timber top".
+- Inactive chapters sit at 35% opacity as specified, which is about 2:1 contrast while inactive (below WCAG AA). Reduced-motion and mobile users always see full contrast.
+
+### Update: Trevor's bio (12 October 2026)
+
+- Rewrote the Trevor section from the overview Trevor supplied: the three chapters (stainless steel, balustrading, timber), plus two closing paragraphs on what he does today and how he works. Edited to the site's voice; two earlier lines that were not from Trevor were removed.
+
+### Update: contact details (12 October 2026)
+
+- Phone 082 332 1112, email topdraw19@gmail.com, service area Greater Johannesburg and site visit R795 added to the contact section, footer, trade section, structured data and no-JavaScript fallback. WhatsApp links use the same number.
+- Consultation form: "Phone" relabelled "Contact number"; new required "Industry sector" choice (Residential or Commercial), also added to the Netlify form definition.
+
+### Update: footer contact labels (12 October 2026)
+
+- Footer contact details now carry small labels (Phone, Email, WhatsApp) above each value; the WhatsApp link reads "Message Trevor".
+
+### Update: hours (12 October 2026)
+
+- Footer and structured data: Monday to Friday 08:00 to 17:00, closed on weekends.
+
+### Session summary (12 October 2026)
+
+**Prepared for:** Dasendhran Subramoney
+
+Removed the hero measurement lines; made the intro play on every refresh; removed the portrait of Trevor at his request; rebuilt the Trevor section as a scroll-driven technical "section drawing" (steel, balustrading, timber); rewrote his bio from his own overview; moved the steel-frame bench photo to Selected work; added his real phone, email, service area, site visit fee and hours; added an Industry sector choice (Residential or Commercial) to the consultation form; labelled the footer contact details. Still to supply: Instagram and Facebook links, project suburbs, and confirmation that WhatsApp uses 082 332 1112.

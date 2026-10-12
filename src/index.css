@@ -114,23 +114,71 @@
   object-position: center;
 }
 .hero-overlay { opacity: 0.55; }
-.hero-dim-label {
-  font-family: var(--font-mono);
-  fill: var(--color-ink);
-  paint-order: stroke;
-  stroke: var(--color-paper);
-  stroke-width: 0.4em;
-  stroke-linejoin: round;
-  letter-spacing: 0.02em;
-}
-#top:not([data-frame]) [data-hero-dims] { visibility: hidden; }
 .skip-intro { display: none; }
 html.intro-lock { overflow: hidden; }
 html[data-intro="play"] .hero-overlay { opacity: 0; }
 html[data-intro="play"] .hero-reveal,
-html[data-intro="play"] [data-hero-dims],
 html[data-intro="play"] .nav-cta { visibility: hidden; }
 html[data-intro="play"] .skip-intro { display: inline-flex; align-items: center; }
+
+/* A-03 Trevor: section drawings. Stacked by default; pinned on desktop when the
+   motion code sets section[data-mode="pinned"] (see Trevor.jsx). */
+.section-drawing { display: block; width: 100%; height: auto; }
+.dw-label {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  fill: var(--color-ink);
+  paint-order: stroke;
+  stroke: var(--color-paper);
+  stroke-width: 4px;
+  stroke-linejoin: round;
+}
+/* Compact drawings scale with the screen; keep labels near 12px on screen. */
+.dw-compact .dw-label { font-size: 21px; stroke-width: 6px; }
+@media (min-width: 640px) { .dw-compact .dw-label { font-size: 12px; stroke-width: 4px; } }
+.trevor-figure,
+.trevor-progress,
+.trevor-progress-track { display: none; }
+.trevor-chapter-figure { padding-top: 24px; }
+.trevor-closing {
+  font-size: clamp(2.25rem, 1.2rem + 4.4vw, 5.5rem);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  max-width: 20ch;
+}
+@media (min-width: 1024px) {
+  /* Stacked on desktop (reduced motion / no JavaScript): drawing left, text right. */
+  .trevor-chapter { display: grid; grid-template-columns: 55fr 45fr; column-gap: calc(var(--gutter) * 2); align-items: center; }
+  .trevor-chapter-figure { padding-block: 24px; }
+
+  .trevor[data-mode="pinned"] .trevor-stage {
+    display: grid;
+    grid-template-columns: 55fr 45fr;
+    column-gap: calc(var(--gutter) * 2);
+    align-items: center;
+    height: calc(100svh - var(--header-h));
+    padding-block: 28px;
+  }
+  .trevor[data-mode="pinned"] .trevor-figure { display: block; }
+  .trevor[data-mode="pinned"] .trevor-figure .section-drawing { max-height: calc(100svh - var(--header-h) - 56px); }
+  .trevor[data-mode="pinned"] .trevor-chapter { display: block; opacity: 0.35; transition: opacity 300ms var(--ease-out); }
+  .trevor[data-mode="pinned"] .trevor-chapter[data-current] { opacity: 1; }
+  .trevor[data-mode="pinned"] .trevor-chapter-figure { display: none; }
+  .trevor[data-mode="pinned"] .trevor-chapter-text { padding-block: 18px; }
+  .trevor[data-mode="pinned"] .trevor-progress-track,
+  .trevor[data-mode="pinned"] .trevor-progress {
+    display: block;
+    position: absolute;
+    left: -24px;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+  }
+  .trevor[data-mode="pinned"] .trevor-progress-track { background: var(--color-mist); }
+  .trevor[data-mode="pinned"] .trevor-progress { background: var(--color-steel); transform: scaleY(0); transform-origin: top; }
+}
 
 /* Lenis */
 html.lenis, html.lenis body { height: auto; }

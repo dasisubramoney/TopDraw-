@@ -14,13 +14,25 @@ export default function Footer() {
           </div>
           <div className="flex flex-col gap-2 border-b border-rule py-6 sm:border-l sm:pl-6 lg:border-b-0">
             <p className="anno text-rule">Contact</p>
-            <p>{contact.phoneHref ? <a className="link-underline inline-flex min-h-11 items-center" href={contact.phoneHref}>{contact.phoneDisplay}</a> : contact.phoneDisplay}</p>
-            <p>{contact.email.includes('@') ? <a className="link-underline inline-flex min-h-11 items-center" href={`mailto:${contact.email}`}>{contact.email}</a> : contact.email}</p>
-            <p>
-              <a className="link-underline inline-flex min-h-11 items-center" href={whatsappHref()} target="_blank" rel="noopener">
-                WhatsApp Trevor<span className="sr-only"> (opens WhatsApp)</span>
-              </a>
-            </p>
+            {/* Label above each value so long addresses still fit the narrow footer columns. */}
+            <dl className="mt-2 flex flex-col gap-3">
+              <div>
+                <dt className="anno text-rule">Phone</dt>
+                <dd>{contact.phoneHref ? <a className="link-underline inline-flex min-h-11 items-center" href={contact.phoneHref}>{contact.phoneDisplay}</a> : contact.phoneDisplay}</dd>
+              </div>
+              <div>
+                <dt className="anno text-rule">Email</dt>
+                <dd>{contact.email.includes('@') ? <a className="link-underline inline-flex min-h-11 items-center break-all" href={`mailto:${contact.email}`}>{contact.email}</a> : contact.email}</dd>
+              </div>
+              <div>
+                <dt className="anno text-rule">WhatsApp</dt>
+                <dd>
+                  <a className="link-underline inline-flex min-h-11 items-center" href={whatsappHref()} target="_blank" rel="noopener">
+                    Message Trevor<span className="sr-only"> on WhatsApp (opens WhatsApp)</span>
+                  </a>
+                </dd>
+              </div>
+            </dl>
           </div>
           <div className="flex flex-col gap-2 border-b border-rule py-6 sm:border-b-0 lg:border-l lg:pl-6">
             <p className="anno text-rule">Hours</p>

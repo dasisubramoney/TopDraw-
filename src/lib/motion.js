@@ -6,10 +6,10 @@ import { useEffect, useState } from 'react'
 let motionPromise = null
 export function loadMotion() {
   if (!motionPromise) {
-    motionPromise = Promise.all([import('gsap'), import('gsap/ScrollTrigger'), import('gsap/SplitText'), import('lenis')]).then(
-      ([{ gsap }, { ScrollTrigger }, { SplitText }, { default: Lenis }]) => {
-        gsap.registerPlugin(ScrollTrigger, SplitText)
-        return { gsap, ScrollTrigger, SplitText, Lenis }
+    motionPromise = Promise.all([import('gsap'), import('gsap/ScrollTrigger'), import('gsap/SplitText'), import('gsap/MorphSVGPlugin'), import('lenis')]).then(
+      ([{ gsap }, { ScrollTrigger }, { SplitText }, { MorphSVGPlugin }, { default: Lenis }]) => {
+        gsap.registerPlugin(ScrollTrigger, SplitText, MorphSVGPlugin)
+        return { gsap, ScrollTrigger, SplitText, MorphSVGPlugin, Lenis }
       },
     )
   }

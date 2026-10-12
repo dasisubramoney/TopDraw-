@@ -2,7 +2,8 @@ import { useRef } from 'react'
 import { useMotionEffect } from '../lib/motion.js'
 
 // Drawing-sheet header: a full-width rule, the sheet number, the title and a margin note.
-export default function SectionHead({ code, title, note, id, dark = false }) {
+// `titleBelow` puts the headline on its own full-width line under the sheet row.
+export default function SectionHead({ code, title, note, id, dark = false, titleBelow = false }) {
   const rule = useRef(null)
 
   useMotionEffect(({ gsap }) => {
@@ -24,11 +25,22 @@ export default function SectionHead({ code, title, note, id, dark = false }) {
         <p className={`label col-span-12 sm:col-span-3 lg:col-span-2 ${dark ? 'text-rule' : ''}`}>
           {code}
         </p>
-        <h2 id={id} className="text-display-l col-span-12 sm:col-span-9 lg:col-span-7">
-          {title}
-        </h2>
+        {!titleBelow && (
+          <h2 id={id} className="text-display-l col-span-12 sm:col-span-9 lg:col-span-7">
+            {title}
+          </h2>
+        )}
         {note && (
-          <p className={`anno col-span-12 lg:col-span-3 lg:text-right lg:pt-3 ${dark ? 'text-rule' : ''}`}>{note}</p>
+          <p
+            className={`anno col-span-12 lg:text-right ${titleBelow ? 'sm:col-span-9 sm:text-right lg:col-span-10' : 'lg:col-span-3 lg:pt-3'} ${dark ? 'text-rule' : ''}`}
+          >
+            {note}
+          </p>
+        )}
+        {titleBelow && (
+          <h2 id={id} className="col-span-12 mt-6 text-display-xl lg:mt-10">
+            {title}
+          </h2>
         )}
       </div>
     </header>
