@@ -10,9 +10,9 @@
 //   data-label     mono labels
 // The markup is always the finished drawing, so it reads without JavaScript.
 
-const INK = '#2B3642'
-const RULE = '#B7C6D6'
-const STEEL = '#4A7FB0'
+const INK = '#222222'
+const RULE = '#D2C9BC'
+const STEEL = '#353A92'
 const W = 640
 const H = 440
 
@@ -215,7 +215,7 @@ export default function SectionDrawing({ id, stages = [1, 2, 3], compact = false
     >
       <defs>
         <pattern id={`${id}-grid`} width="20" height="20" patternUnits="userSpaceOnUse">
-          <path d="M20 0 H0 V20" fill="none" stroke="#E9EEF3" strokeWidth="1" />
+          <path d="M20 0 H0 V20" fill="none" stroke="#F5F2ED" strokeWidth="1" />
         </pattern>
       </defs>
       <rect x="-20" y="-20" width={W + 40} height={H + 40} fill={`url(#${id}-grid)`} />

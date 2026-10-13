@@ -58,7 +58,7 @@ and stored in `public/images`. To add a project, export the same two widths and 
 - Single page with anchored navigation: hero, Services (01 to 05), Process, Trevor ("From steel to timber"), Selected work, For designers and architects, Contact, and a title-block footer.
 - Hero meets the above-the-fold contract (what, who, why, both CTAs) at 375×667, 375×812, 768×1024 and 1440×900.
 - Drawing-sheet system: hairline rules instead of cards, sheet numbers (A-01 to A-07), dimension lines and leader notes on photographs, blueprint grid on the Process section only.
-- Services list is keyboard operable (arrow keys, Home, End), opens on hover, click or tap, and shows a photo per row.
+- Services: a sticky scroll reveal on desktop (photo pinned beside the services in view) and a stacked list with a photo per service on small screens.
 - Process line scrubs with scroll; gallery images reveal with a clip wipe; motion limited to the inventory in `DESIGN.md`.
 - Consultation form with South African phone validation, inline errors, focus management, success and failure states, and Netlify Forms with a honeypot.
 - LocalBusiness schema, meta and Open Graph tags, skip link, visible focus states, reduced-motion support (Lenis and scroll animations off).
@@ -138,6 +138,55 @@ and stored in `public/images`. To add a project, export the same two widths and 
 ### Pending: Process section content (12 October 2026)
 
 - A five-stage process (Enquire, Site visit and quote, Agree and refine, Manufacture, Install and handover) with the R795 consultation fee, the 30% / 50% / 20% payment schedule, 7-10 working days to source materials and a 4-6 week project timeline has been drafted and sent to Trevor to confirm as a PDF. It is not on the site yet; the current Process copy in `src/content.js` stays until he replies.
+
+### Update: brand colours from the logo (13 October 2026)
+
+**Prepared for:** Dasendhran Subramoney
+
+- Re-themed the site from the old cool blue-grey to the Top Draw logo colours, measured from the logo file: blue #353A92, black #222222, beige #B2A696. Done on the `feature/brand-colours` branch.
+- Token changes in `src/index.css` (names unchanged): `steel` #4A7FB0 to #353A92 (CTAs, active states, focus, process nodes); `ink` #2B3642 to #222222 (text, dark contact/footer); `mist` #E9EEF3 to #F5F2ED (alternating sections); `rule` #B7C6D6 to #D2C9BC (hairlines, secondary text on dark). New `beige` #B2A696, used only for the primary button border on the dark section.
+- Blue on near-black is only 1.65:1, so on the dark contact section the primary button keeps its edge with a 1px beige border (beige on ink is 6.66:1).
+- Also updated the hard-coded colours in `SectionDrawings.jsx`, the Process blueprint grid (an encoded colour inside `index.css`) and `public/favicon.svg`. `DESIGN.md` has the new palette and a re-measured contrast table. Text contrast is better everywhere (ink on paper 15.91:1; white on blue 9.67:1, so the old 19px-bold rule for button text no longer limits it).
+- Colour only: no layout, copy, type or motion changes. The logo artwork and the "Top Draw" wordmark in the header are unchanged. The hero video, photographs and the `og.jpg` social image are not recoloured.
+
+### Update: Services sticky scroll reveal (13 October 2026)
+
+- Replaced the Services accordion with a sticky scroll reveal adapted from a 21st.dev component. On desktop the five services scroll past on the left while one photo stays pinned on the right and swaps to match the service in view; the others dim to 35% and the active title turns blue. Under 1024 px each service is a plain stack with its own photo.
+- Adapted rather than pasted: the original scrolls inside its own 30rem box and is TypeScript, shadcn and Tailwind-colour based. This version scrolls with the page, is plain JSX, and uses the site palette and existing photos; no new dependency (it uses `framer-motion`, already installed). Active service is tracked with an IntersectionObserver.
+- Reduced motion and no-JavaScript show every service at full contrast. Inactive services at 35% are below AA contrast while inactive (same trade-off as the Trevor chapters).
+- The accordion's arrow-key navigation and hover-to-open are gone with it: the list is now plain content. Checked at 1440 and 390 px wide; the active service and photo stay in step as you scroll.
+
+### Update: Work section portal intro (13 October 2026)
+
+- Added a scroll-driven intro to Selected work, adapted from the MIT-licensed Glyph Portal (21st.dev, Christian Katzmann; licence notice kept at the top of `src/components/GlyphPortal.jsx`). The word PROJECTS (with "Top Draw" above it, like the logo) is set huge in blue, with a project photo showing through the letters; scrolling zooms into a letter until the blue fills the screen, then the six projects scroll over it. Pinned for 1.5 screens. Branch: `feature/work-glyph-portal`.
+- Ported to JavaScript for this project (the original is TypeScript): the `inert` attribute is set the React 18 way, the root is a plain div, the default green background and no-JS poster are removed. No new packages; font is the existing self-hosted Schibsted Grotesk at weight 800; colours are the existing palette tokens (blue, black, white); the photo is one of the existing project photos.
+- Loads on demand: the portal is a separate 5.5 KB (gzip) chunk that only loads when the section is within a screen of the viewport and the font has loaded (1.5 s limit). Until then, with reduced motion, or without JavaScript, the section is the same plain project list as before, and that list is what the prerendered HTML contains. Checked: raw HTML contains the heading, captions and images; no external hosts are requested; desktop and 390 px behave; reduced motion stays static.
+- Lighthouse mobile, before and after this change: performance 98 to 99, LCP 2.3 s to 1.8 s, TBT 40 ms to 0 ms (within normal run-to-run noise). Lighthouse does not scroll, so it does not exercise the portal itself.
+- **TODO:** swap Schibsted Grotesk for the typeface in the final logo once chosen; replace the kitchen photo behind the letters with the chosen hero project photo; confirm the line "Measured on site. Built in our workshop. Professionally installed." with Trevor; project suburbs are still [SUBURB].
+
+### Update: infinite drag gallery after the Projects zoom (13 October 2026)
+
+- After the zoom into PROJECTS, the first thing you land on is now an infinite drag gallery of all twelve project photos on the blue; (that captioned list has since been removed from the zoomed view, see the next entry). Adapted from the 21st.dev `infinite-drag-scroll` component (masonry variant): `src/components/InfiniteGallery.jsx`. No new packages.
+- Behaviour: scrolling the page moves the grid while the gallery is pinned (about 1.2 screens), and on a mouse you can also drag it in any direction with momentum; the photos repeat forever. On touch, dragging is sideways only so a vertical swipe still scrolls the page. The photos scale in with a short stagger the first time it comes on screen.
+- Adapted rather than pasted: the original turns every mouse wheel tick anywhere on the page into grid movement (a scroll trap on a normal page), uses `motion/react`, `class-variance-authority` and Tailwind colour classes, and is TypeScript. This version uses `framer-motion` (already installed), plain classes, the site's own photos, and sizes tiles in vw so the wrap never shows a gap.
+- Loading: drag support (`domMax`) is in the gallery's own lazy chunk (about 15 KB gzipped) and only downloads with the portal. The main bundle grew by about 1.7 KB gzipped for this whole branch. Raw HTML, reduced motion and no-JavaScript are unchanged: the plain captioned list, no gallery.
+- Checked in dev and the production build at 1440 and 390 px: no blank space while scrolling or dragging, drag and scroll both move the grid, no console errors, only local requests. The gallery is aria-hidden (decorative, repeats photos shown elsewhere).
+
+### Update: old project list removed from the Projects zoom (13 October 2026)
+
+- After the zoom into PROJECTS you now land in the infinite drag gallery and nothing else: the captioned project list (the six large photos with captions under the "A-04 / Selected work, Built and installed" heading) is gone from that view, and the Trade section follows the gallery directly.
+- The plain list is kept for visitors without JavaScript, with reduced motion, or before the portal loads, so the prerendered HTML still has the Selected work heading, captions and photos. Inside the portal, a screen-reader-only heading and caption list (no images) keeps the section labelled and readable for assistive tech.
+
+### Fix: gallery first view and photo pop (13 October 2026)
+
+- First view after the zoom: the grid was already moving while the gallery was still sliding up into view, so it landed on a random position with photos cut off. It now only moves with the page once it is pinned, and it starts below the header, so the opening view is a clean grid. The staggered rows are also less offset on desktop so more of each photo shows.
+- Photos now stand out: each sits on a flat blue backdrop (the white frames were later replaced by a soft shadow), instead of sitting on the faint kitchen photo.
+- The entrance animation previously played before the gallery had faded in, so it was finished before anyone saw it. It now starts once the zoom completes (the photos scale and fade in with a short stagger) and replays if you scroll back out and in again.
+
+### Update: gallery shadows and clean exit (13 October 2026)
+
+- Replaced the white frames around the gallery photos with a soft black drop shadow, so they lift off the blue. This is the one shadow on the site (the design notes otherwise rule them out); noted as an exception in `DESIGN.md`.
+- Clean first and last view: an infinite grid always has photos running off some edge, which looked like a mistake when the gallery opened and when it handed over to the next section (the bottom edge of the panel sliced the photos). At both moments the grid now eases into an aligned resting position where every photo on screen is whole, with blue margin above and below. Photos are sized from the screen height as well as its width, and the row gap grows to match, so this works on any window (checked at 1900x832, 1852x703, 1440x900, 1920x1080, 390x844 and 375x667: no cut photos at the first or last view). The panel then scrolls away with blue along its bottom edge. Earlier attempts (a fade-out, and the next section sliding over it like a curtain) were dropped.
 
 ### Session summary (12 October 2026)
 

@@ -1,7 +1,7 @@
 import { img } from '../content.js'
 
 // Responsive WebP from /public/images. Hard edges, no radius.
-export default function Picture({ k, sizes = '100vw', priority = false, className = '', onLoad, imgRef }) {
+export default function Picture({ k, sizes = '100vw', priority = false, className = '', onLoad, imgRef, alt }) {
   const i = img[k]
   const largest = i.widths[i.widths.length - 1]
   return (
@@ -12,7 +12,7 @@ export default function Picture({ k, sizes = '100vw', priority = false, classNam
       sizes={sizes}
       width={i.w}
       height={i.h}
-      alt={i.alt}
+      alt={alt ?? i.alt}
       loading={priority ? 'eager' : 'lazy'}
       decoding={priority ? 'sync' : 'async'}
       fetchpriority={priority ? 'high' : undefined}
