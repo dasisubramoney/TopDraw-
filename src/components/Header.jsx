@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, m } from 'framer-motion'
-import { nav, whatsappHref } from '../content.js'
+import { hero, nav, whatsappHref } from '../content.js'
 import { getLenis, requestSkipIntro, scrollToId, useReducedMotion } from '../lib/motion.js'
 
 function useActiveSection() {
@@ -22,13 +22,20 @@ export default function Header() {
   const active = useActiveSection()
   // Transparent over the top of the hero, solid paper once the page scrolls.
   const [atTop, setAtTop] = useState(true)
+  // The hero carries the full logo, so the nav brand waits until the hero has scrolled away.
+  const [overHero, setOverHero] = useState(true)
   useEffect(() => {
-    const onScroll = () => setAtTop(window.scrollY < 8)
+    const onScroll = () => {
+      setAtTop(window.scrollY < 8)
+      const hero = document.getElementById('top')
+      setOverHero(hero ? window.scrollY < hero.offsetHeight * 0.6 : false)
+    }
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
   const solid = open || !atTop
+  const showBrand = open || !overHero
   const reduced = useReducedMotion()
   const menuBtn = useRef(null)
   const panel = useRef(null)
@@ -81,7 +88,12 @@ export default function Header() {
       className={`sticky top-0 z-40 border-b transition-colors duration-200 ${solid ? 'border-rule bg-paper' : 'border-transparent bg-transparent'}`}
       style={{ paddingTop: 'env(safe-area-inset-top, 0px)' }}>
       <div className="wrap flex h-[var(--header-h)] items-center justify-between gap-6">
-        <a href="#top" onClick={(e) => go(e, 'top')} className="flex items-baseline gap-3 no-underline">
+        <a
+          href="#top"
+          onClick={(e) => go(e, 'top')}
+          className={`flex items-center gap-3 no-underline transition-[opacity,visibility] duration-300 ${showBrand ? 'visible opacity-100' : 'invisible opacity-0'}`}
+        >
+          <img src={hero.mark.src} alt="" width={hero.mark.w} height={hero.mark.h} className="h-7 w-auto lg:h-8" />
           <span className="whitespace-nowrap font-display text-[1.375rem] leading-none tracking-[-0.01em] lg:text-[1.5rem]">Top Draw</span>
           <span className="anno hidden whitespace-nowrap md:inline lg:hidden xl:inline">Bespoke interiors / Johannesburg</span>
         </a>

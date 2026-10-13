@@ -143,9 +143,9 @@ and stored in `public/images`. To add a project, export the same two widths and 
 
 **Prepared for:** Dasendhran Subramoney
 
-- Re-themed the site from the old cool blue-grey to the Top Draw logo colours, measured from the logo file: blue #353A92, black #222222, beige #B2A696. Done on the `feature/brand-colours` branch.
-- Token changes in `src/index.css` (names unchanged): `steel` #4A7FB0 to #353A92 (CTAs, active states, focus, process nodes); `ink` #2B3642 to #222222 (text, dark contact/footer); `mist` #E9EEF3 to #F5F2ED (alternating sections); `rule` #B7C6D6 to #D2C9BC (hairlines, secondary text on dark). New `beige` #B2A696, used only for the primary button border on the dark section.
-- Blue on near-black is only 1.65:1, so on the dark contact section the primary button keeps its edge with a 1px beige border (beige on ink is 6.66:1).
+- Re-themed the site from the old cool blue-grey to the Top Draw logo colours, measured from the logo file: blue #31378F, black #222222, beige #B2A696. Done on the `feature/brand-colours` branch.
+- Token changes in `src/index.css` (names unchanged): `steel` #4A7FB0 to #31378F (CTAs, active states, focus, process nodes); `ink` #2B3642 to #222222 (text, dark contact/footer); `mist` #E9EEF3 to #F5F2ED (alternating sections); `rule` #B7C6D6 to #D2C9BC (hairlines, secondary text on dark). New `beige` #B2A696, used only for the primary button border on the dark section.
+- Blue on near-black is only 1.57:1, so on the dark contact section the primary button is white with dark text (resolved when this branch was merged with the logo-hero work, which made the same call; the beige-border idea was dropped). The beige token is reserved for dark-section accents and currently unused.
 - Also updated the hard-coded colours in `SectionDrawings.jsx`, the Process blueprint grid (an encoded colour inside `index.css`) and `public/favicon.svg`. `DESIGN.md` has the new palette and a re-measured contrast table. Text contrast is better everywhere (ink on paper 15.91:1; white on blue 9.67:1, so the old 19px-bold rule for button text no longer limits it).
 - Colour only: no layout, copy, type or motion changes. The logo artwork and the "Top Draw" wordmark in the header are unchanged. The hero video, photographs and the `og.jpg` social image are not recoloured.
 
@@ -193,3 +193,44 @@ and stored in `public/images`. To add a project, export the same two widths and 
 **Prepared for:** Dasendhran Subramoney
 
 Removed the hero measurement lines; fixed the hero headline overlapping the nav on short windows; drafted the new Process copy for Trevor to confirm (not live yet); made the intro play on every refresh; removed the portrait of Trevor at his request; rebuilt the Trevor section as a scroll-driven technical "section drawing" (steel, balustrading, timber); rewrote his bio from his own overview; moved the steel-frame bench photo to Selected work; added his real phone, email, service area, site visit fee and hours; added an Industry sector choice (Residential or Commercial) to the consultation form; labelled the footer contact details. Still to supply: Instagram and Facebook links, project suburbs, and confirmation that WhatsApp uses 082 332 1112.
+
+### Update: Trevor section ending (13 October 2026)
+
+**Prepared for:** Dasendhran Subramoney
+
+- The closing statement no longer sits as a separate block after the animation. It is now the drawing's title block, revealed as the last step of the same scroll sequence, alongside a new chapter 04 "Today" (from Trevor's bio).
+- While pinned on desktop, inactive chapters fold to their number and label and the active chapter opens, so all four fit on a laptop screen. Mobile and reduced-motion layouts show every chapter in full, with the title block in chapter 04's drawing slot.
+
+### Update: intro captions (13 October 2026)
+
+**Prepared for:** Dasendhran Subramoney
+
+- Two captions now run over the intro video, timed to what is on screen: "Bespoke design: We design, build and install bespoke kitchens, bathrooms and interiors." while the finished kitchen is showing, and "White boxing: We also do white boxing, taking a bare room to a finished shell ready for fit-out." once the room is empty.
+- The video pauses for 1.5 s on the finished kitchen so the first caption can be read, and holds on the empty room for 3 s with the white-boxing caption before the hero copy reveals, so the intro runs about 11 s. Skip intro, scroll or touch still skip straight to the copy. Wording and timings are in `intro.captions` in `src/content.js`.
+
+### Update: logo (13 October 2026)
+
+- Supersedes the 12 October headline-size fix: the hero no longer shows the headline text.
+
+**Prepared for:** Dasendhran Subramoney
+
+- The Top Draw Projects logo now replaces the hero text: after the intro, the logo wipes in from the left, followed by the two buttons. The headline sentence stays in the page heading for screen readers and search engines, but is no longer shown.
+- The TD mark sits beside "Top Draw" in the navigation bar.
+- The supplied JPEG was cropped and its white background removed (`public/images/logo-top-draw.webp`, `logo-top-draw-sm.webp`, `logo-mark.webp`). The original is kept in `design/logo/`.
+
+### Update: hero polish (13 October 2026)
+
+- Site accent changed from steel blue (#4A7FB0) to the logo's blue (#31378F) so buttons, active states and drawings match the logo. Button text contrast rises from 4.2:1 to 10.1:1. In the dark contact section the main button is now white with dark text.
+- The half-screen white veil is gone. The logo, a one-line descriptor ("Bespoke kitchens, bathrooms and interiors / Greater Johannesburg") and the two buttons now sit in a framed title block, bottom left, so the whole room shows.
+- The nav brand stays hidden over the hero and fades in once the hero scrolls away.
+
+### Update: hero ends on the finished kitchen (13 October 2026)
+
+- After the white-boxing caption, the finished kitchen fades back in over the empty room and stays as the hero background behind the title block. It is a frame of the intro video (4.3 s), captured as the video plays, so there is no separate image file and no jump in camera position.
+- Skip intro, repeat visits with reduced motion, and slow connections all land on the same kitchen frame. The frame time is `intro.finalFrame` in `src/content.js`.
+
+### Session summary (13 October 2026)
+
+**Prepared for:** Dasendhran Subramoney
+
+Folded the Trevor closing statement into the drawing sequence as chapter 04 "Today" with a title block; added timed intro captions ("Bespoke design" and "White boxing") with reading pauses; replaced the hero text with the Top Draw Projects logo in a framed title block with a one-line descriptor; changed the site accent to the logo's blue; hid the nav brand over the hero; ended the intro on the finished kitchen. Still to supply: Instagram and Facebook links, project suburbs, confirmation that WhatsApp uses 082 332 1112, and whether the business name everywhere should be "Top Draw Projects".

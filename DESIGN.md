@@ -9,16 +9,16 @@ The site reads like a well-kept shop drawing: a white sheet, hairline rules that
 
 ## 1. Colour (closed palette, nothing else)
 
-Taken from the Top Draw logo (blue #353A92, black #222222, beige #B2A696), measured from the logo file.
+Taken from the Top Draw logo (blue #31378F measured from the original logo file; black #222222 and beige #B2A696 from the supplied logo image, within a few units of the original).
 
 | Token | Hex | Role |
 |---|---|---|
 | `paper` | `#FFFFFF` | Main background |
 | `mist` | `#F5F2ED` | Secondary surface, alternating sections, image placeholders. A light tint of the logo beige |
 | `rule` | `#D2C9BC` | Hairlines, borders, dimension lines, muted UI. Also secondary text on the dark section. **Never text on light.** |
-| `steel` | `#353A92` | Logo blue. CTAs, active states, dimension arrowheads, focus. Sparingly: max one steel object per viewport besides focus rings. |
+| `steel` | `#31378F` | The logo's blue, measured from the original logo file (was #4A7FB0 until 13 October 2026). CTAs, active states, dimension arrowheads, focus. Sparingly: max one steel object per viewport besides focus rings. |
 | `ink` | `#222222` | Logo black. All text, headings, dark contact/footer surface |
-| `beige` | `#B2A696` | Logo beige. Accent on the dark section only (the primary button border). Never text on light |
+| `beige` | `#B2A696` | Logo beige. Reserved for accents on the dark sections; currently unused. Never text on light |
 
 No tints, no opacity variants of colours used as new colours, no gradients, no shadows (one exception: the A-04 gallery photos, see section 6).
 Exception: `ink` at reduced opacity is not allowed for text either; secondary text is still `ink`, distinguished by size and the mono face.
@@ -29,11 +29,11 @@ Exception: `ink` at reduced opacity is not allowed for text either; secondary te
 | ink / paper | 15.91 | All text |
 | ink / mist | 14.25 | All text |
 | rule / ink | 9.71 | Secondary text and rules on the dark section |
-| paper / steel | 9.67 | Button text at any size (the buttons stay 19px bold) |
-| steel / paper | 9.67 | Steel text at any size |
-| steel / mist | 8.66 | Steel text and UI on mist |
-| **ink / steel** | **1.65** | **Fails. Never put ink text on a steel button, or steel text on ink** |
-| steel / ink | 1.65 | Steel on the dark section is non-text only, and too faint to define an edge: the primary button there gets a 1px `beige` border |
+| paper / steel | 10.13 | Button text at any size |
+| steel / paper | 10.13 | Steel text at any size |
+| steel / mist | 9.07 | Steel text and UI on mist |
+| **ink / steel** | **1.57** | **Fails. Never put ink text on a steel button, or steel text on ink** |
+| steel / ink | 1.57 | Never on the dark section: the primary button there is paper with ink text |
 | beige / ink | 6.66 | Beige text or borders on the dark section |
 | beige / paper | 2.39 | **Fails for text.** Never use beige on light backgrounds |
 | rule / paper | 1.64 | Decorative/structural only. Form field borders use `ink` at 1px to meet 3:1 for UI components |
@@ -89,7 +89,7 @@ Fonts are self-hosted from `public/fonts`, Latin-subset with fonttools: Newsread
 - **Leader note**: used on the Trevor figure and one gallery image.
 - **Leader note**: short angled line from a point on an image to a mono note (`Oak veneer / 18 mm`). Max 1 per image.
 - **Title block**: footer echoes a drawing's title block: a ruled table with Drawn by / Project / Sheet / Contact cells.
-- **Buttons**: rectangular, no radius. Primary: steel fill, paper text 19px bold, 1px steel border (1px beige border on the dark section). Secondary: paper fill, ink 1px border, ink text. WhatsApp is secondary, with a small mono `↗` not a logo blob.
+- **Buttons**: rectangular, no radius. Primary: steel fill, paper text 19px bold, 1px steel border (paper fill with ink text on the dark section, where blue would be only 1.57:1). Secondary: paper fill, ink 1px border, ink text. WhatsApp is secondary, with a small mono `↗` not a logo blob.
 - **Blueprint grid**: allowed on the **Process** section only, 24px `rule` grid at very low visual weight (lines drawn in mist on paper).
 - **Images**: hard edges, 1px rule frame, mist while loading. Responsive WebP in `public/images` (800/1600 widths). No photos of Trevor (his wish); the Trevor section uses the steel-frame bench photo.
 
@@ -103,7 +103,7 @@ Quiet, precise, purposeful. Motion explains structure; it never decorates.
 - No bounce, no overshoot springs, no stagger above 60 ms, no more than 4 staggered items.
 
 **Allowed moments (the whole inventory)**
-1. **Hero intro** (every page load, refreshes included): a 6.7 s video builds a kitchen, removes it and holds on the empty room, which stays as the hero background. Nav and logo are visible throughout; the header CTA and the copy wait. At 6.6 s or on `ended`, a ~1.2 s GSAP timeline (power3.out): flat paper overlay to 55% behind the copy, headline reveals line by line behind a mask (SplitText), then the what/who/why line, then both CTAs. "Skip intro", a scroll, a touch or a nav click jumps to the last frame and runs the same reveal. Scroll is locked until the reveal.
+1. **Hero intro** (every page load, refreshes included): a 6.7 s video builds a kitchen, removes it and holds on the empty room, which stays as the hero background. Nav and logo are visible throughout; the header CTA and the copy wait. Two captions are timed to the video's own clock (paper panel, steel left edge, wipe in from the left and out to the right): "Bespoke design" while the kitchen is complete (2.9 to 5.0 s, with a 1.5 s reading pause at 4.3 s) and "White boxing" once the room is empty (from 6.2 s). The video ends on the empty room and holds for 3 s with the white-boxing caption; the finished kitchen (the 4.3 s frame, captured from the video as it plays) then fades back in over 0.9 s and stays as the permanent hero background; then a ~1.2 s GSAP timeline (power3.out): flat paper overlay to 55% behind the copy, headline reveals line by line behind a mask (SplitText), then the what/who/why line, then both CTAs. "Skip intro", a scroll, a touch or a nav click jumps to the last frame and runs the same reveal. Scroll is locked until the reveal.
    - Reduced motion: no playback; last frame and copy shown at once.
    - Autoplay blocked, a video error, or nothing played after 2.5 s: last frame and reveal. If the video can't load, the #F5F2ED hero ground stays and the copy shows.
    - The mode is set on `<html data-intro>` by an inline script before first paint, and a parse-time fallback beside the `<video>` shows the copy without waiting for JavaScript on slow connections.
@@ -113,10 +113,10 @@ Quiet, precise, purposeful. Motion explains structure; it never decorates.
 5. **Gallery images**: clip-path inset reveal from the top edge, 700 ms, once. No parallax beyond 6% translate on the hero image only.
 6. **Press**: buttons `scale(0.98)` on active, 120 ms. No hover-scale on images or cards.
 
-7. **A-03 Trevor, "Section drawing"** (desktop, motion allowed): the stage pins for 250vh and a scrubbed timeline (scrub 0.6) moves one cross-section through three stages: stainless box section (45° hatch), balustrade (wider hatch), timber door edge (diagonals bend into grain with MorphSVG, one knot). Outlines undraw in 0.6 s and draw in over 0.8 s (power2.inOut), the next starting 0.2 s before the last has gone; hatch sweeps left to right; dimension lines grow from their centre, labels 0.1 s apart. The active chapter is ink, the others 35% opacity; a steel progress line fills down the chapter list. The closing statement reveals word by word behind a mask, once.
+7. **A-03 Trevor, "Section drawing"** (desktop, motion allowed): the stage pins for 250vh and a scrubbed timeline (scrub 0.6) moves one cross-section through three stages: stainless box section (45° hatch), balustrade (wider hatch), timber door edge (diagonals bend into grain with MorphSVG, one knot). Outlines undraw in 0.6 s and draw in over 0.8 s (power2.inOut), the next starting 0.2 s before the last has gone; hatch sweeps left to right; dimension lines grow from their centre, labels 0.1 s apart. The active chapter is ink and opens; the others fold to number and label at 35% opacity. A steel progress line fills down the chapter list. The sequence ends on chapter 04 (Today): the timber section holds and the drawing's title block completes the sheet (rule draws, notes fade, "The material changed. The standard didn't." rises word by word behind a mask). Pin length 300vh.
+   - Under 1024px: no pinning; each chapter's drawing (and chapter 04's title block) draws in once at 40% in view.
 8. **A-04 Work, glyph portal intro** (adapted from the MIT-licensed Glyph Portal by Christian Katzmann, 21st.dev; `src/components/GlyphPortal.jsx`): a scroll-driven camera through the word PROJECTS (with "Top Draw" in small type above it, echoing the logo lockup), set in Schibsted Grotesk 800. The letters are windows onto a project photo under a flat steel overlay; scrolling zooms through the largest letter counter it finds until the blue field fills the screen, then the content scrolls over it: an infinite drag gallery of all twelve project photos (the captioned project list is not shown here; it stays for the plain version below, and screen readers get a text-only summary inside the portal). Pinned for 1.5 viewport heights, driven by its own rAF loop (no GSAP or Framer Motion). Desktop visitors can hover or arrow-key a letter first; touch visitors get a letter dropdown. It mounts only once the section is within a screen of the viewport and Schibsted Grotesk 800 has loaded (1.5 s limit); until then, with reduced motion, or without JavaScript, the section is the plain list on mist, and that plain list is what the prerendered HTML contains.
    - **Infinite drag gallery** (adapted from the 21st.dev `infinite-drag-scroll` component, masonry variant; `src/components/InfiniteGallery.jsx`): a 2 x 2 block of identical photo tiles in a draggable layer, wrapped on both axes so it repeats forever. It stays pinned for about 220svh of scrolling after the zoom; scrolling the page moves the grid (the page keeps its own scroll, there is no scroll trap), and mouse users can also drag in any direction with momentum. Touch users drag sideways only so a vertical swipe still scrolls the page. The photos sit on a flat steel backdrop with a soft black drop shadow so they lift off it (the one place the site uses a shadow, at the client's request),  and scale in with a short stagger once the zoom has finished (replayed if you scroll back out). The grid only moves with the page once the gallery is pinned. At the two moments it is at rest (when it opens and when it hands over to the next section) the grid is eased to an aligned resting position where every photo on screen is whole, with blue margin above and below and nothing under the header. Photo sizes come from the screen height as well as the width (`.gallery` in `src/index.css`) and the row gap grows to match, so such a position exists on any window; the columns are spaced so one tile is exactly a screen wide. The panel then scrolls away with blue (no photo) along its bottom edge. It is decorative (aria-hidden); a screen-reader-only heading and caption list sits beside it inside the portal. Sized in vw so a tile is always at least a screen wide and tall.
-   - Under 1024px: no pinning; each chapter's drawing draws in once at 40% in view.
    - Reduced motion or no JavaScript: no pinning or drawing animation; every chapter shows its finished drawing. The prerendered markup is always the finished state.
    - Drawings: `src/components/SectionDrawings.jsx`, stroke-only, 1.5px ink outlines, rule dimension lines with the primary dimension in steel, mono labels with a paper halo.
 
@@ -141,3 +141,6 @@ Quiet, precise, purposeful. Motion explains structure; it never decorates.
 - [ ] No em dashes or stock phrases in copy
 - [ ] Every number on the page is either real or a marked placeholder
 - [ ] Steel used for ≤1 object per viewport (plus focus)
+
+## Hero (revised 13 October 2026)
+After the intro, the hero carries a single title block, bottom left, framed in 1px ink on paper: the Top Draw Projects logo, a mono descriptor line, then the two buttons, each in its own cell divided by ink rules. The rest of the frame is the finished kitchen. The block wipes in from the left, then the logo, then the descriptor and buttons. The nav brand stays hidden until the hero has scrolled away, so the logo never appears twice on one screen.
