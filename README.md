@@ -1,7 +1,7 @@
 # Top Draw
 
 Marketing site for Top Draw, bespoke cabinetry and interiors in Johannesburg.
-Vite + React 18, Tailwind CSS 4, GSAP ScrollTrigger, Lenis, Framer Motion (AnimatePresence only).
+Vite + React 18, Tailwind CSS 4, GSAP ScrollTrigger, Lenis, Framer Motion (AnimatePresence, plus drag in the Projects gallery).
 
 - `PRODUCT.md`: brief, audiences, voice, content rules
 - `DESIGN.md`: the "Shop Drawing" system: tokens, type, grid, motion
@@ -234,3 +234,19 @@ Removed the hero measurement lines; fixed the hero headline overlapping the nav 
 **Prepared for:** Dasendhran Subramoney
 
 Folded the Trevor closing statement into the drawing sequence as chapter 04 "Today" with a title block; added timed intro captions ("Bespoke design" and "White boxing") with reading pauses; replaced the hero text with the Top Draw Projects logo in a framed title block with a one-line descriptor; changed the site accent to the logo's blue; hid the nav brand over the hero; ended the intro on the finished kitchen. Still to supply: Instagram and Facebook links, project suburbs, confirmation that WhatsApp uses 082 332 1112, and whether the business name everywhere should be "Top Draw Projects".
+
+### Session summary: branch `feature/work-glyph-portal` (13 October 2026)
+
+**Prepared for:** Dasendhran Subramoney
+
+This branch has everything below, merged with the logo-hero work from `feature/marketing-site`. The local branches `feature/brand-colours` and `feature/services-sticky-scroll` never had commits of their own (their work is in this branch), so they can be deleted.
+
+- **Colours:** re-themed from blue-grey to the Top Draw logo colours: blue #31378F (measured from the original logo file), black #222222, beige #B2A696, with warm beige tints for sections and hairlines. Contrast re-measured in `DESIGN.md`; text and white-on-blue buttons now pass comfortably.
+- **Services:** the accordion became a sticky scroll reveal (adapted from 21st.dev). On desktop a photo stays pinned beside the services and swaps as each one scrolls into view; on phones each service carries its own photo.
+- **Projects (was Selected work):** a scroll-driven portal intro. The word PROJECTS, with "Top Draw" above it, is set huge in blue with a project photo showing through the letters; scrolling zooms into a letter until the blue fills the screen. You then land in an infinite drag gallery of all twelve project photos (scrolling moves it, mouse users can drag it in any direction, touch users drag sideways). The first and last views are aligned so no photo is ever cut by an edge, on any window size tested. The photos carry a soft shadow (the one shadow on the site).
+- **Fallbacks:** the plain captioned project list stays for visitors without JavaScript, with reduced motion, and in the prerendered HTML; screen readers get a text summary inside the portal. The portal and gallery load only when the section is near the screen (about 5 KB and 20 KB gzipped).
+- **Fixes:** hero headline no longer overlaps the nav on short windows; the hero measurement lines were removed.
+- **Process section:** a new five-stage process (with the R795 fee, the 30% / 50% / 20% payments, 7-10 working days for materials and a 4-6 week project) was drafted and sent to Trevor as a PDF. It is not on the site yet.
+- **Third-party code:** the portal is adapted from Glyph Portal (MIT, Christian Katzmann; licence notice kept in `src/components/GlyphPortal.jsx`); the Services reveal and the drag gallery are adapted from 21st.dev components. No new packages were added.
+
+Still to supply or decide: Instagram and Facebook links, project suburbs, confirmation that WhatsApp uses 082 332 1112, Trevor's reply on the Process wording, and Trevor's OK on the line under PROJECTS ("Measured on site. Built in our workshop. Professionally installed."). Also: swap the kitchen photo behind the PROJECTS letters for the chosen hero project photo, and swap Schibsted Grotesk for the logo's typeface if one is chosen.
