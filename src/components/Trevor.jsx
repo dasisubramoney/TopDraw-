@@ -12,7 +12,9 @@ import SectionDrawing from './SectionDrawings.jsx'
 //                      reduced motion, and before/without JavaScript.
 //   pinned (desktop)   section[data-mode="pinned"], set by the motion code: one large
 //                      drawing on the left is scrubbed through all three stages while the
-//                      chapter list on the right highlights the active chapter.
+//                      chapter list on the right opens the active chapter. The sequence
+//                      ends on chapter 04 (Today) with the closing statement revealed in
+//                      the drawing's title block.
 
 const parts = (scope) => ({
   outline: [...scope.querySelectorAll('[data-outline]')],
@@ -59,6 +61,40 @@ function drawOut(tl, p, at) {
   return at + 0.6
 }
 
+// The drawing's title block: the closing statement, set like a sheet's general note.
+function TitleBlock() {
+  return (
+    <div className="trevor-titleblock" data-titleblock>
+      <span aria-hidden="true" className="block h-px origin-left bg-ink" data-tb-rule />
+      <div className="flex items-baseline justify-between gap-4 pt-3">
+        <span className="anno" data-tb-meta>
+          A-03 / General note
+        </span>
+        <span className="anno" data-tb-meta>
+          Sheet 04 of 04
+        </span>
+      </div>
+      <p className="trevor-statement mt-3 font-display" data-tb-statement>
+        {trevor.closing}
+      </p>
+    </div>
+  )
+}
+
+// Title block reveal: rule draws, notes fade, statement rises word by word behind a mask.
+function revealTitleBlock(gsap, SplitText, tl, block, at) {
+  const split = SplitText.create(block.querySelector('[data-tb-statement]'), { type: 'words', mask: 'words' })
+  const rule = block.querySelector('[data-tb-rule]')
+  const meta = block.querySelectorAll('[data-tb-meta]')
+  gsap.set(rule, { scaleX: 0 })
+  gsap.set(meta, { autoAlpha: 0 })
+  gsap.set(split.words, { yPercent: 105 })
+  tl.to(rule, { scaleX: 1, duration: 0.5, ease: 'power2.inOut' }, at)
+  tl.to(meta, { autoAlpha: 1, duration: 0.2, stagger: 0.1 }, at + 0.3)
+  tl.to(split.words, { yPercent: 0, duration: 0.6, stagger: 0.06, ease: 'power3.out' }, at + 0.35)
+  return { split, end: at + 0.35 + 0.6 + split.words.length * 0.06 }
+}
+
 export default function Trevor() {
   const root = useRef(null)
 
@@ -90,7 +126,11 @@ export default function Trevor() {
       t = drawOut(tl, stages[1], t + 1.2) - 0.2
       tl.addLabel('c3', t)
       t = drawIn(gsap, tl, stages[2], t)
-      tl.to({}, { duration: 1.2 }, t)
+      tl.to({}, { duration: 1 }, t)
+      // 04 Today: the timber section stays; the title block completes the sheet.
+      tl.addLabel('c4', t + 1)
+      const tb = revealTitleBlock(gsap, SplitText, tl, big.querySelector('[data-titleblock]'), t + 1)
+      tl.to({}, { duration: 1.2 }, tb.end)
 
       const setActive = (i) =>
         chapters.forEach((li, n) => (n === i ? li.setAttribute('data-current', '') : li.removeAttribute('data-current')))
@@ -100,14 +140,14 @@ export default function Trevor() {
       const st = ScrollTrigger.create({
         trigger: stageEl,
         start: () => `top top+=${header()}`,
-        end: '+=250%',
+        end: '+=300%',
         pin: true,
         scrub: 0.6,
         animation: tl,
         invalidateOnRefresh: true,
         onUpdate: (self) => {
           const time = self.progress * tl.duration()
-          setActive(time >= tl.labels.c3 ? 2 : time >= tl.labels.c2 ? 1 : 0)
+          setActive(time >= tl.labels.c4 ? 3 : time >= tl.labels.c3 ? 2 : time >= tl.labels.c2 ? 1 : 0)
           progressBar.style.transform = `scaleY(${self.progress})`
         },
       })
@@ -116,6 +156,7 @@ export default function Trevor() {
       return () => {
         st.kill()
         tl.progress(0).kill()
+        tb.split.revert()
         chapters.forEach((li) => li.removeAttribute('data-current'))
         progressBar.style.transform = ''
         delete section.dataset.mode
@@ -133,27 +174,19 @@ export default function Trevor() {
         const st = ScrollTrigger.create({ trigger: fig, start: '40% bottom', once: true, onEnter: () => tl.play() })
         return { tl, st }
       })
-      return () => runs.forEach(({ tl, st }) => (st.kill(), tl.progress(1).kill()))
+      const block = section.querySelector('.trevor-chapter [data-titleblock]')
+      const tbl = gsap.timeline({ paused: true })
+      const tb = revealTitleBlock(gsap, SplitText, tbl, block, 0)
+      const tbst = ScrollTrigger.create({ trigger: block, start: '40% bottom', once: true, onEnter: () => tbl.play() })
+      return () => {
+        runs.forEach(({ tl, st }) => (st.kill(), tl.progress(1).kill()))
+        tbst.kill()
+        tbl.progress(1).kill()
+        tb.split.revert()
+      }
     })
 
-    // Closing statement: word-by-word mask reveal, once.
-    const closing = section.querySelector('[data-trevor-closing]')
-    const split = SplitText.create(closing, { type: 'words', mask: 'words' })
-    const reveal = gsap.from(split.words, {
-      yPercent: 105,
-      duration: 0.7,
-      ease: 'power3.out',
-      stagger: 0.06,
-      scrollTrigger: { trigger: closing, start: 'top 85%', once: true },
-      onComplete: () => split.revert(),
-    })
-
-    return () => {
-      reveal.scrollTrigger?.kill()
-      reveal.kill()
-      split.revert()
-      mm.revert()
-    }
+    return () => mm.revert()
   })
 
   return (
@@ -162,8 +195,11 @@ export default function Trevor() {
         <SectionHead code="A-03 / Trevor" title={trevor.title} note="Owner and lead craftsman" id="trevor-title" titleBelow />
 
         <div className="trevor-stage" data-trevor-stage>
-          <div className="trevor-figure" data-trevor-figure aria-hidden="true">
-            <SectionDrawing id="tv-pinned" />
+          <div className="trevor-figure" data-trevor-figure>
+            <div aria-hidden="true">
+              <SectionDrawing id="tv-pinned" />
+            </div>
+            <TitleBlock />
           </div>
 
           <div className="trevor-text">
@@ -175,28 +211,28 @@ export default function Trevor() {
               <ol className="trevor-chapters border-t border-rule">
                 {trevor.chapters.map((c, i) => (
                   <li key={c.label} data-chapter={i} className="trevor-chapter border-b border-rule">
-                    <div className="trevor-chapter-figure" data-chapter-figure aria-hidden="true">
-                      <SectionDrawing id={`tv-${i + 1}`} stages={[i + 1]} compact />
-                    </div>
+                    {i < 3 ? (
+                      <div className="trevor-chapter-figure" data-chapter-figure aria-hidden="true">
+                        <SectionDrawing id={`tv-${i + 1}`} stages={[i + 1]} compact />
+                      </div>
+                    ) : (
+                      <div className="trevor-chapter-figure trevor-chapter-note">
+                        <TitleBlock />
+                      </div>
+                    )}
                     <div className="trevor-chapter-text grid grid-cols-[2.5rem_1fr] gap-x-4 py-6 sm:grid-cols-[2.5rem_9rem_1fr]">
                       <span className="anno pt-[0.35rem]">0{i + 1}</span>
                       <h3 className="label pt-[0.2rem]">{c.label}</h3>
-                      <p className="col-start-2 mt-2 max-w-[48ch] sm:col-start-3 sm:mt-0">{c.text}</p>
+                      <div className="trevor-chapter-body col-start-2 sm:col-start-3">
+                        <div>
+                          <p className="mt-2 max-w-[48ch] sm:mt-0">{c.text}</p>
+                        </div>
+                      </div>
                     </div>
                   </li>
                 ))}
               </ol>
             </div>
-          </div>
-        </div>
-
-        <div className="mt-20 border-t border-rule pt-10 lg:mt-28 lg:pt-14">
-          <p className="trevor-closing font-display" data-trevor-closing>
-            {trevor.closing}
-          </p>
-          <div className="mt-8 grid max-w-[46ch] gap-4 text-body-l lg:mt-10 lg:max-w-none lg:grid-cols-2 lg:gap-[calc(var(--gutter)*2)]">
-            <p className="max-w-[46ch]">{trevor.today}</p>
-            <p className="max-w-[46ch]">{trevor.close}</p>
           </div>
         </div>
       </div>

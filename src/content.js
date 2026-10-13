@@ -53,12 +53,19 @@ export const img = {
 }
 
 export const hero = {
-  eyebrow: 'Interiors / Johannesburg',
-  audienceLine: 'For homeowners, interior designers and architects',
+  // The hero shows the logo and the two buttons only (owner's choice, October 2026).
+  logo: {
+    src: '/images/logo-top-draw.webp',
+    srcSmall: '/images/logo-top-draw-sm.webp',
+    w: 1308,
+    h: 277,
+    alt: 'Top Draw Projects.',
+  },
+  mark: { src: '/images/logo-mark.webp', w: 467, h: 277 },
+  descriptor: 'Bespoke kitchens, bathrooms and interiors / Greater Johannesburg',
+  // Not shown on screen: read by screen readers and search engines as part of the
+  // page's main heading, after the logo.
   headline: 'Bespoke kitchens, bathrooms and interiors. Designed, built and installed by one team.',
-  lead: "Trevor trained as a stainless steel fabricator, where a millimetre out means it doesn't fit. He runs every job himself, from the first site measure to the final hinge adjustment, so it's right the first time.",
-  // Shown under 640px so the copy fits above the fold on small phones.
-  leadShort: "A steel fabricator turned cabinetmaker, Trevor runs every job himself, so it's right the first time.",
   primaryCta: 'Book a site consultation',
   secondaryCta: 'WhatsApp Trevor',
 }
@@ -70,7 +77,31 @@ export const intro = {
     webm: '/video/intro-desktop.webm', // 1920 x 1080
     mp4: '/video/intro-desktop.mp4',
   },
-  revealAt: 6.6, // seconds; the reveal starts here or on "ended", whichever comes first
+  // Captions over the video, timed to what is on screen (seconds of video time).
+  // 2.8 to 5.1 s the kitchen is complete; from about 6.2 s the room is empty.
+  captions: [
+    {
+      id: 'design',
+      from: 2.9,
+      to: 5.0,
+      // Pause the video on the finished kitchen so the caption can be read.
+      pauseAt: 4.3,
+      pause: 1.5,
+      label: 'Bespoke design',
+      text: 'We design, build and install bespoke kitchens, bathrooms and interiors.',
+    },
+    {
+      id: 'whitebox',
+      from: 6.2,
+      label: 'White boxing',
+      text: 'We also do white boxing, taking a bare room to a finished shell ready for fit-out.',
+    },
+  ],
+  // The video ends on the empty room; hold it (with the white-boxing caption) this long
+  // before the finished kitchen fades back in and the hero copy reveals.
+  holdAfterEnd: 3,
+  // The finished-kitchen frame (seconds) used as the permanent hero background.
+  finalFrame: 4.3,
 }
 
 export const services = [
@@ -139,12 +170,13 @@ export const trevor = {
       label: 'Timber',
       text: 'From there he moved into high-end furniture, bespoke cabinetry and interior design, combining technical knowledge with a strong eye for detail and design.',
     },
+    {
+      label: 'Today',
+      text: 'Today he designs, builds and installs bespoke interiors for a wide range of home projects, with a focus on quality and precision. He’s hands-on and proud of his workmanship, gets it right the first time, and goes the extra mile for every client.',
+    },
   ],
+  // Shown as the drawing's title block at the end of the sequence.
   closing: 'The material changed. The standard didn’t.',
-  today:
-    'Today Trevor designs, builds and installs bespoke interiors across a wide range of home projects, with a focus on quality, precision and attention to detail.',
-  close:
-    'He takes pride in his workmanship and holds every project to a high standard. He’s hands-on, he gets it right the first time, and he’ll go the extra mile so the finished result exceeds what you expected.',
 }
 
 export const work = [

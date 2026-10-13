@@ -23,6 +23,8 @@ Trevor, owner and lead craftsman. Former boilermaker and sheet metal worker (sta
 Get a qualified visitor to book a site consultation (primary) or start a WhatsApp conversation with Trevor (secondary).
 
 ## Above-the-fold contract (375px and 1440px)
+> Revised 13 October 2026 at the owner's request: the hero now shows the Top Draw Projects logo and the two buttons only. The headline sentence remains in the page heading for screen readers and search engines. The points below are now carried by the intro captions and the sections that follow.
+
 - WHAT: bespoke cabinetry, kitchens, bathrooms and full turnkey interiors, designed, made and installed by one team
 - WHO: homeowners, plus designers and architects
 - WHY: one craftsman owns the whole job, with a steel fabricator's precision, done right the first time

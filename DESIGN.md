@@ -14,7 +14,7 @@ The site reads like a well-kept shop drawing: a white sheet, hairline rules that
 | `paper` | `#FFFFFF` | Main background |
 | `mist` | `#E9EEF3` | Secondary surface, alternating sections, image placeholders |
 | `rule` | `#B7C6D6` | Hairlines, borders, dimension lines, muted UI. **Never text on light.** |
-| `steel` | `#4A7FB0` | CTAs, active states, dimension arrowheads, focus. Sparingly: max one steel object per viewport besides focus rings. |
+| `steel` | `#31378F` | The logo's blue (changed from #4A7FB0 on 13 October 2026 to match the logo). CTAs, active states, dimension arrowheads, focus. Sparingly. |
 | `ink` | `#2B3642` | All text, headings, dark contact/footer surface |
 
 No tints, no opacity variants of colours used as new colours, no gradients, no shadows.
@@ -26,11 +26,11 @@ Exception: `ink` at reduced opacity is not allowed for text either; secondary te
 | ink / paper | 12.29 | All text |
 | ink / mist | 10.53 | All text |
 | rule / ink | 7.06 | Secondary text and rules on the dark section |
-| paper / steel | **4.24** | Button text only at ≥19px **bold (700)**: WCAG large text is ≥18.67px bold, so 18px semibold does not qualify |
-| steel / paper | 4.24 | Steel text only at ≥18px bold or ≥24px regular |
-| steel / mist | 3.63 | Large text / non-text UI only |
-| **ink / steel** | **2.90** | **Fails. Never put ink text on a steel button** (the brief suggested this as a fallback; it does not pass) |
-| steel / ink | 2.90 | Steel is non-text only on the dark section (e.g. the button fill, with paper text 18px bold) |
+| paper / steel | **10.13** | All text sizes pass (was 4.24:1 with the old steel blue) |
+| steel / paper | 10.13 | Any size |
+| steel / mist | 8.67 | Any size |
+| **ink / steel** | **1.21** | **Fails. Never put ink text on a steel button** (the brief suggested this as a fallback; it does not pass) |
+| steel / ink | 1.21 | Never on the dark section: the primary button there is paper with ink text |
 | rule / paper | 1.74 | Decorative/structural only. Form field borders use `ink` at 1px to meet 3:1 for UI components |
 
 Dimension-line labels are set in `ink` mono. Steel is used for the line and arrowheads only.
@@ -98,7 +98,7 @@ Quiet, precise, purposeful. Motion explains structure; it never decorates.
 - No bounce, no overshoot springs, no stagger above 60 ms, no more than 4 staggered items.
 
 **Allowed moments (the whole inventory)**
-1. **Hero intro** (every page load, refreshes included): a 6.7 s video builds a kitchen, removes it and holds on the empty room, which stays as the hero background. Nav and logo are visible throughout; the header CTA and the copy wait. At 6.6 s or on `ended`, a ~1.2 s GSAP timeline (power3.out): flat paper overlay to 55% behind the copy, headline reveals line by line behind a mask (SplitText), then the what/who/why line, then both CTAs. "Skip intro", a scroll, a touch or a nav click jumps to the last frame and runs the same reveal. Scroll is locked until the reveal.
+1. **Hero intro** (every page load, refreshes included): a 6.7 s video builds a kitchen, removes it and holds on the empty room, which stays as the hero background. Nav and logo are visible throughout; the header CTA and the copy wait. Two captions are timed to the video's own clock (paper panel, steel left edge, wipe in from the left and out to the right): "Bespoke design" while the kitchen is complete (2.9 to 5.0 s, with a 1.5 s reading pause at 4.3 s) and "White boxing" once the room is empty (from 6.2 s). The video ends on the empty room and holds for 3 s with the white-boxing caption; the finished kitchen (the 4.3 s frame, captured from the video as it plays) then fades back in over 0.9 s and stays as the permanent hero background; then a ~1.2 s GSAP timeline (power3.out): flat paper overlay to 55% behind the copy, headline reveals line by line behind a mask (SplitText), then the what/who/why line, then both CTAs. "Skip intro", a scroll, a touch or a nav click jumps to the last frame and runs the same reveal. Scroll is locked until the reveal.
    - Reduced motion: no playback; last frame and copy shown at once.
    - Autoplay blocked, a video error, or nothing played after 2.5 s: last frame and reveal. If the video can't load, the #E9EEF3 hero ground stays and the copy shows.
    - The mode is set on `<html data-intro>` by an inline script before first paint, and a parse-time fallback beside the `<video>` shows the copy without waiting for JavaScript on slow connections.
@@ -108,8 +108,8 @@ Quiet, precise, purposeful. Motion explains structure; it never decorates.
 5. **Gallery images**: clip-path inset reveal from the top edge, 700 ms, once. No parallax beyond 6% translate on the hero image only.
 6. **Press**: buttons `scale(0.98)` on active, 120 ms. No hover-scale on images or cards.
 
-7. **A-03 Trevor, "Section drawing"** (desktop, motion allowed): the stage pins for 250vh and a scrubbed timeline (scrub 0.6) moves one cross-section through three stages: stainless box section (45° hatch), balustrade (wider hatch), timber door edge (diagonals bend into grain with MorphSVG, one knot). Outlines undraw in 0.6 s and draw in over 0.8 s (power2.inOut), the next starting 0.2 s before the last has gone; hatch sweeps left to right; dimension lines grow from their centre, labels 0.1 s apart. The active chapter is ink, the others 35% opacity; a steel progress line fills down the chapter list. The closing statement reveals word by word behind a mask, once.
-   - Under 1024px: no pinning; each chapter's drawing draws in once at 40% in view.
+7. **A-03 Trevor, "Section drawing"** (desktop, motion allowed): the stage pins for 250vh and a scrubbed timeline (scrub 0.6) moves one cross-section through three stages: stainless box section (45° hatch), balustrade (wider hatch), timber door edge (diagonals bend into grain with MorphSVG, one knot). Outlines undraw in 0.6 s and draw in over 0.8 s (power2.inOut), the next starting 0.2 s before the last has gone; hatch sweeps left to right; dimension lines grow from their centre, labels 0.1 s apart. The active chapter is ink and opens; the others fold to number and label at 35% opacity. A steel progress line fills down the chapter list. The sequence ends on chapter 04 (Today): the timber section holds and the drawing's title block completes the sheet (rule draws, notes fade, "The material changed. The standard didn't." rises word by word behind a mask). Pin length 300vh.
+   - Under 1024px: no pinning; each chapter's drawing (and chapter 04's title block) draws in once at 40% in view.
    - Reduced motion or no JavaScript: no pinning or drawing animation; every chapter shows its finished drawing. The prerendered markup is always the finished state.
    - Drawings: `src/components/SectionDrawings.jsx`, stroke-only, 1.5px ink outlines, rule dimension lines with the primary dimension in steel, mono labels with a paper halo.
 
@@ -134,3 +134,6 @@ Quiet, precise, purposeful. Motion explains structure; it never decorates.
 - [ ] No em dashes or stock phrases in copy
 - [ ] Every number on the page is either real or a marked placeholder
 - [ ] Steel used for ≤1 object per viewport (plus focus)
+
+## Hero (revised 13 October 2026)
+After the intro, the hero carries a single title block, bottom left, framed in 1px ink on paper: the Top Draw Projects logo, a mono descriptor line, then the two buttons, each in its own cell divided by ink rules. The rest of the frame is the finished kitchen. The block wipes in from the left, then the logo, then the descriptor and buttons. The nav brand stays hidden until the hero has scrolled away, so the logo never appears twice on one screen.

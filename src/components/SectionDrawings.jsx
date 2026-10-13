@@ -12,7 +12,7 @@
 
 const INK = '#2B3642'
 const RULE = '#B7C6D6'
-const STEEL = '#4A7FB0'
+const STEEL = '#31378F' // the logo's blue (--color-steel)
 const W = 640
 const H = 440
 
