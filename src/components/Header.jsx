@@ -100,7 +100,7 @@ export default function Header() {
 
         <nav aria-label="Main" className="hidden lg:block">
           <ul className="flex items-center gap-7">
-            {nav.slice(0, 5).map((n) => (
+            {nav.filter((n) => n.id !== 'contact').map((n) => (
               <li key={n.id}>
                 <a
                   href={`#${n.id}`}

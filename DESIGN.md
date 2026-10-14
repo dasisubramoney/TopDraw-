@@ -110,6 +110,12 @@ Quiet, precise, purposeful. Motion explains structure; it never decorates.
 2. **Rules draw**: section header rule scales X from 0→1 from the left, 600 ms, once, when it enters. This is the only scroll-triggered reveal on text sections.
 3. **Services**: no motion. The photos and the sticky scroll reveal that used to be here were removed on 14 October 2026; it is now a plain list on hairlines (title left, description right from 1024 px, stacked below).
 4. **Process line**: single continuous SVG path scrubbed to scroll (GSAP ScrollTrigger, scrub 0.6). Stage nodes switch from rule to steel as the line passes them.
+3. **Services, sticky scroll reveal** (adapted from 21st.dev): on desktop (≥1024 px) the five services scroll past in the left column while one photo stays pinned in the right column. The service crossing the middle of the viewport is active: its title turns steel, the others drop to 35% opacity (300 ms), and the photo crossfades 180 ms (AnimatePresence). Tracked with an IntersectionObserver, no nested scroll box. Under 1024 px every service is a plain stack with its own photo. Reduced motion: no dimming and an instant photo swap. Inactive services at 35% opacity are below AA contrast while inactive, the same trade-off as the Trevor chapters.
+4. **A-02 Process, "Programme"** (revised 14 October 2026 from Trevor's workflow PDF, Rev 1): the eight stages drawn as a project programme. Stages 1 to 3 are steps before sign-off; from sign-off a working-day axis (0 to 30) carries manufacturing (10 to 20 days), site preparation (7 to 10 days, alongside manufacturing) and installation (5 to 10 days), with solid bars for the minimum and hatched ends for the range; scheduling is a dashed coordination span; handover is a step at day 30. A payments row places the 70%, 20% and 10% milestones at sign-off, delivery and handover.
+   - Desktop with motion: the stage pins for 400vh and a steel cursor is scrubbed across the chart (scrub 0.6), one equal slice of scroll per stage. Bars grow behind the cursor, steps and payment markers light as it passes, the active row stays ink and the rest dim, and the active stage's full text swaps in beside the chart (300 ms fade, 10 px rise).
+   - Under 1024px: no chart; the stages stack with a rail that fills on scroll and nodes that light as each stage arrives.
+   - Reduced motion or no JavaScript: chart fully drawn, every stage listed in two columns.
+   - Below, in every mode: the payment schedule (a 70 / 20 / 10 split bar that draws in once, then three cells) and the timeline notes as general notes. All copy is in `process` in `src/content.js`.
 5. **Gallery images**: clip-path inset reveal from the top edge, 700 ms, once. No parallax beyond 6% translate on the hero image only.
 6. **Press**: buttons `scale(0.98)` on active, 120 ms. No hover-scale on images or cards.
 
@@ -122,7 +128,7 @@ Quiet, precise, purposeful. Motion explains structure; it never decorates.
 
 **Banned**: fade-up on every element, blur transitions, magnetic buttons, cursor followers, marquee, pulsing dots, scroll-jacking, auto-playing carousels.
 
-**Reduced motion**: `prefers-reduced-motion: reduce` disables Lenis, all ScrollTrigger instances and clip reveals; the process line renders fully drawn; transitions become instant but every state change still happens.
+**Reduced motion**: `prefers-reduced-motion: reduce` disables Lenis, all ScrollTrigger instances and clip reveals; the process programme renders fully drawn; transitions become instant but every state change still happens.
 
 **Loading**: the page is prerendered to static HTML at build time (`scripts/prerender.mjs`) and hydrated. GSAP, ScrollTrigger and Lenis load as a separate chunk after hydration (`loadMotion()` in `src/lib/motion.js`), so the page is complete and readable before any motion code arrives. Framer Motion loads through `LazyMotion` with `domAnimation`.
 

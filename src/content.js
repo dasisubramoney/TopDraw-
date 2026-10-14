@@ -32,8 +32,7 @@ export const nav = [
   { id: 'process', code: 'A-02', label: 'Process' },
   { id: 'trevor', code: 'A-03', label: 'Trevor' },
   { id: 'work', code: 'A-04', label: 'Work' },
-  { id: 'trade', code: 'A-05', label: 'Trade' },
-  { id: 'contact', code: 'A-06', label: 'Contact' },
+  { id: 'contact', code: 'A-05', label: 'Contact' },
 ]
 
 // Images: `sizes` lists the widths actually exported to /public/images.
@@ -142,15 +141,98 @@ export const services = [
   },
 ]
 
+// From Trevor's "Topdraw Workflow Process, Rev 1" (October 2026), edited to the site's voice.
+// Facts, durations and percentages are his; nothing here is invented.
 export const process = {
-  intro: 'Five stages, one team. Nothing is handed over to someone who wasn’t there for the last stage.',
+  intro:
+    'Eight stages from your first enquiry to handover. Manufacturing and site preparation are planned to run side by side, to keep disruption and downtime to a minimum.',
   stages: [
-    { num: '01', title: 'Concept', text: 'We meet on site, measure up and talk through how you use the room. You get a straight answer on budget and timing.' },
-    { num: '02', title: 'Design', text: 'Layouts and shop drawings, with materials, finishes and hardware specified before anything is cut.' },
-    { num: '03', title: 'Manufacture', text: 'Built in our workshop to the drawing and to the measured site, not to a catalogue size.' },
-    { num: '04', title: 'Install', text: 'Fitted by the people who built it, with Trevor on site.' },
-    { num: '05', title: 'Completion', text: 'Final adjustments, a walk-through with you and a clean site at handover.' },
+    {
+      short: 'Enquiry',
+      title: 'Enquiry and consultation',
+      text: 'Send an enquiry through the form below. We’ll get back to you to arrange a consultation date that suits you.',
+    },
+    {
+      short: 'Visit and quote',
+      title: 'Site visit and quotation',
+      text: 'We visit your space to take measurements and talk through your needs, your preferences and how you use the room. Once the scope is clear, you get a quotation, a preliminary design concept and a proposed project timeline.',
+    },
+    {
+      short: 'Sign-off',
+      title: 'Approval, final measurements and sign-off',
+      text: 'Once you accept the quotation and pay the deposit, we come back to confirm final measurements and specifications, so every detail is finalised before materials are ordered and manufacturing starts.',
+      payment: 0,
+    },
+    {
+      short: 'Manufacturing',
+      title: 'Material sourcing and manufacturing',
+      duration: '10 to 20 working days',
+      text: 'After final sign-off, the materials are sourced and your cabinetry is scheduled for manufacture.',
+    },
+    {
+      short: 'Site preparation',
+      title: 'Site preparation and removal of the existing kitchen',
+      duration: '7 to 10 working days',
+      text: 'While your cabinetry is being made, the existing kitchen, cabinetry and fittings are removed where needed. The shell is then prepared for the new layout and footprint, which may include electrical and plumbing alterations, tiling, painting and other building work.',
+    },
+    {
+      short: 'Scheduling',
+      title: 'Installation scheduling and downtime',
+      text: 'Once the installation date is confirmed, site preparation is scheduled to line up with manufacturing and installation. The preparation, manufacturing and installation teams are coordinated to keep disruption and downtime to a minimum. Timing depends on the complexity of the project and the preparation needed.',
+    },
+    {
+      short: 'Installation',
+      title: 'Kitchen installation and finishing',
+      duration: '5 to 10 working days',
+      text: 'Once the site is ready, your new cabinetry and finishes go in. Installation typically covers:',
+      list: [
+        'Fitting and securing the cabinetry',
+        'Installing worktops',
+        'Sink, tap and appliance plumbing',
+        'Gas or electric cooking appliances, connected by suitably qualified professionals where applicable',
+        'LED lighting and electrical connections',
+        'Dishwashers and other integrated appliances',
+        'Final adjustments and finishing touches',
+      ],
+      payment: 1,
+    },
+    {
+      short: 'Handover',
+      title: 'Snagging and final handover',
+      text: 'We inspect the finished installation, attend to any snag-list items and make sure the agreed scope of work is complete. Then the project is handed over to you to enjoy.',
+      payment: 2,
+    },
   ],
+  notes: [
+    'Manufacturing: allow about 10 to 20 working days for material sourcing and manufacturing after final sign-off.',
+    'Site preparation: allow about 7 to 10 working days, depending on the work required. It runs alongside manufacturing wherever possible.',
+    'Installation: allow about 5 to 10 working days, depending on the size and complexity of the project.',
+    'These are estimated working days, not a guaranteed completion date. Some work runs at the same time, and the overall duration depends on material availability, the scope of work, site readiness and the coordination of trades.',
+  ],
+  payments: {
+    intro: 'Payments are tied to three milestones, in step with the progress of your kitchen or cabinetry.',
+    items: [
+      {
+        pct: 70,
+        title: 'Initial deposit',
+        when: 'On accepting the quotation',
+        text: 'Confirms the project, so final measurements, material procurement and manufacturing can go ahead.',
+      },
+      {
+        pct: 20,
+        title: 'Installation deposit',
+        when: 'On delivery to site',
+        text: 'Due on the day the cabinetry and materials are delivered, ready for installation. It marks the move from manufacturing to installation.',
+      },
+      {
+        pct: 10,
+        title: 'Final payment',
+        when: 'At handover',
+        text: 'The balance, due on commissioning and final handover once the agreed work is complete.',
+      },
+    ],
+    footnote: 'All payment milestones and amounts are set out in your approved quotation.',
+  },
 }
 
 // Based on Trevor's own overview (October 2026), edited to the site's voice.
@@ -187,18 +269,6 @@ export const work = [
   { key: 'W-05', type: 'Balustrading', image: 'balustrade', text: 'Loft balustrade under thatch', place: '[SUBURB]' },
   { key: 'W-06', type: 'Furniture', image: 'benchFrame', text: 'Steel frame, timber top', place: '[SUBURB]' },
 ]
-
-export const trade = {
-  title: 'For designers and architects',
-  intro: 'You’ve drawn it. We build it to your drawing, install it properly and leave your client with what you specified.',
-  points: [
-    { label: 'To spec', text: 'We work from your drawings, finishes schedule and hardware list. Substitutions are agreed with you, not made on site.' },
-    { label: 'Shop drawings', text: 'Shop drawings come back to you for sign-off before anything is manufactured.' },
-    { label: 'Site ready', text: 'We check the shell, levels and services before install, and flag problems early.' },
-    { label: 'On programme', text: 'One point of contact who works to your programme and alongside your contractors.' },
-  ],
-  cta: 'Send Trevor your drawings',
-}
 
 export const sectors = ['Residential', 'Commercial']
 

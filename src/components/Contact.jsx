@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState } from 'react'
+import { useId, useRef, useState } from 'react'
 import { AnimatePresence, m } from 'framer-motion'
 import { contact, projectTypes, sectors, whatsappHref } from '../content.js'
 import { useReducedMotion } from '../lib/motion.js'
@@ -45,7 +45,7 @@ const inputCls = (err) =>
     err ? 'border-b-2 border-paper' : 'border-rule'
   } focus:border-paper`
 
-export default function Contact({ presetType }) {
+export default function Contact() {
   const [values, setValues] = useState(empty)
   const [errors, setErrors] = useState({})
   const [touched, setTouched] = useState({})
@@ -54,9 +54,6 @@ export default function Contact({ presetType }) {
   const formRef = useRef(null)
   const summaryId = useId()
 
-  useEffect(() => {
-    if (presetType) setValues((v) => ({ ...v, projectType: presetType }))
-  }, [presetType])
 
   const set = (k) => (e) => {
     const next = { ...values, [k]: e.target.value }

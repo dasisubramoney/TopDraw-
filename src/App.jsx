@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { LazyMotion, domAnimation } from 'framer-motion'
 import { useReducedMotion, useSmoothScroll } from './lib/motion.js'
 import Header from './components/Header.jsx'
@@ -7,14 +6,12 @@ import Services from './components/Services.jsx'
 import Process from './components/Process.jsx'
 import Trevor from './components/Trevor.jsx'
 import Work from './components/Work.jsx'
-import Trade from './components/Trade.jsx'
 import Contact from './components/Contact.jsx'
 import Footer from './components/Footer.jsx'
 
 export default function App() {
   const reduced = useReducedMotion()
   useSmoothScroll(reduced)
-  const [presetType, setPresetType] = useState('')
 
   return (
     <LazyMotion features={domAnimation} strict>
@@ -28,8 +25,7 @@ export default function App() {
         <Process />
         <Trevor />
         <Work />
-        <Trade onTradeEnquiry={() => setPresetType('Trade project (to spec)')} />
-        <Contact presetType={presetType} />
+        <Contact />
       </main>
       <Footer />
     </LazyMotion>
