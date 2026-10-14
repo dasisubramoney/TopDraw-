@@ -217,6 +217,137 @@ html[data-intro="play"] .skip-intro { display: inline-flex; align-items: center;
   .trevor[data-mode="pinned"] .trevor-progress { background: var(--color-steel); transform: scaleY(0); transform-origin: top; }
 }
 
+/* A-02 Process: the programme chart. Static by default (fully drawn); on desktop the
+   motion code sets section[data-mode="live"], pins it and scrubs a cursor across it. */
+.programme { position: relative; --label: 10.5rem; }
+.pg-row {
+  display: grid;
+  grid-template-columns: var(--label) 1fr;
+  align-items: center;
+  min-height: 44px;
+  border-top: 1px solid var(--color-rule);
+}
+.pg-axis { border-top: 0; min-height: 52px; align-items: stretch; }
+.pg-payments { border-bottom: 1px solid var(--color-rule); }
+.pg-track { position: relative; align-self: stretch; min-height: 44px; }
+.pg-zone { position: absolute; top: 4px; white-space: nowrap; }
+.pg-tick { position: absolute; bottom: 6px; transform: translateX(-50%); }
+.pg-label { display: flex; align-items: center; gap: 10px; padding-right: 12px; transition: opacity 300ms var(--ease-out); }
+.pg-step {
+  position: absolute;
+  top: 50%;
+  width: 11px;
+  height: 11px;
+  transform: translate(-50%, -50%);
+  border: 1px solid var(--color-steel);
+  background: var(--color-steel);
+  transition: background-color 200ms var(--ease-out);
+}
+.pg-bar, .pg-span { position: absolute; top: 50%; height: 12px; transform: translateY(-50%); }
+.pg-bar-fill { display: flex; width: 100%; height: 100%; transform-origin: left; transform: scaleX(var(--f, 1)); }
+.pg-bar-min { background: var(--color-steel); }
+.pg-bar-range {
+  flex: 1;
+  border: 1px solid var(--color-steel);
+  border-left: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='6' height='6'%3E%3Cpath d='M-1 1l2-2M0 6l6-6M5 7l2-2' stroke='%2331378F' stroke-width='1'/%3E%3C/svg%3E");
+}
+.pg-bar-label { position: absolute; top: 50%; transform: translate(10px, -50%); white-space: nowrap; transition: opacity 200ms linear; }
+/* Near the right edge the label sits before the bar instead. */
+.pg-bar-label[data-side="before"] { transform: translate(calc(-100% - 10px), -50%); }
+.pg-span-line {
+  position: relative;
+  width: 100%;
+  border-left: 1px solid var(--color-steel);
+  border-right: 1px solid var(--color-steel);
+}
+.pg-span-line::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; border-top: 1px dashed var(--color-steel); }
+.pg-span-label { position: absolute; left: 6px; top: calc(100% + 3px); white-space: nowrap; }
+.pg-pay { position: absolute; top: 50%; display: flex; align-items: center; gap: 8px; transform: translate(-5px, -50%); transition: opacity 200ms linear; }
+.pg-pay-mark { display: inline-block; flex: none; width: 10px; height: 10px; background: var(--color-steel); transform: rotate(45deg); }
+.pg-overlay { position: absolute; top: 52px; bottom: 0; left: var(--label); right: 0; pointer-events: none; }
+.pg-signoff { position: absolute; top: 0; bottom: 0; border-left: 1px dashed var(--color-rule); }
+.pg-cursor { display: none; position: absolute; top: 0; bottom: 0; border-left: 1.5px solid var(--color-steel); }
+/* Markers and their labels sit above the cursor line, so it passes behind them. */
+.pg-track { z-index: 1; }
+.pg-overlay { z-index: 0; }
+.pg-step, .pg-pay, .pg-bar-label, .pg-span-label { z-index: 2; }
+.pg-pay-label, .pg-bar-label, .pg-span-label { background: var(--color-paper); padding-inline: 3px; }
+.pg-payment-note { display: flex; align-items: center; gap: 10px; }
+
+.process-list li { position: relative; padding-left: 18px; }
+.process-list li + li { margin-top: 4px; }
+.process-list li::before { content: ""; position: absolute; left: 2px; top: 0.65em; width: 5px; height: 5px; background: var(--color-steel); }
+
+/* Payment split: 70 / 20 / 10 */
+.pay-split { display: flex; gap: 2px; height: 44px; }
+.pay-seg { display: flex; align-items: center; min-width: 44px; padding-inline: 10px; transform-origin: left; background: var(--color-steel); color: var(--color-paper); }
+.pay-seg:nth-child(2) { background: var(--color-ink); }
+.pay-seg:nth-child(3) { background: var(--color-rule); color: var(--color-ink); }
+
+@media (max-width: 1023px) {
+  .process-chart { display: none; }
+  .process-steps-wrap { position: relative; padding-left: 30px; }
+  .process-rail { position: absolute; left: 5px; top: 8px; bottom: 0; width: 1px; background: var(--color-rule); }
+  .process-rail::after { content: ""; position: absolute; inset: 0; background: var(--color-steel); transform-origin: top; transform: scaleY(var(--rail, 1)); }
+  .process-step { position: relative; padding-bottom: 40px; }
+  .process-node {
+    position: absolute;
+    left: -30px;
+    top: 3px;
+    width: 11px;
+    height: 11px;
+    border: 1px solid var(--color-steel);
+    background: var(--color-steel);
+    transition: background-color 300ms var(--ease-out);
+  }
+  .process[data-mode="rail"] .process-node { background: var(--color-paper); }
+  .process[data-mode="rail"] .process-step[data-lit] .process-node { background: var(--color-steel); }
+}
+@media (min-width: 1024px) {
+  .process-rail, .process-node { display: none; }
+  /* Static desktop (reduced motion / no JavaScript): chart, then every stage in two columns. */
+  .process-steps { display: grid; grid-template-columns: 1fr 1fr; column-gap: calc(var(--gutter) * 2); margin-top: 48px; }
+  .process-step { border-top: 1px solid var(--color-rule); padding-block: 24px 32px; }
+
+  .process[data-mode="live"] .process-stage {
+    display: grid;
+    grid-template-columns: 65fr 35fr;
+    column-gap: calc(var(--gutter) * 2);
+    align-items: center;
+    height: calc(100svh - var(--header-h));
+    padding-block: 24px;
+  }
+  .process[data-mode="live"] .process-steps-wrap { position: relative; align-self: stretch; }
+  .process[data-mode="live"] .process-steps { display: block; position: absolute; inset: 0; margin: 0; }
+  .process[data-mode="live"] .process-step {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-top: 0;
+    padding: 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 300ms var(--ease-out), transform 400ms var(--ease-out), visibility 0s linear 300ms;
+  }
+  .process[data-mode="live"] .process-step[data-current] {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    transition: opacity 300ms var(--ease-out) 80ms, transform 400ms var(--ease-out) 80ms, visibility 0s;
+  }
+  .process[data-mode="live"] .pg-cursor { display: block; }
+  .process[data-mode="live"] .pg-label { opacity: 0.35; }
+  .process[data-mode="live"] [data-pg-row][data-current] .pg-label { opacity: 1; }
+  .process[data-mode="live"] .pg-step { background: var(--color-paper); }
+  .process[data-mode="live"] .pg-step[data-reached] { background: var(--color-steel); }
+  .process[data-mode="live"] .pg-bar-label:not([data-reached]),
+  .process[data-mode="live"] .pg-pay:not([data-reached]) { opacity: 0; }
+}
+
 /* Lenis */
 html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }

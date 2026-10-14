@@ -49,8 +49,9 @@ Never: em dashes, "elevate", "seamless", "unlock", "transform your space", "drea
 3. A-02 Process (Concept, Design, Manufacture, Install, Completion)
 4. A-03 Trevor: The Artisan
 5. A-04 Selected work
-6. A-05 For designers and architects
-7. A-06 Contact (dark)
+6. Contact (dark)
+
+> The "For designers and architects" section was removed on 14 October 2026. Designers and architects can still choose "Trade project (to spec)" as the project type in the consultation form.
 8. Footer
 
 ## Technical constraints

@@ -315,3 +315,21 @@ Still to supply or decide: Instagram and Facebook links, project suburbs, confir
 **Prepared for:** Dasendhran Subramoney
 
 Projects intro: PROJECTS is now black with "Top Draw" in blue above it, the "See the work" button is black, and the gallery sits on a solid black panel. Fixed a bump that happened as the gallery handed over to the next section (the grid now glides to its resting position in step with the scroll). Removed the small section labels ("A-0X / Name" and the right-hand notes) and every small index number on the site (service numbers, Stage 01 to 05, Trevor chapter numbers, W-01 to W-06, Fig. 02, menu codes, the footer sheet line). The Services heading is now "Areas of Expertise", centred between its two lines, and the Services photos and animation were removed in favour of a plain text list. Still to supply or decide: Instagram and Facebook links, project suburbs, confirmation that WhatsApp uses 082 332 1112, Trevor's reply on the Process wording and on the line under PROJECTS, the hero photo behind PROJECTS, and the logo typeface if one is chosen.
+### Update: Process redesign (14 October 2026)
+
+
+- The Process section now follows Trevor's "Topdraw Workflow Process, Rev 1": eight stages, from enquiry to snagging and handover, with his durations (manufacturing 10 to 20 working days, site preparation 7 to 10, installation 5 to 10) and his payment schedule (70% on accepting the quotation, 20% on delivery to site, 10% at handover). Wording lightly edited to the site's voice; no facts or numbers changed.
+- Drawn as a project programme: a bar chart against working days, showing that manufacturing and site preparation run side by side, with the payment milestones on the same chart. On desktop the chart pins and a cursor sweeps across it as you scroll, drawing each bar and opening each stage's detail beside it, the same scroll-driven style as the Trevor section. Phones get a stacked stage list with a progress rail; reduced motion shows the finished chart and every stage.
+- Below the programme: the payment schedule (a 70 / 20 / 10 split bar and three cells) and Trevor's timeline notes, including that the durations are estimates, not a guaranteed completion date.
+- Supersedes the earlier 30 / 50 / 20 payment draft mentioned in the 12 October entry.
+
+### Update: designers and architects section removed (14 October 2026)
+
+- Removed the "For designers and architects" section and its nav link. The consultation form keeps the "Trade project (to spec)" project type, so trade enquiries can still be flagged. The tall charcoal unit photo stays, as the Projects gallery uses it.
+- The new Process section follows the no-labels rule from Damian's 14 October changes: no section code or side note, no stage numbers in the chart or detail panel, and plain headings for "Payment schedule" and "Timeline notes".
+
+### Session summary (14 October 2026)
+
+**Prepared for:** Dasendhran Subramoney
+
+Rebuilt the Process section from Trevor's workflow PDF (Rev 1) as a project programme: eight stages, his working-day estimates, and the 70% / 20% / 10% payment schedule, with a scroll-driven cursor on desktop that rests at handover and fades out. Removed the "For designers and architects" section. Merged with Damian's 14 October changes (no section labels or index numbers, plain Services list, Projects colours and gallery fix) and adapted the new Process section to match. Still to supply: Instagram and Facebook links, project suburbs, confirmation that WhatsApp uses 082 332 1112, and Trevor's OK on the line under PROJECTS.
