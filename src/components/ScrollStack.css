@@ -1,0 +1,55 @@
+/* Written for this site from how ScrollStack.jsx uses each class (the original stylesheet was
+   not supplied). The JavaScript sets each slot's `top` and `margin-bottom` inline, the cards'
+   transform and the --scroll-stack-dim variable, and the inner padding and end spacer heights. */
+
+.scroll-stack {
+  position: relative;
+  width: 100%;
+}
+
+/* Page scroll: nothing may clip, or the sticky slots stop pinning. */
+.scroll-stack--window {
+  overflow: visible;
+}
+
+/* Own scroll box (not used on this site). */
+.scroll-stack--contained {
+  height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.scroll-stack__inner {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+/* Each card's slot pins at the `top` the component gives it. */
+.scroll-stack__slot {
+  position: sticky;
+  width: 100%;
+}
+
+.scroll-stack-card {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  transform-origin: top center;
+  will-change: transform;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+/* Darkens a card as others stack on top of it. */
+.scroll-stack-card__shade {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  opacity: var(--scroll-stack-dim, 0);
+  pointer-events: none;
+}
+
+.scroll-stack__end {
+  width: 100%;
+}
