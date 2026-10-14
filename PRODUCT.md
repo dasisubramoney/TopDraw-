@@ -47,7 +47,7 @@ Never: em dashes, "elevate", "seamless", "unlock", "transform your space", "drea
 1. Hero
 2. A-01 Services (indexed list 01–05)
 3. A-02 Process (Concept, Design, Manufacture, Install, Completion)
-4. A-03 Trevor: From steel to timber
+4. A-03 Trevor: The Artisan
 5. A-04 Selected work
 6. A-05 For designers and architects
 7. A-06 Contact (dark)

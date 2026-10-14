@@ -1,60 +1,123 @@
-import { contact, whatsappHref } from '../content.js'
+import { contact, nav, whatsappHref } from '../content.js'
 
 const isUrl = (s) => /^https?:\/\//.test(s)
 
-// Laid out like a drawing's title block.
+// Small line icons, drawn here so the footer needs no icon library.
+const icons = {
+  Instagram: (
+    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
+      <rect x="3.5" y="3.5" width="17" height="17" rx="4.5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17.2" cy="6.8" r="0.9" fill="currentColor" stroke="none" />
+    </svg>
+  ),
+  Facebook: (
+    <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true">
+      <path d="M14 21v-8h2.8l.5-3.2H14V7.9c0-.9.4-1.6 1.7-1.6h1.7V3.5c-.3 0-1.3-.2-2.5-.2-2.6 0-4.1 1.5-4.1 4.2v2.3H8v3.2h2.8v8z" />
+    </svg>
+  ),
+}
+
+// Footer: a pitch with the two ways to get in touch, the section links, contact details and
+// hours, and social links; then a closing line. Modelled on a common four-column footer,
+// adapted to the site (no newsletter, no dark-mode switch, no rounded corners).
 export default function Footer() {
   return (
     <footer className="on-dark bg-ink pb-[calc(32px+env(safe-area-inset-bottom,0px))] text-paper">
       <div className="wrap">
-        <div className="grid border-t border-rule sm:grid-cols-2 lg:grid-cols-4">
-          <div className="flex flex-col gap-2 border-b border-rule py-6 lg:border-b-0 lg:pr-6">
-            <p className="font-display text-[1.5rem] leading-none">Top Draw</p>
-            <p className="text-[0.9375rem] text-rule">Bespoke cabinetry, furniture and interiors. Johannesburg.</p>
+        <div className="grid gap-12 border-t border-rule pt-12 sm:grid-cols-2 lg:grid-cols-12 lg:gap-x-[var(--gutter)] lg:pt-16">
+          <div className="sm:col-span-2 lg:col-span-5">
+            <p className="font-display text-display-m">Let’s talk about your project.</p>
+            <p className="mt-4 max-w-[40ch] text-[0.9375rem] text-rule">
+              Bespoke cabinetry, furniture and interiors in Johannesburg. Call, message or book a site visit.
+            </p>
+            <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+              <a href="#contact" className="btn btn-primary">
+                Book a site consultation
+              </a>
+              <a href={whatsappHref()} target="_blank" rel="noopener" className="btn btn-secondary">
+                WhatsApp Trevor <span className="anno" aria-hidden="true">↗</span>
+                <span className="sr-only">(opens WhatsApp)</span>
+              </a>
+            </div>
           </div>
-          <div className="flex flex-col gap-2 border-b border-rule py-6 sm:border-l sm:pl-6 lg:border-b-0">
-            <p className="anno text-rule">Contact</p>
-            {/* Label above each value so long addresses still fit the narrow footer columns. */}
-            <dl className="mt-2 flex flex-col gap-3">
-              <div>
-                <dt className="anno text-rule">Phone</dt>
-                <dd>{contact.phoneHref ? <a className="link-underline inline-flex min-h-11 items-center" href={contact.phoneHref}>{contact.phoneDisplay}</a> : contact.phoneDisplay}</dd>
-              </div>
-              <div>
-                <dt className="anno text-rule">Email</dt>
-                <dd>{contact.email.includes('@') ? <a className="link-underline inline-flex min-h-11 items-center break-all" href={`mailto:${contact.email}`}>{contact.email}</a> : contact.email}</dd>
-              </div>
-              <div>
-                <dt className="anno text-rule">WhatsApp</dt>
-                <dd>
-                  <a className="link-underline inline-flex min-h-11 items-center" href={whatsappHref()} target="_blank" rel="noopener">
-                    Message Trevor<span className="sr-only"> on WhatsApp (opens WhatsApp)</span>
+
+          <nav aria-label="Footer" className="lg:col-span-2">
+            <p className="anno text-rule">Quick links</p>
+            <ul className="mt-3 flex flex-col">
+              {nav.map((n) => (
+                <li key={n.id}>
+                  <a className="link-underline inline-flex min-h-11 items-center" href={`#${n.id}`}>
+                    {n.label}
                   </a>
-                </dd>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <div className="lg:col-span-3">
+            <p className="anno text-rule">Contact us</p>
+            <address className="mt-3 flex flex-col gap-3 not-italic">
+              <div>
+                <p className="anno text-rule">Phone</p>
+                {contact.phoneHref ? (
+                  <a className="link-underline inline-flex min-h-11 items-center" href={contact.phoneHref}>
+                    {contact.phoneDisplay}
+                  </a>
+                ) : (
+                  <p>{contact.phoneDisplay}</p>
+                )}
               </div>
-            </dl>
+              <div>
+                <p className="anno text-rule">Email</p>
+                {contact.email.includes('@') ? (
+                  <a className="link-underline inline-flex min-h-11 items-center break-all" href={`mailto:${contact.email}`}>
+                    {contact.email}
+                  </a>
+                ) : (
+                  <p>{contact.email}</p>
+                )}
+              </div>
+              <div>
+                <p className="anno text-rule">Area</p>
+                <p>{contact.area}</p>
+                <p className="text-rule">Site visit {contact.siteVisit}</p>
+              </div>
+            </address>
           </div>
-          <div className="flex flex-col gap-2 border-b border-rule py-6 sm:border-b-0 lg:border-l lg:pl-6">
+
+          <div className="lg:col-span-2">
             <p className="anno text-rule">Hours</p>
-            <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-1">
+            <dl className="mt-3 flex flex-col gap-3">
               {contact.hours.map((h) => (
-                <div key={h.days} className="contents">
-                  <dt>{h.days}</dt>
+                <div key={h.days}>
+                  <dt className="anno text-rule">{h.days}</dt>
                   <dd>{h.time}</dd>
                 </div>
               ))}
             </dl>
-          </div>
-          <div className="flex flex-col gap-2 py-6 sm:border-l sm:pl-6">
-            <p className="anno text-rule">Follow</p>
-            <ul className="flex flex-col">
+
+            <p className="anno mt-8 text-rule">Follow us</p>
+            <ul className="mt-3 flex gap-3">
               {contact.social.map((s) => (
                 <li key={s.label}>
                   {isUrl(s.href) ? (
-                    <a className="link-underline inline-flex min-h-11 items-center" href={s.href} target="_blank" rel="noopener">{s.label}</a>
+                    <a
+                      href={s.href}
+                      target="_blank"
+                      rel="noopener"
+                      className="inline-flex h-11 w-11 items-center justify-center border border-rule transition-colors duration-200 hover:bg-paper hover:text-ink"
+                    >
+                      {icons[s.label]}
+                      <span className="sr-only">{s.label} (opens in a new tab)</span>
+                    </a>
                   ) : (
-                    <span>
-                      {s.label} <span className="anno text-rule">{s.href}</span>
+                    // Placeholder until the real address is supplied (see content.js).
+                    <span className="inline-flex h-11 w-11 items-center justify-center border border-dashed border-rule text-rule" title={`${s.label} ${s.href}`}>
+                      {icons[s.label]}
+                      <span className="sr-only">
+                        {s.label} {s.href}
+                      </span>
                     </span>
                   )}
                 </li>
@@ -62,8 +125,12 @@ export default function Footer() {
             </ul>
           </div>
         </div>
-        <div className="anno flex flex-col gap-2 border-t border-rule pt-5 text-rule sm:flex-row sm:justify-between">
+
+        <div className="anno mt-12 flex flex-col gap-3 border-t border-rule pt-6 text-rule sm:flex-row sm:items-center sm:justify-between lg:mt-16">
           <span>© {new Date().getFullYear()} Top Draw. All work shown designed, built and installed by Top Draw.</span>
+          <a href="#top" className="link-underline inline-flex min-h-11 items-center">
+            Back to top ↑
+          </a>
         </div>
       </div>
     </footer>

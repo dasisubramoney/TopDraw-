@@ -155,7 +155,7 @@ export const process = {
 
 // Based on Trevor's own overview (October 2026), edited to the site's voice.
 export const trevor = {
-  title: 'From steel to timber',
+  title: 'The Artisan',
   intro: 'Trevor didn’t start in a joinery shop. He started as a boilermaker.',
   chapters: [
     {

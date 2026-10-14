@@ -55,7 +55,7 @@ and stored in `public/images`. To add a project, export the same two widths and 
 - Trimmed letterboxing and phone watermarks, exported responsive WebP at 800 and 1600 px, and made a 1200×630 Open Graph image.
 
 **Build** (Vite, React 18, Tailwind CSS 4, GSAP ScrollTrigger, Lenis, Framer Motion)
-- Single page with anchored navigation: hero, Services (01 to 05), Process, Trevor ("From steel to timber"), Selected work, For designers and architects, Contact, and a title-block footer.
+- Single page with anchored navigation: hero, Services (01 to 05), Process, Trevor ("The Artisan"), Selected work, For designers and architects, Contact, and a title-block footer.
 - Hero meets the above-the-fold contract (what, who, why, both CTAs) at 375×667, 375×812, 768×1024 and 1440×900.
 - Drawing-sheet system: hairline rules instead of cards, sheet numbers (A-01 to A-07), dimension lines and leader notes on photographs, blueprint grid on the Process section only.
 - Services: a sticky scroll reveal on desktop (photo pinned beside the services in view) and a stacked list with a photo per service on small screens.
@@ -266,6 +266,33 @@ Folded the Trevor closing statement into the drawing sequence as chapter 04 "Tod
 
 - Removed the photos from the Services section (the pinned photo on desktop and the photo under each service on phones, including their "[SUBURB]" captions). Without photos the sticky scroll reveal had nothing to pin, so the section is now a plain text list on hairlines: each service's title on the left and its description on the right from 1024 px wide (stacked on smaller screens). It no longer has any animation, and the earlier "Services sticky scroll reveal" entry above describes the version it replaced.
 - The photo and caption fields for each service are still in `src/content.js` but are no longer used.
+
+### Update: Services Scroll Stack (14 October 2026)
+
+- Services are now a Scroll Stack (from React Bits): five cards in the logo colours (black, blue, beige, black, blue) that pin under the header one after another as you scroll, the next sliding over the last. It scrolls with the page, not inside a box, and the site's existing smooth scroll does the smoothing (the component's own wheel handling and snapping are switched off so the two do not fight). Heading "Areas of Expertise" unchanged. Branch: `feature/services-scroll-stack`.
+- Only the JavaScript was supplied, so `src/components/ScrollStack.css` was written for this site from how the component uses each class (sticky slots, card, dim overlay). If it should match the React Bits demo exactly, replace it with the original stylesheet. React Bits has its own licence terms; check them before reusing the component outside this site.
+- Fallbacks: the plain two-column list (title left, description right) stays for the prerendered HTML, no JavaScript, reduced motion and until the stack loads (a separate 2.4 KB gzipped chunk). Checked at 1440 and 390 px: cards pin at the right offsets, stack and scroll away, no console errors.
+- Replaces the plain text list from the entry above.
+
+### Update: Services heading stays in frame (14 October 2026)
+
+- The "Areas of Expertise" heading now stays pinned under the site header while the cards stack beneath it (on an opaque beige background so cards slide up behind it, not through it), and scrolls away with the section once the stack is done. Measured at 1440 and 390 px: the heading stays at the same position through the whole stack. The cards now pin directly below the heading (measured, so it follows the window size). Without the stack (reduced motion, no JavaScript) the heading is not pinned.
+
+### Update: Trevor heading (14 October 2026)
+
+- The Trevor section heading "From steel to timber" is now "The Artisan" (the "Trevor" nav link is unchanged), and it sits a little lower under its rule (20 px on phones, 32 px on desktop). The sentence below it ("Trevor didn't start in a joinery shop...") and the chapters are unchanged.
+
+### Fix: nav links played every animation on the way (14 October 2026)
+
+- Clicking a nav link (or the hero and Trade enquiry buttons) glided the page down over about a second, scrolling through every section in between, so each pinned or scroll-driven animation (Trevor drawing, Projects zoom, gallery) played in fast-forward before you arrived. Measured: about 60 scroll frames per click; now 1.
+- All in-page links now jump straight to the section. Because the Projects portal loads when it is near the screen and makes its section several screens taller, a jump to Trade first landed in the gallery; jumps now re-check their landing spot for 2.5 s and correct it, and any scroll, touch or key press stops the correcting. Checked: Process, Trevor, Work, Trade and the hero button all land with the section top exactly under the header, no console errors.
+- Unchanged on purpose: the "See the work" button still glides (that glide is the zoom into the gallery). Lenis's built-in anchor handling was replaced by this in `src/lib/motion.js`.
+
+### Update: footer rebuilt (14 October 2026)
+
+- Rebuilt the footer from a React component pattern (shadcn-based) the client supplied, adapted to this site rather than pasted: no shadcn, Radix or Lucide (none are installed; icons are small inline drawings), no new packages.
+- Layout: a pitch ("Let's talk about your project." with "Book a site consultation" and "WhatsApp Trevor"), quick links to every section, contact details (phone, email, area, site visit R795), hours, Instagram and Facebook icons, then the copyright line with "Back to top". Stacks to one column on phones; no horizontal overflow at 1440, 1024 or 390 px.
+- Left out on purpose, because there is nothing real behind them: the newsletter sign-up (no mailing list or backend), the dark-mode switch, Twitter and LinkedIn icons, and the Privacy, Terms and Cookie links (no such pages exist; tell me if they are needed and what they should say). The social icons are dashed placeholders until the real Instagram and Facebook links go into `contact.social` in `src/content.js`.
 
 ### Session summary: branch `feature/work-glyph-portal` (13 October 2026)
 
