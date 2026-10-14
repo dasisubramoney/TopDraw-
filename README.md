@@ -300,3 +300,9 @@ Projects intro: PROJECTS is now black with "Top Draw" in blue above it, the "See
 
 - Removed the "For designers and architects" section and its nav link. The consultation form keeps the "Trade project (to spec)" project type, so trade enquiries can still be flagged. The tall charcoal unit photo stays, as the Projects gallery uses it.
 - The new Process section follows the no-labels rule from Damian's 14 October changes: no section code or side note, no stage numbers in the chart or detail panel, and plain headings for "Payment schedule" and "Timeline notes".
+
+### Session summary (14 October 2026)
+
+**Prepared for:** Dasendhran Subramoney
+
+Rebuilt the Process section from Trevor's workflow PDF (Rev 1) as a project programme: eight stages, his working-day estimates, and the 70% / 20% / 10% payment schedule, with a scroll-driven cursor on desktop that rests at handover and fades out. Removed the "For designers and architects" section. Merged with Damian's 14 October changes (no section labels or index numbers, plain Services list, Projects colours and gallery fix) and adapted the new Process section to match. Still to supply: Instagram and Facebook links, project suburbs, confirmation that WhatsApp uses 082 332 1112, and Trevor's OK on the line under PROJECTS.
