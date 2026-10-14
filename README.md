@@ -1,2 +1,252 @@
-# TopDraw-
-TopDraw 
+# Top Draw
+
+Marketing site for Top Draw, bespoke cabinetry and interiors in Johannesburg.
+Vite + React 18, Tailwind CSS 4, GSAP ScrollTrigger, Lenis, Framer Motion (AnimatePresence, plus drag in the Projects gallery).
+
+- `PRODUCT.md`: brief, audiences, voice, content rules
+- `DESIGN.md`: the "Shop Drawing" system: tokens, type, grid, motion
+
+## Run
+
+```bash
+npm install          # add --legacy-peer-deps if peer conflicts appear
+npm run dev          # http://localhost:5173
+npm run build        # client build, SSR build, then prerenders dist/index.html
+npm run preview
+```
+
+## Deploy (Netlify)
+
+`netlify.toml` sets the build command and publish folder (`dist`). The consultation form uses
+Netlify Forms (the hidden `consultation` form in `index.html` lets Netlify detect it at build time).
+Turn on form notifications in the Netlify dashboard so submissions reach Trevor by email.
+
+Set `VITE_SITE_URL` in `.env` (or Netlify environment variables) to the live domain before launch.
+It feeds the canonical URL, Open Graph tags and LocalBusiness schema.
+
+## Content still needed before launch
+
+All copy and contact details are in `src/content.js`. Search the project for `[` to find placeholders.
+
+- `[INSTAGRAM URL]`, `[FACEBOOK URL]`
+- `[SUBURB]` for each project caption
+- Confirm the WhatsApp number: it is set to the same number as the phone (082 332 1112)
+
+## Images
+
+Project photos come from Trevor's shared album. They are resized to WebP at 800 and 1600 px wide
+and stored in `public/images`. To add a project, export the same two widths and add an entry to
+`img` in `src/content.js`.
+
+## Project log
+
+**Prepared for:** Dasendhran Subramoney
+**Date:** 6 October 2026
+
+### Summary of work
+
+**Planning**
+- Wrote `PRODUCT.md` (brief, audiences, voice, content rules, above-the-fold contract) and `DESIGN.md` (the "Shop Drawing" system: palette, type, spacing, grid, components, motion rules, anti-slop checklist).
+- Published a visual direction board for approval. Type Option A (Newsreader, Schibsted Grotesk, IBM Plex Mono) was chosen.
+- Checked the palette's contrast. Ink text on the steel blue fails at 2.90:1, so buttons use white text at 19px bold (4.24:1, which passes as large text).
+
+**Photography**
+- Reviewed all 87 photos in Trevor's shared album and selected the 13 strongest.
+- Trimmed letterboxing and phone watermarks, exported responsive WebP at 800 and 1600 px, and made a 1200×630 Open Graph image.
+
+**Build** (Vite, React 18, Tailwind CSS 4, GSAP ScrollTrigger, Lenis, Framer Motion)
+- Single page with anchored navigation: hero, Services (01 to 05), Process, Trevor ("From steel to timber"), Selected work, For designers and architects, Contact, and a title-block footer.
+- Hero meets the above-the-fold contract (what, who, why, both CTAs) at 375×667, 375×812, 768×1024 and 1440×900.
+- Drawing-sheet system: hairline rules instead of cards, sheet numbers (A-01 to A-07), dimension lines and leader notes on photographs, blueprint grid on the Process section only.
+- Services: a sticky scroll reveal on desktop (photo pinned beside the services in view) and a stacked list with a photo per service on small screens.
+- Process line scrubs with scroll; gallery images reveal with a clip wipe; motion limited to the inventory in `DESIGN.md`.
+- Consultation form with South African phone validation, inline errors, focus management, success and failure states, and Netlify Forms with a honeypot.
+- LocalBusiness schema, meta and Open Graph tags, skip link, visible focus states, reduced-motion support (Lenis and scroll animations off).
+
+**Review and fixes**
+- Screenshots at 375, 768 and 1440 px; fixed the mobile fold, an off-image annotation, a gallery image that failed to reveal, and caption wrapping.
+- Functional test suite (30 checks): navigation, mobile menu, form validation, WhatsApp links, keyboard and touch on the services list, reduced motion. All pass.
+- Fixed a hover bug where a resting mouse cursor reopened the wrong service row after a tap.
+- `impeccable detect`: 27 findings reduced to zero (uppercase captions, button contrast, 11px text, tight heading leading, button padding, heading rhythm).
+- Design critique and technical audit: rewrote generic headings, deferred mobile service images until opened, enlarged footer tap targets, added a site-visit row and an email line for drawings, replaced a hard-coded colour with a token.
+- Performance: prerendered HTML at build time, loaded GSAP and Lenis after hydration, used LazyMotion for Framer Motion, and subset the fonts from 356 KB to 112 KB. Lighthouse mobile performance went from 60 to 86–93; desktop 100; accessibility 100; SEO 100.
+
+**Not done**
+- No Figma reference was supplied, so no comparison was made.
+- The impeccable and motion skills were not installed in the editor, so their critique, audit and polish steps were followed by hand.
+- The site is not yet deployed. See "Content still needed before launch" above.
+
+### Update: hero intro video (6 October 2026)
+
+**Prepared for:** Dasendhran Subramoney
+
+- Replaced the hero photograph with a full-viewport intro video (`public/video`): desktop WebM/MP4, square MP4 under 768 px. No poster or still images. The hero ground is #E9EEF3 so there is no black flash.
+- The video plays on every page load (changed later the same day from once per session), then holds on its last frame (the empty room). A 1.2 s GSAP reveal follows: white overlay at 55%, headline revealed line by line, then the supporting line and both CTAs.
+- "Skip intro", scroll, touch and nav clicks skip to the last frame. Scroll is locked during the intro.
+- Fallbacks: reduced motion skips playback; autoplay blocked, video errors or nothing played after 2.5 s jump to the end; if the video can't load the copy still shows. A parse-time fallback shows the copy on slow connections without waiting for JavaScript.
+- Renamed `public/Video` to `public/video` (Netlify paths are case-sensitive).
+- Header is transparent over the top of the hero; its CTA appears after the intro. Fixed header wrapping at 1024 px.
+- Tests: 20 intro checks (normal play, skip, wheel and touch skip, replay on refresh, reduced motion, autoplay blocked on mobile emulation, slow 3G, video failing to load) and the 30 existing site checks all pass.
+- Lighthouse reports 99 mobile / 100 desktop, but it stops measuring before the reveal. Real first-visit LCP is likely to be the headline at about 7 s.
+
+### Update: hero measurement lines removed (12 October 2026)
+
+**Prepared for:** Dasendhran Subramoney
+
+- Removed the dimension lines drawn onto the empty room at the end of the intro. The reveal is now: white overlay, headline line by line, supporting line, then both CTAs.
+
+### Update: no portrait of Trevor (12 October 2026)
+
+- Trevor doesn't want his photo on the site. Removed the portrait placeholder from the Trevor section; the steel-frame bench photo now sits beside his story instead. Figures renumbered (Fig. 01 Trevor section, Fig. 02 trade section).
+
+### Fix: intro plays on every refresh (12 October 2026)
+
+- After a nav click the address ended in `#section`, and refreshing that address skipped the intro. Every load now clears the `#section` and plays the intro from the top. Reduced motion is the only exception.
+
+### Redesign: A-03 Trevor "Section drawing" (12 October 2026)
+
+**Prepared for:** Dasendhran Subramoney
+
+- Trevor's career is now told through one technical cross-section that changes on scroll: stainless steel box section (45° hatch, weld beads), balustrade (handrail on post, base plate, fixings), timber door edge (rebate, edge banding, hinge cup, grain with a knot). Chapter copy unchanged.
+- Desktop pins the section for 250vh with a scrubbed GSAP timeline; under 1024px each drawing draws in once; reduced motion and no-JS show all finished drawings.
+- New full-width closing statement, "The material changed. The standard didn’t.", revealed word by word.
+- The steel-frame bench photo moved to Selected work as W-06 Furniture, "Steel frame, timber top".
+- Inactive chapters sit at 35% opacity as specified, which is about 2:1 contrast while inactive (below WCAG AA). Reduced-motion and mobile users always see full contrast.
+
+### Update: Trevor's bio (12 October 2026)
+
+- Rewrote the Trevor section from the overview Trevor supplied: the three chapters (stainless steel, balustrading, timber), plus two closing paragraphs on what he does today and how he works. Edited to the site's voice; two earlier lines that were not from Trevor were removed.
+
+### Update: contact details (12 October 2026)
+
+- Phone 082 332 1112, email topdraw19@gmail.com, service area Greater Johannesburg and site visit R795 added to the contact section, footer, trade section, structured data and no-JavaScript fallback. WhatsApp links use the same number.
+- Consultation form: "Phone" relabelled "Contact number"; new required "Industry sector" choice (Residential or Commercial), also added to the Netlify form definition.
+
+### Update: footer contact labels (12 October 2026)
+
+- Footer contact details now carry small labels (Phone, Email, WhatsApp) above each value; the WhatsApp link reads "Message Trevor".
+
+### Update: hours (12 October 2026)
+
+- Footer and structured data: Monday to Friday 08:00 to 17:00, closed on weekends.
+
+### Fix: hero headline overlapping the nav on short windows (12 October 2026)
+
+- On wide but short desktop windows (for example 1833 x 900) the five-line headline grew taller than the hero and pushed the "Interiors / Johannesburg" label up under the logo and nav. On large screens the headline size is now also capped by window height (6.2% of the height, never below 34 px or above the existing size), so it only shrinks when the window is short. Tall screens, tablets and phones are unchanged.
+- Checked at 1366 x 650 and 1833 x 900: the copy now clears the header with room to spare.
+
+### Pending: Process section content (12 October 2026)
+
+- A five-stage process (Enquire, Site visit and quote, Agree and refine, Manufacture, Install and handover) with the R795 consultation fee, the 30% / 50% / 20% payment schedule, 7-10 working days to source materials and a 4-6 week project timeline has been drafted and sent to Trevor to confirm as a PDF. It is not on the site yet; the current Process copy in `src/content.js` stays until he replies.
+
+### Update: brand colours from the logo (13 October 2026)
+
+**Prepared for:** Dasendhran Subramoney
+
+- Re-themed the site from the old cool blue-grey to the Top Draw logo colours, measured from the logo file: blue #31378F, black #222222, beige #B2A696. Done on the `feature/brand-colours` branch.
+- Token changes in `src/index.css` (names unchanged): `steel` #4A7FB0 to #31378F (CTAs, active states, focus, process nodes); `ink` #2B3642 to #222222 (text, dark contact/footer); `mist` #E9EEF3 to #F5F2ED (alternating sections); `rule` #B7C6D6 to #D2C9BC (hairlines, secondary text on dark). New `beige` #B2A696, used only for the primary button border on the dark section.
+- Blue on near-black is only 1.57:1, so on the dark contact section the primary button is white with dark text (resolved when this branch was merged with the logo-hero work, which made the same call; the beige-border idea was dropped). The beige token is reserved for dark-section accents and currently unused.
+- Also updated the hard-coded colours in `SectionDrawings.jsx`, the Process blueprint grid (an encoded colour inside `index.css`) and `public/favicon.svg`. `DESIGN.md` has the new palette and a re-measured contrast table. Text contrast is better everywhere (ink on paper 15.91:1; white on blue 9.67:1, so the old 19px-bold rule for button text no longer limits it).
+- Colour only: no layout, copy, type or motion changes. The logo artwork and the "Top Draw" wordmark in the header are unchanged. The hero video, photographs and the `og.jpg` social image are not recoloured.
+
+### Update: Services sticky scroll reveal (13 October 2026)
+
+- Replaced the Services accordion with a sticky scroll reveal adapted from a 21st.dev component. On desktop the five services scroll past on the left while one photo stays pinned on the right and swaps to match the service in view; the others dim to 35% and the active title turns blue. Under 1024 px each service is a plain stack with its own photo.
+- Adapted rather than pasted: the original scrolls inside its own 30rem box and is TypeScript, shadcn and Tailwind-colour based. This version scrolls with the page, is plain JSX, and uses the site palette and existing photos; no new dependency (it uses `framer-motion`, already installed). Active service is tracked with an IntersectionObserver.
+- Reduced motion and no-JavaScript show every service at full contrast. Inactive services at 35% are below AA contrast while inactive (same trade-off as the Trevor chapters).
+- The accordion's arrow-key navigation and hover-to-open are gone with it: the list is now plain content. Checked at 1440 and 390 px wide; the active service and photo stay in step as you scroll.
+
+### Update: Work section portal intro (13 October 2026)
+
+- Added a scroll-driven intro to Selected work, adapted from the MIT-licensed Glyph Portal (21st.dev, Christian Katzmann; licence notice kept at the top of `src/components/GlyphPortal.jsx`). The word PROJECTS (with "Top Draw" above it, like the logo) is set huge in blue, with a project photo showing through the letters; scrolling zooms into a letter until the blue fills the screen, then the six projects scroll over it. Pinned for 1.5 screens. Branch: `feature/work-glyph-portal`.
+- Ported to JavaScript for this project (the original is TypeScript): the `inert` attribute is set the React 18 way, the root is a plain div, the default green background and no-JS poster are removed. No new packages; font is the existing self-hosted Schibsted Grotesk at weight 800; colours are the existing palette tokens (blue, black, white); the photo is one of the existing project photos.
+- Loads on demand: the portal is a separate 5.5 KB (gzip) chunk that only loads when the section is within a screen of the viewport and the font has loaded (1.5 s limit). Until then, with reduced motion, or without JavaScript, the section is the same plain project list as before, and that list is what the prerendered HTML contains. Checked: raw HTML contains the heading, captions and images; no external hosts are requested; desktop and 390 px behave; reduced motion stays static.
+- Lighthouse mobile, before and after this change: performance 98 to 99, LCP 2.3 s to 1.8 s, TBT 40 ms to 0 ms (within normal run-to-run noise). Lighthouse does not scroll, so it does not exercise the portal itself.
+- **TODO:** swap Schibsted Grotesk for the typeface in the final logo once chosen; replace the kitchen photo behind the letters with the chosen hero project photo; confirm the line "Measured on site. Built in our workshop. Professionally installed." with Trevor; project suburbs are still [SUBURB].
+
+### Update: infinite drag gallery after the Projects zoom (13 October 2026)
+
+- After the zoom into PROJECTS, the first thing you land on is now an infinite drag gallery of all twelve project photos on the blue; (that captioned list has since been removed from the zoomed view, see the next entry). Adapted from the 21st.dev `infinite-drag-scroll` component (masonry variant): `src/components/InfiniteGallery.jsx`. No new packages.
+- Behaviour: scrolling the page moves the grid while the gallery is pinned (about 1.2 screens), and on a mouse you can also drag it in any direction with momentum; the photos repeat forever. On touch, dragging is sideways only so a vertical swipe still scrolls the page. The photos scale in with a short stagger the first time it comes on screen.
+- Adapted rather than pasted: the original turns every mouse wheel tick anywhere on the page into grid movement (a scroll trap on a normal page), uses `motion/react`, `class-variance-authority` and Tailwind colour classes, and is TypeScript. This version uses `framer-motion` (already installed), plain classes, the site's own photos, and sizes tiles in vw so the wrap never shows a gap.
+- Loading: drag support (`domMax`) is in the gallery's own lazy chunk (about 15 KB gzipped) and only downloads with the portal. The main bundle grew by about 1.7 KB gzipped for this whole branch. Raw HTML, reduced motion and no-JavaScript are unchanged: the plain captioned list, no gallery.
+- Checked in dev and the production build at 1440 and 390 px: no blank space while scrolling or dragging, drag and scroll both move the grid, no console errors, only local requests. The gallery is aria-hidden (decorative, repeats photos shown elsewhere).
+
+### Update: old project list removed from the Projects zoom (13 October 2026)
+
+- After the zoom into PROJECTS you now land in the infinite drag gallery and nothing else: the captioned project list (the six large photos with captions under the "A-04 / Selected work, Built and installed" heading) is gone from that view, and the Trade section follows the gallery directly.
+- The plain list is kept for visitors without JavaScript, with reduced motion, or before the portal loads, so the prerendered HTML still has the Selected work heading, captions and photos. Inside the portal, a screen-reader-only heading and caption list (no images) keeps the section labelled and readable for assistive tech.
+
+### Fix: gallery first view and photo pop (13 October 2026)
+
+- First view after the zoom: the grid was already moving while the gallery was still sliding up into view, so it landed on a random position with photos cut off. It now only moves with the page once it is pinned, and it starts below the header, so the opening view is a clean grid. The staggered rows are also less offset on desktop so more of each photo shows.
+- Photos now stand out: each sits on a flat blue backdrop (the white frames were later replaced by a soft shadow), instead of sitting on the faint kitchen photo.
+- The entrance animation previously played before the gallery had faded in, so it was finished before anyone saw it. It now starts once the zoom completes (the photos scale and fade in with a short stagger) and replays if you scroll back out and in again.
+
+### Update: gallery shadows and clean exit (13 October 2026)
+
+- Replaced the white frames around the gallery photos with a soft black drop shadow, so they lift off the blue. This is the one shadow on the site (the design notes otherwise rule them out); noted as an exception in `DESIGN.md`.
+- Clean first and last view: an infinite grid always has photos running off some edge, which looked like a mistake when the gallery opened and when it handed over to the next section (the bottom edge of the panel sliced the photos). At both moments the grid now eases into an aligned resting position where every photo on screen is whole, with blue margin above and below. Photos are sized from the screen height as well as its width, and the row gap grows to match, so this works on any window (checked at 1900x832, 1852x703, 1440x900, 1920x1080, 390x844 and 375x667: no cut photos at the first or last view). The panel then scrolls away with blue along its bottom edge. Earlier attempts (a fade-out, and the next section sliding over it like a curtain) were dropped.
+
+### Session summary (12 October 2026)
+
+**Prepared for:** Dasendhran Subramoney
+
+Removed the hero measurement lines; fixed the hero headline overlapping the nav on short windows; drafted the new Process copy for Trevor to confirm (not live yet); made the intro play on every refresh; removed the portrait of Trevor at his request; rebuilt the Trevor section as a scroll-driven technical "section drawing" (steel, balustrading, timber); rewrote his bio from his own overview; moved the steel-frame bench photo to Selected work; added his real phone, email, service area, site visit fee and hours; added an Industry sector choice (Residential or Commercial) to the consultation form; labelled the footer contact details. Still to supply: Instagram and Facebook links, project suburbs, and confirmation that WhatsApp uses 082 332 1112.
+
+### Update: Trevor section ending (13 October 2026)
+
+**Prepared for:** Dasendhran Subramoney
+
+- The closing statement no longer sits as a separate block after the animation. It is now the drawing's title block, revealed as the last step of the same scroll sequence, alongside a new chapter 04 "Today" (from Trevor's bio).
+- While pinned on desktop, inactive chapters fold to their number and label and the active chapter opens, so all four fit on a laptop screen. Mobile and reduced-motion layouts show every chapter in full, with the title block in chapter 04's drawing slot.
+
+### Update: intro captions (13 October 2026)
+
+**Prepared for:** Dasendhran Subramoney
+
+- Two captions now run over the intro video, timed to what is on screen: "Bespoke design: We design, build and install bespoke kitchens, bathrooms and interiors." while the finished kitchen is showing, and "White boxing: We also do white boxing, taking a bare room to a finished shell ready for fit-out." once the room is empty.
+- The video pauses for 1.5 s on the finished kitchen so the first caption can be read, and holds on the empty room for 3 s with the white-boxing caption before the hero copy reveals, so the intro runs about 11 s. Skip intro, scroll or touch still skip straight to the copy. Wording and timings are in `intro.captions` in `src/content.js`.
+
+### Update: logo (13 October 2026)
+
+- Supersedes the 12 October headline-size fix: the hero no longer shows the headline text.
+
+**Prepared for:** Dasendhran Subramoney
+
+- The Top Draw Projects logo now replaces the hero text: after the intro, the logo wipes in from the left, followed by the two buttons. The headline sentence stays in the page heading for screen readers and search engines, but is no longer shown.
+- The TD mark sits beside "Top Draw" in the navigation bar.
+- The supplied JPEG was cropped and its white background removed (`public/images/logo-top-draw.webp`, `logo-top-draw-sm.webp`, `logo-mark.webp`). The original is kept in `design/logo/`.
+
+### Update: hero polish (13 October 2026)
+
+- Site accent changed from steel blue (#4A7FB0) to the logo's blue (#31378F) so buttons, active states and drawings match the logo. Button text contrast rises from 4.2:1 to 10.1:1. In the dark contact section the main button is now white with dark text.
+- The half-screen white veil is gone. The logo, a one-line descriptor ("Bespoke kitchens, bathrooms and interiors / Greater Johannesburg") and the two buttons now sit in a framed title block, bottom left, so the whole room shows.
+- The nav brand stays hidden over the hero and fades in once the hero scrolls away.
+
+### Update: hero ends on the finished kitchen (13 October 2026)
+
+- After the white-boxing caption, the finished kitchen fades back in over the empty room and stays as the hero background behind the title block. It is a frame of the intro video (4.3 s), captured as the video plays, so there is no separate image file and no jump in camera position.
+- Skip intro, repeat visits with reduced motion, and slow connections all land on the same kitchen frame. The frame time is `intro.finalFrame` in `src/content.js`.
+
+### Session summary (13 October 2026)
+
+**Prepared for:** Dasendhran Subramoney
+
+Folded the Trevor closing statement into the drawing sequence as chapter 04 "Today" with a title block; added timed intro captions ("Bespoke design" and "White boxing") with reading pauses; replaced the hero text with the Top Draw Projects logo in a framed title block with a one-line descriptor; changed the site accent to the logo's blue; hid the nav brand over the hero; ended the intro on the finished kitchen. Still to supply: Instagram and Facebook links, project suburbs, confirmation that WhatsApp uses 082 332 1112, and whether the business name everywhere should be "Top Draw Projects".
+
+### Session summary: branch `feature/work-glyph-portal` (13 October 2026)
+
+**Prepared for:** Dasendhran Subramoney
+
+This branch has everything below, merged with the logo-hero work from `feature/marketing-site`. The local branches `feature/brand-colours` and `feature/services-sticky-scroll` never had commits of their own (their work is in this branch), so they can be deleted.
+
+- **Colours:** re-themed from blue-grey to the Top Draw logo colours: blue #31378F (measured from the original logo file), black #222222, beige #B2A696, with warm beige tints for sections and hairlines. Contrast re-measured in `DESIGN.md`; text and white-on-blue buttons now pass comfortably.
+- **Services:** the accordion became a sticky scroll reveal (adapted from 21st.dev). On desktop a photo stays pinned beside the services and swaps as each one scrolls into view; on phones each service carries its own photo.
+- **Projects (was Selected work):** a scroll-driven portal intro. The word PROJECTS, with "Top Draw" above it, is set huge in blue with a project photo showing through the letters; scrolling zooms into a letter until the blue fills the screen. You then land in an infinite drag gallery of all twelve project photos (scrolling moves it, mouse users can drag it in any direction, touch users drag sideways). The first and last views are aligned so no photo is ever cut by an edge, on any window size tested. The photos carry a soft shadow (the one shadow on the site).
+- **Fallbacks:** the plain captioned project list stays for visitors without JavaScript, with reduced motion, and in the prerendered HTML; screen readers get a text summary inside the portal. The portal and gallery load only when the section is near the screen (about 5 KB and 20 KB gzipped).
+- **Fixes:** hero headline no longer overlaps the nav on short windows; the hero measurement lines were removed.
+- **Process section:** a new five-stage process (with the R795 fee, the 30% / 50% / 20% payments, 7-10 working days for materials and a 4-6 week project) was drafted and sent to Trevor as a PDF. It is not on the site yet.
+- **Third-party code:** the portal is adapted from Glyph Portal (MIT, Christian Katzmann; licence notice kept in `src/components/GlyphPortal.jsx`); the Services reveal and the drag gallery are adapted from 21st.dev components. No new packages were added.
+
+Still to supply or decide: Instagram and Facebook links, project suburbs, confirmation that WhatsApp uses 082 332 1112, Trevor's reply on the Process wording, and Trevor's OK on the line under PROJECTS ("Measured on site. Built in our workshop. Professionally installed."). Also: swap the kitchen photo behind the PROJECTS letters for the chosen hero project photo, and swap Schibsted Grotesk for the logo's typeface if one is chosen.
