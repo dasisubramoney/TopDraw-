@@ -333,3 +333,7 @@ Projects intro: PROJECTS is now black with "Top Draw" in blue above it, the "See
 **Prepared for:** Dasendhran Subramoney
 
 Rebuilt the Process section from Trevor's workflow PDF (Rev 1) as a project programme: eight stages, his working-day estimates, and the 70% / 20% / 10% payment schedule, with a scroll-driven cursor on desktop that rests at handover and fades out. Removed the "For designers and architects" section. Merged with Damian's 14 October changes (no section labels or index numbers, plain Services list, Projects colours and gallery fix) and adapted the new Process section to match. Still to supply: Instagram and Facebook links, project suburbs, confirmation that WhatsApp uses 082 332 1112, and Trevor's OK on the line under PROJECTS.
+
+### Merge note: branch `feature/services-scroll-stack` with Das's main (14 October 2026)
+
+- This branch (Services Scroll Stack with a pinned heading, the "The Artisan" heading, instant nav jumps, and the rebuilt footer) was merged with Das's changes on `main` (the Process programme redesign and the removal of the Trade section). There were no text conflicts. Checked after the merge: nothing still points at the removed Trade section (the nav and footer links come from the same list), the nav jumps land correctly on every section including the new pinned Process, the Services stack and the Projects gallery behave as before, the footer has no overflow at 1440, 1024 or 390 px, and the production build passes.
