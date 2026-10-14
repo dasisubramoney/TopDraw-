@@ -109,7 +109,7 @@ export default function Contact({ presetType }) {
   return (
     <section id="contact" aria-labelledby="contact-title" className="on-dark section-pad bg-ink text-paper">
       <div className="wrap">
-        <SectionHead code="A-06 / Contact" title="Book a site consultation" note={`Service area: ${contact.area}`} id="contact-title" dark />
+        <SectionHead title="Book a site consultation" id="contact-title" dark />
 
         <div className="grid-12 gap-y-14">
           <div className="col-span-12 lg:col-span-4">

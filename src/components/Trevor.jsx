@@ -66,31 +66,20 @@ function TitleBlock() {
   return (
     <div className="trevor-titleblock" data-titleblock>
       <span aria-hidden="true" className="block h-px origin-left bg-ink" data-tb-rule />
-      <div className="flex items-baseline justify-between gap-4 pt-3">
-        <span className="anno" data-tb-meta>
-          A-03 / General note
-        </span>
-        <span className="anno" data-tb-meta>
-          Sheet 04 of 04
-        </span>
-      </div>
-      <p className="trevor-statement mt-3 font-display" data-tb-statement>
+      <p className="trevor-statement mt-4 font-display" data-tb-statement>
         {trevor.closing}
       </p>
     </div>
   )
 }
 
-// Title block reveal: rule draws, notes fade, statement rises word by word behind a mask.
+// Title block reveal: rule draws, statement rises word by word behind a mask.
 function revealTitleBlock(gsap, SplitText, tl, block, at) {
   const split = SplitText.create(block.querySelector('[data-tb-statement]'), { type: 'words', mask: 'words' })
   const rule = block.querySelector('[data-tb-rule]')
-  const meta = block.querySelectorAll('[data-tb-meta]')
   gsap.set(rule, { scaleX: 0 })
-  gsap.set(meta, { autoAlpha: 0 })
   gsap.set(split.words, { yPercent: 105 })
   tl.to(rule, { scaleX: 1, duration: 0.5, ease: 'power2.inOut' }, at)
-  tl.to(meta, { autoAlpha: 1, duration: 0.2, stagger: 0.1 }, at + 0.3)
   tl.to(split.words, { yPercent: 0, duration: 0.6, stagger: 0.06, ease: 'power3.out' }, at + 0.35)
   return { split, end: at + 0.35 + 0.6 + split.words.length * 0.06 }
 }
@@ -192,7 +181,7 @@ export default function Trevor() {
   return (
     <section id="trevor" ref={root} aria-labelledby="trevor-title" className="trevor section-pad">
       <div className="wrap">
-        <SectionHead code="A-03 / Trevor" title={trevor.title} note="Owner and lead craftsman" id="trevor-title" titleBelow />
+        <SectionHead title={trevor.title} id="trevor-title" titleBelow />
 
         <div className="trevor-stage" data-trevor-stage>
           <div className="trevor-figure" data-trevor-figure>
@@ -220,10 +209,9 @@ export default function Trevor() {
                         <TitleBlock />
                       </div>
                     )}
-                    <div className="trevor-chapter-text grid grid-cols-[2.5rem_1fr] gap-x-4 py-6 sm:grid-cols-[2.5rem_9rem_1fr]">
-                      <span className="anno pt-[0.35rem]">0{i + 1}</span>
+                    <div className="trevor-chapter-text grid grid-cols-1 gap-x-4 py-6 sm:grid-cols-[9rem_1fr]">
                       <h3 className="label pt-[0.2rem]">{c.label}</h3>
-                      <div className="trevor-chapter-body col-start-2 sm:col-start-3">
+                      <div className="trevor-chapter-body sm:col-start-2">
                         <div>
                           <p className="mt-2 max-w-[48ch] sm:mt-0">{c.text}</p>
                         </div>

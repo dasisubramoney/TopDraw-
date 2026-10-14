@@ -6,10 +6,10 @@ export default function Trade({ onTradeEnquiry }) {
   return (
     <section id="trade" aria-labelledby="trade-title" className="section-pad">
       <div className="wrap">
-        <SectionHead code="A-05 / Trade" title={trade.title} note="Fabrication and installation partner" id="trade-title" />
+        <SectionHead title={trade.title} id="trade-title" />
 
         <div className="grid-12 gap-y-14">
-          <div className="col-span-12 lg:col-span-6 lg:col-start-3 lg:row-start-1">
+          <div className="col-span-12 lg:col-span-6 lg:col-start-1 lg:row-start-1">
             <p className="max-w-[46ch] text-body-l">{trade.intro}</p>
 
             <dl className="mt-10 border-t border-rule">
@@ -44,7 +44,7 @@ export default function Trade({ onTradeEnquiry }) {
             <div className="plate aspect-[3/4]">
               <Picture k="tallUnit" sizes="(min-width: 1024px) 22vw, 60vw" />
             </div>
-            <figcaption className="anno mt-3 border-b border-rule pb-3">Fig. 02 / Full-height joinery and open shelving</figcaption>
+            <figcaption className="anno mt-3 border-b border-rule pb-3">Full-height joinery and open shelving</figcaption>
           </figure>
         </div>
       </div>

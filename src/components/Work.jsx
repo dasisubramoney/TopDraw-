@@ -25,7 +25,7 @@ const FONT_TIMEOUT = 1500
 const portalColours = {
   '--gp-paper': 'var(--color-paper)',
   '--gp-ink': 'var(--color-ink)',
-  '--gp-field': 'var(--color-steel)',
+  '--gp-field': 'var(--color-ink)',
   '--gp-foreground': 'var(--color-paper)',
 }
 
@@ -34,12 +34,7 @@ const portalColours = {
 function WorkContent() {
   return (
     <div className="wrap">
-      <SectionHead
-        code="A-04 / Selected work"
-        title="Built and installed"
-        note="Kitchens, bathrooms, dressing rooms, furniture, balustrading"
-        id="work-title"
-      />
+      <SectionHead title="Built and installed" id="work-title" />
 
       <ul className="grid-12 gap-y-16 lg:gap-y-24">
         {work.map((w) => {
@@ -53,10 +48,7 @@ function WorkContent() {
                 </div>
                 <figcaption className="mt-3 border-b border-rule pb-3">
                   <div className="flex items-baseline justify-between gap-4">
-                    <h3 className="label">
-                      <span className="anno mr-3">{w.key}</span>
-                      {w.type}
-                    </h3>
+                    <h3 className="label">{w.type}</h3>
                     <span className="anno">{w.place}</span>
                   </div>
                   <p className="mt-1.5 text-[0.9375rem] leading-[1.5]">{w.text}</p>
@@ -176,7 +168,7 @@ export default function Work() {
             <div style={{ position: 'absolute', inset: 0, transform: 'scale(var(--gp-field-scale, 1))' }}>
               {/* TODO: swap for the hero project photo once chosen. Decorative, so no alt text. */}
               <Picture k="kitchen2" alt="" sizes="100vw" className="absolute inset-0 h-full w-full object-cover" />
-              <div className="absolute inset-0 bg-steel opacity-85" />
+              <div className="absolute inset-0 bg-ink opacity-85" />
             </div>
           }
           front={
