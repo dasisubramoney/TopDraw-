@@ -161,7 +161,6 @@ export default function Header() {
                 {nav.map((n) => (
                   <li key={n.id} className="border-b border-rule">
                     <a href={`#${n.id}`} onClick={(e) => go(e, n.id)} className="flex items-baseline gap-5 py-4">
-                      <span className="anno w-10">{n.code}</span>
                       <span className="font-display text-[1.75rem] leading-tight">{n.label}</span>
                     </a>
                   </li>

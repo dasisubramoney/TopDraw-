@@ -361,11 +361,11 @@ html.lenis, html.lenis body { height: auto; }
   font: 700 1.1875rem/1.2 var(--font-sans);
   letter-spacing: 0;
   color: var(--color-paper);
-  background: var(--color-steel);
-  border: 1px solid var(--color-steel);
+  background: var(--color-ink);
+  border: 1px solid var(--color-ink);
   transition: background-color 180ms var(--ease-out), border-color 180ms var(--ease-out);
 }
-.work-portal .gp-enter:hover { background: var(--color-ink); border-color: var(--color-ink); }
+.work-portal .gp-enter:hover { background: var(--color-steel); border-color: var(--color-steel); }
 .work-portal .gp-enter:focus-visible { outline: 2px solid var(--color-steel); outline-offset: 3px; margin: 0; padding: 14px 24px; }
 .work-portal .gp-eyebrow {
   position: absolute;
@@ -374,6 +374,7 @@ html.lenis, html.lenis body { height: auto; }
   margin: 0;
   text-align: center;
   bottom: calc(100% - var(--gp-word-top, 35%) + 28px);
+  color: var(--color-steel);
   font: 700 clamp(1.125rem, 0.85rem + 1.1vw, 1.75rem)/1.2 var(--font-sans);
   letter-spacing: 0.14em;
 }

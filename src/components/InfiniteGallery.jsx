@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { LazyMotion, animate, cubicBezier, domMax, m, useMotionValue, wrap } from 'framer-motion'
+import { LazyMotion, cubicBezier, domMax, m, useMotionValue, wrap } from 'framer-motion'
 import Picture from './Picture.jsx'
 
 // Infinite drag gallery, adapted from a 21st.dev component ("infinite-drag-scroll", masonry
@@ -40,8 +40,12 @@ const item = {
 
 // Pixels the grid moves per pixel the page scrolls while the gallery is pinned.
 const SCROLL_RATIO = 1.1
-// Share of the pinned scroll after which the grid settles into its resting position.
-const SETTLE_AT = 0.78
+// The grid glides into its resting position as you scroll through this share of the pinned
+// range, then stays there for the rest of it (a short stretch to look at the tidy final view).
+// It is tied to scroll, not to a timer, so it never jumps and it reverses if you scroll back.
+const SETTLE_FROM = 0.58
+const SETTLE_TO = 0.88
+const smooth = (t) => t * t * (3 - 2 * t)
 // Smallest blue margin (px) kept above and below the photos at rest.
 const MIN_MARGIN = 24
 
@@ -82,14 +86,17 @@ export default function InfiniteGallery({ play = false }) {
 
   useEffect(() => {
     let last = window.scrollY
-    let settled = false
     let wasPinned = false
-    let moves = []
+    // Where the grid was when the glide began, and the resting position it glides to.
+    let from = null
+    let to = null
+    let slope = 0
 
     // The aligned resting position nearest to where the grid is now, as { x, y }, or null if
     // no position shows only whole photos on this window. Layout only (offsetTop, no
     // transforms), so it is right even while the photos are still scaling in.
-    const rest = () => {
+    // With minUp, the nearest one at least that many px further up (the way the page is scrolling).
+    const rest = (minUp = 0) => {
       const lay = layer.current
       const tile = lay.firstElementChild
       const items = tile.children
@@ -110,30 +117,29 @@ export default function InfiniteGallery({ play = false }) {
       const tileH = pitch * rows
       const first = lay.offsetTop + items[0].offsetTop
       let best = null
+      const ref = y.get()
       for (let j = 0; j < rows; j++) {
         let yj = top - (first + j * pitch)
-        yj -= Math.round((yj - y.get()) / tileH) * tileH
-        if (best === null || Math.abs(yj - y.get()) < Math.abs(best - y.get())) best = yj
+        if (minUp > 0) {
+          yj -= Math.ceil((yj - (ref - minUp)) / tileH) * tileH
+          if (best === null || yj > best) best = yj
+        } else {
+          yj -= Math.round((yj - ref) / tileH) * tileH
+          if (best === null || Math.abs(yj - ref) < Math.abs(best - ref)) best = yj
+        }
       }
       const tileW = lay.offsetWidth / 2
       return { x: Math.round(x.get() / tileW) * tileW, y: best }
     }
 
-    const settle = (duration) => {
+    // The first view: start at a resting position too.
+    const raf = requestAnimationFrame(() => {
       const r = rest()
-      if (!r) return
-      moves.forEach((c) => c.stop())
-      if (duration === 0) {
+      if (r) {
         x.set(r.x)
         y.set(r.y)
-        moves = []
-      } else {
-        moves = [animate(x, r.x, { duration, ease }), animate(y, r.y, { duration, ease })]
       }
-    }
-
-    // The first view: start at a resting position too.
-    const raf = requestAnimationFrame(() => settle(0))
+    })
 
     const onScroll = () => {
       const dy = window.scrollY - last
@@ -142,22 +148,39 @@ export default function InfiniteGallery({ play = false }) {
       const h = window.innerHeight
       const pinned = r.top <= 0 && r.bottom >= h
       const u = Math.min(1, Math.max(0, -r.top / (r.height - h)))
-      if (pinned && u >= SETTLE_AT && !settled) {
-        settled = true
-        settle(0.8)
-      } else if (u < SETTLE_AT - 0.08 && settled) {
-        settled = false
-        moves.forEach((c) => c.stop())
+      if (pinned && u >= SETTLE_FROM) {
+        // Glide from wherever the grid was to the resting position, in step with the scroll.
+        if (!to) {
+          // The glide starts at the speed the grid is already moving (so there is no sudden
+          // slow-down) and ends at rest, so the resting position must be far enough ahead.
+          slope = -SCROLL_RATIO * (SETTLE_TO - SETTLE_FROM) * (r.height - h)
+          const target = rest(Math.abs(slope) / 3)
+          if (target) {
+            from = { x: x.get(), y: y.get() }
+            to = target
+          }
+        }
+        if (to) {
+          const t = Math.min(1, (u - SETTLE_FROM) / (SETTLE_TO - SETTLE_FROM))
+          // Cubic Hermite from the current position to the resting one: start slope = scroll
+          // speed, end slope = 0.
+          const h00 = 2 * t ** 3 - 3 * t ** 2 + 1
+          const h10 = t ** 3 - 2 * t ** 2 + t
+          const h01 = -2 * t ** 3 + 3 * t ** 2
+          y.set(h00 * from.y + h10 * slope + h01 * to.y)
+          x.set(from.x + (to.x - from.x) * smooth(t))
+        }
+      } else {
+        to = null
+        // Scrolling moves the grid only while pinned (and was pinned a moment ago, so a big jump
+        // from far away does not throw it).
+        if (pinned && wasPinned && dy) y.set(y.get() - dy * SCROLL_RATIO)
       }
-      // Scrolling moves the grid only while pinned (and was pinned a moment ago, so a big jump
-      // from far away does not throw it), and not once it has settled for the exit.
-      if (pinned && wasPinned && !settled && dy) y.set(y.get() - dy * SCROLL_RATIO)
       wasPinned = pinned
     }
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => {
       cancelAnimationFrame(raf)
-      moves.forEach((c) => c.stop())
       window.removeEventListener('scroll', onScroll)
     }
   }, [x, y])
@@ -165,7 +188,7 @@ export default function InfiniteGallery({ play = false }) {
   return (
     <LazyMotion features={domMax} strict>
       <div ref={runway} aria-hidden="true" className="gallery relative h-[320svh]">
-        <div ref={stage} className="sticky top-0 h-[100svh] overflow-hidden bg-steel">
+        <div ref={stage} className="sticky top-0 h-[100svh] overflow-hidden bg-ink">
           <m.div
             ref={layer}
             drag={coarse ? 'x' : true}

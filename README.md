@@ -235,6 +235,38 @@ Removed the hero measurement lines; fixed the hero headline overlapping the nav 
 
 Folded the Trevor closing statement into the drawing sequence as chapter 04 "Today" with a title block; added timed intro captions ("Bespoke design" and "White boxing") with reading pauses; replaced the hero text with the Top Draw Projects logo in a framed title block with a one-line descriptor; changed the site accent to the logo's blue; hid the nav brand over the hero; ended the intro on the finished kitchen. Still to supply: Instagram and Facebook links, project suburbs, confirmation that WhatsApp uses 082 332 1112, and whether the business name everywhere should be "Top Draw Projects".
 
+### Update: gallery backdrop black (14 October 2026)
+
+- The panel behind the gallery photos is now solid black (the logo black, `ink` #222222) instead of blue. The blue still shows during the zoom into PROJECTS; the black panel fades in over it as the zoom finishes. The photos' soft shadow is much fainter on black, as expected.
+
+### Update: PROJECTS black, Top Draw blue (14 October 2026)
+
+- Swapped the colours of the Projects intro: the small "Top Draw" line above is now the logo blue and the huge PROJECTS word is black (the letters are windows onto the kitchen photo under a black overlay). The zoom into a letter now ends in black, which flows straight into the black gallery panel instead of crossing from blue to black.
+
+### Fix: bump at the end of the gallery (14 October 2026)
+
+- Scrolling towards the next section, the photos used to "bump" up and then only let the page scroll: at about 78% of the gallery a timed animation snapped the grid into its resting position (it jumped back 159 px against the scroll) and then froze it. Measured, not guessed.
+- The grid now glides into its resting position in step with your scroll, starting at the speed it was already moving and easing to a stop, then holds still for a short stretch before the page moves on. No timer, no jump; scrolling back up reverses it smoothly. Measured with no abrupt moves going down or up, and the first and last views still show only whole photos on all six window sizes tested.
+
+### Update: section header labels removed (14 October 2026)
+
+- Removed the small sheet-number label above each section title ("A-01 / Services" through "A-06 / Contact", and "A-04 / Selected work") and the small right-hand note beside it ("Five services, one team", "Same team at every stage", "Owner and lead craftsman", "Fabrication and installation partner", "Service area: ..." and the Work note). The rule and the large title stay, and titles now start at the left margin. In Process and Trade the text that had been lined up under the old title position moves to the left margin with them.
+- Not touched: the section numbers in the mobile menu, "Sheet A-07 / End" in the footer, and the "A-03 / General note" inside the Trevor drawing's title block. Say if you want those removed too.
+
+### Update: all small index numbers removed (14 October 2026)
+
+- Removed the small numbering across the site: the "01" to "05" above each service, the numbers in the Services photo captions ("01 / New build..." is now just the caption), "Stage 01" to "Stage 05" in Process, the "01" to "04" beside each Trevor chapter, the "A-03 / General note" and "Sheet 04 of 04" lines in the Trevor drawing's title block, the "W-01" to "W-06" project codes in the plain project list, "Fig. 02 /" in the Trade caption, the "A-01" to "A-06" codes in the mobile menu, and "Sheet A-07 / End" in the footer. Checked in the built page: none of those strings remain.
+- Kept on purpose: the real measurements and specs inside the Trevor drawings ("50 x 25 mm", "t = 2.0 mm", "SS 304", "Tolerance +/- 0.5 mm" and so on), times ("08:00 to 17:00") and the R795 fee. The numbers still exist in the data (`content.js`) because the layout uses them as keys; they are just not shown.
+
+### Update: Services heading (14 October 2026)
+
+- The Services section heading "What we take on" is now "Areas of Expertise" (the "Services" link in the navigation is unchanged). It is also centred between the rule above it and the line below it: measured at 58.8 px above (rule to the top of the capitals) and 58.4 px below (baseline to the line) on a 1440 px window, and 36 / 37 px on a phone. This is an option on the section header (`centered`), used only here; the other section headings are unchanged.
+
+### Update: Services photos removed (14 October 2026)
+
+- Removed the photos from the Services section (the pinned photo on desktop and the photo under each service on phones, including their "[SUBURB]" captions). Without photos the sticky scroll reveal had nothing to pin, so the section is now a plain text list on hairlines: each service's title on the left and its description on the right from 1024 px wide (stacked on smaller screens). It no longer has any animation, and the earlier "Services sticky scroll reveal" entry above describes the version it replaced.
+- The photo and caption fields for each service are still in `src/content.js` but are no longer used.
+
 ### Session summary: branch `feature/work-glyph-portal` (13 October 2026)
 
 **Prepared for:** Dasendhran Subramoney
@@ -250,3 +282,9 @@ This branch has everything below, merged with the logo-hero work from `feature/m
 - **Third-party code:** the portal is adapted from Glyph Portal (MIT, Christian Katzmann; licence notice kept in `src/components/GlyphPortal.jsx`); the Services reveal and the drag gallery are adapted from 21st.dev components. No new packages were added.
 
 Still to supply or decide: Instagram and Facebook links, project suburbs, confirmation that WhatsApp uses 082 332 1112, Trevor's reply on the Process wording, and Trevor's OK on the line under PROJECTS ("Measured on site. Built in our workshop. Professionally installed."). Also: swap the kitchen photo behind the PROJECTS letters for the chosen hero project photo, and swap Schibsted Grotesk for the logo's typeface if one is chosen.
+
+### Session summary (14 October 2026)
+
+**Prepared for:** Dasendhran Subramoney
+
+Projects intro: PROJECTS is now black with "Top Draw" in blue above it, the "See the work" button is black, and the gallery sits on a solid black panel. Fixed a bump that happened as the gallery handed over to the next section (the grid now glides to its resting position in step with the scroll). Removed the small section labels ("A-0X / Name" and the right-hand notes) and every small index number on the site (service numbers, Stage 01 to 05, Trevor chapter numbers, W-01 to W-06, Fig. 02, menu codes, the footer sheet line). The Services heading is now "Areas of Expertise", centred between its two lines, and the Services photos and animation were removed in favour of a plain text list. Still to supply or decide: Instagram and Facebook links, project suburbs, confirmation that WhatsApp uses 082 332 1112, Trevor's reply on the Process wording and on the line under PROJECTS, the hero photo behind PROJECTS, and the logo typeface if one is chosen.

@@ -64,7 +64,6 @@ export default function Footer() {
         </div>
         <div className="anno flex flex-col gap-2 border-t border-rule pt-5 text-rule sm:flex-row sm:justify-between">
           <span>© {new Date().getFullYear()} Top Draw. All work shown designed, built and installed by Top Draw.</span>
-          <span>Sheet A-07 / End</span>
         </div>
       </div>
     </footer>

@@ -45,9 +45,9 @@ export default function Process() {
   return (
     <section id="process" aria-labelledby="process-title" className="blueprint section-pad">
       <div className="wrap">
-        <SectionHead code="A-02 / Process" title="Concept to completion" note="Same team at every stage" id="process-title" />
+        <SectionHead title="Concept to completion" id="process-title" />
 
-        <p className="mb-14 max-w-[52ch] text-body-l lg:mb-20 lg:ml-[calc((100%+var(--gutter))/12*2)]">{process.intro}</p>
+        <p className="mb-14 max-w-[52ch] text-body-l lg:mb-20">{process.intro}</p>
 
         <div ref={track} className="relative" style={{ '--p': reduced ? 1 : 0 }}>
           {/* Base and progress lines */}
@@ -76,8 +76,7 @@ export default function Process() {
                     }`}
                   />
                   <div className="lg:mt-8 lg:pr-4">
-                    <p className="anno -mt-[2px] lg:mt-0">Stage {s.num}</p>
-                    <h3 className="mt-2 text-display-m">{s.title}</h3>
+                    <h3 className="-mt-[3px] text-display-m lg:mt-0">{s.title}</h3>
                     <p className="mt-3 max-w-[40ch] text-[0.9375rem] leading-[1.6]">{s.text}</p>
                   </div>
                 </li>

@@ -1,9 +1,12 @@
 import { useRef } from 'react'
 import { useMotionEffect } from '../lib/motion.js'
 
-// Drawing-sheet header: a full-width rule, the sheet number, the title and a margin note.
-// `titleBelow` puts the headline on its own full-width line under the sheet row.
-export default function SectionHead({ code, title, note, id, dark = false, titleBelow = false }) {
+// Section header: a full-width rule with the title under it. `titleBelow` makes the title larger.
+// `centered` sets the title midway between this rule and the line that follows the header
+// (the same total space, split evenly above and below), measured from the top of the capitals
+// to the baseline, which is how the eye reads a heading; the small 0.14em nudge down is that
+// correction (the line box has more space above the capitals than below the baseline).
+export default function SectionHead({ title, id, dark = false, titleBelow = false, centered = false }) {
   const rule = useRef(null)
 
   useMotionEffect(({ gsap }) => {
@@ -19,26 +22,15 @@ export default function SectionHead({ code, title, note, id, dark = false, title
   })
 
   return (
-    <header className="relative mb-12 lg:mb-20">
+    <header className={`relative ${centered ? "mb-8 lg:mb-[var(--head-gap)]" : "mb-12 lg:mb-20"}`} style={centered ? { "--head-gap": "50px" } : undefined}>
       <div ref={rule} aria-hidden="true" className={`h-px origin-left ${dark ? 'bg-rule' : 'bg-ink'}`} />
-      <div className="grid-12 gap-y-3 pt-4 lg:pt-5">
-        <p className={`label col-span-12 sm:col-span-3 lg:col-span-2 ${dark ? 'text-rule' : ''}`}>
-          {code}
-        </p>
-        {!titleBelow && (
-          <h2 id={id} className="text-display-l col-span-12 sm:col-span-9 lg:col-span-7">
+      <div className={centered ? "pt-8 lg:pt-[var(--head-gap)]" : "pt-4 lg:pt-5"}>
+        {titleBelow ? (
+          <h2 id={id} className="text-display-xl">
             {title}
           </h2>
-        )}
-        {note && (
-          <p
-            className={`anno col-span-12 lg:text-right ${titleBelow ? 'sm:col-span-9 sm:text-right lg:col-span-10' : 'lg:col-span-3 lg:pt-3'} ${dark ? 'text-rule' : ''}`}
-          >
-            {note}
-          </p>
-        )}
-        {titleBelow && (
-          <h2 id={id} className="col-span-12 mt-6 text-display-xl lg:mt-10">
+        ) : (
+          <h2 id={id} className={`text-display-l lg:max-w-[75%] ${centered ? "relative top-[0.14em]" : ""}`}>
             {title}
           </h2>
         )}
