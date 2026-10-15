@@ -125,10 +125,17 @@ export default function Trevor() {
         chapters.forEach((li, n) => (n === i ? li.setAttribute('data-current', '') : li.removeAttribute('data-current')))
       setActive(0)
       const header = () => parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h'), 10) || 0
+      // The section heading stays pinned under the site header; the stage pins just below it.
+      const head = section.querySelector('.section-head')
+      const stageTop = () => header() + (head ? head.offsetHeight : 0)
+      const setTop = () => section.style.setProperty('--trevor-top', stageTop() + 'px')
+      setTop()
+      const ro = new ResizeObserver(setTop)
+      if (head) ro.observe(head)
 
       const st = ScrollTrigger.create({
         trigger: stageEl,
-        start: () => `top top+=${header()}`,
+        start: () => `top top+=${stageTop()}`,
         end: '+=300%',
         pin: true,
         scrub: 0.6,
@@ -143,6 +150,8 @@ export default function Trevor() {
       ScrollTrigger.refresh()
 
       return () => {
+        ro.disconnect()
+        section.style.removeProperty('--trevor-top')
         st.kill()
         tl.progress(0).kill()
         tb.split.revert()
@@ -181,7 +190,7 @@ export default function Trevor() {
   return (
     <section id="trevor" ref={root} aria-labelledby="trevor-title" className="trevor section-pad">
       <div className="wrap">
-        <SectionHead title={trevor.title} id="trevor-title" titleBelow />
+        <SectionHead title={trevor.title} id="trevor-title" />
 
         <div className="trevor-stage" data-trevor-stage>
           <div className="trevor-figure" data-trevor-figure>
@@ -192,9 +201,9 @@ export default function Trevor() {
           </div>
 
           <div className="trevor-text">
-            <p className="font-display text-display-m">{trevor.intro}</p>
+            <p className="trevor-intro font-display text-display-m">{trevor.intro}</p>
 
-            <div className="relative mt-10 lg:mt-12">
+            <div className="trevor-list relative mt-10 lg:mt-12">
               <span aria-hidden="true" className="trevor-progress-track" />
               <span aria-hidden="true" className="trevor-progress" data-trevor-progress />
               <ol className="trevor-chapters border-t border-rule">

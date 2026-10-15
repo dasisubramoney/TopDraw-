@@ -82,6 +82,26 @@ function WorkSummary() {
   )
 }
 
+// The project photos on the black panel after the zoom: still, no drag or movement. Each photo
+// keeps its own shape (a staggered grid, four columns on desktop, two on phones), so nothing is
+// cropped. Decorative (the captioned list is the content for assistive tech; see WorkSummary).
+// Twenty photos chosen from Trevor's album: finished, well-lit work across kitchens, bathrooms,
+// built-ins, furniture and shopfitting.
+const gridOrder = ['kitchen2', 'library', 'dining', 'loftShell', 'vanityOak', 'glossKitchen', 'kitchenTile', 'hutch', 'laundry', 'deli', 'newBuild', 'vanityInstall', 'fridgeUnit', 'wardrobe', 'longVanity', 'tallUnit', 'balustrade', 'graniteKitchen', 'barCounter', 'wardrobeWall']
+function PhotoGrid() {
+  return (
+    <div className="bg-ink">
+      <ul aria-hidden="true" className="wrap columns-2 gap-4 py-24 sm:gap-6 lg:columns-4 lg:gap-8 lg:py-36">
+        {gridOrder.map((k) => (
+          <li key={k} className="mb-4 break-inside-avoid shadow-[0_22px_48px_-10px_rgba(0,0,0,0.6)] sm:mb-6 lg:mb-8">
+            <Picture k={k} alt="" sizes="(min-width: 1024px) 24vw, 46vw" className="block h-auto w-full" />
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
 // The section is complete static content in the prerendered HTML. Once it is within a
 // screen of the viewport, the portal and its font load; if either is late (1.5 s) or motion
 // is reduced, the static section simply stays.
@@ -89,10 +109,7 @@ export default function Work() {
   const root = useRef(null)
   const reduced = useReducedMotion()
   const [parts, setParts] = useState(null)
-  // True once the zoom has finished and the gallery is fading in; it triggers the photo entrance.
-  const [entered, setEntered] = useState(false)
   const Portal = parts?.Portal
-  const Gallery = parts?.Gallery
 
   useEffect(() => {
     if (reduced) {
@@ -105,9 +122,9 @@ export default function Work() {
         if (!entry.isIntersecting) return
         io.disconnect()
         const late = new Promise((_, reject) => setTimeout(() => reject(new Error('font timeout')), FONT_TIMEOUT))
-        Promise.race([Promise.all([import('./GlyphPortal.jsx'), import('./InfiniteGallery.jsx'), document.fonts.load(FONT_LOAD, 'PROJECTS')]), late])
-          .then(([portal, gallery, faces]) => {
-            if (!cancelled && faces.length) setParts({ Portal: portal.default, Gallery: gallery.default })
+        Promise.race([Promise.all([import('./GlyphPortal.jsx'), document.fonts.load(FONT_LOAD, 'PROJECTS')]), late])
+          .then(([portal, faces]) => {
+            if (!cancelled && faces.length) setParts({ Portal: portal.default })
           })
           .catch(() => {})
       },
@@ -162,7 +179,6 @@ export default function Work() {
           annotations={false}
           enterLabel="See the work"
           className="work-portal"
-          onProgress={(p) => setEntered((e) => (p >= 0.85 ? true : p < 0.6 ? false : e))}
           style={portalColours}
           background={
             <div style={{ position: 'absolute', inset: 0, transform: 'scale(var(--gp-field-scale, 1))' }}>
@@ -179,9 +195,9 @@ export default function Work() {
             </>
           }
         >
-          {/* After the zoom you land in the drag gallery. */}
+          {/* After the zoom you land on a still grid of the project photos. */}
           <WorkSummary />
-          <Gallery play={entered} />
+          <PhotoGrid />
         </Portal>
       ) : (
         <WorkContent />

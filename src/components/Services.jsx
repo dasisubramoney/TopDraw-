@@ -86,7 +86,7 @@ export default function Services() {
   return (
     <section id="services" aria-labelledby="services-title" className="section-pad bg-mist">
       <div className="wrap">
-        <SectionHead title="Areas of Expertise" id="services-title" centered pinned={Boolean(Stack)} />
+        <SectionHead title="Areas of Expertise" id="services-title" pinned={Boolean(Stack)} />
 
         {Stack ? (
           <Stack
