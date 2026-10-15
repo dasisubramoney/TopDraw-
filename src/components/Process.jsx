@@ -254,10 +254,17 @@ export default function Process() {
     }
   })
 
-  const { payments } = process
+  const { payments, timing } = process
 
   return (
-    <section id="process" ref={root} aria-labelledby="process-title" className="process blueprint section-pad">
+    <section id="process" ref={root} aria-labelledby="process-title" className="process section-pad">
+      {/* Drawing-sheet frame: a hairline border with crop marks at the corners. */}
+      <div aria-hidden="true" className="sheet-frame">
+        <span />
+        <span />
+        <span />
+        <span />
+      </div>
       <div className="wrap">
         <SectionHead title="Concept to completion" id="process-title" />
 
@@ -292,6 +299,32 @@ export default function Process() {
           </div>
         </div>
 
+        {/* How long it takes: the three durations as large figures, then the caveat. */}
+        <div className="mt-20 lg:mt-28">
+          <div className="border-t border-ink pt-4">
+            <h3 className="text-display-m">{timing.title}</h3>
+            <p className="mt-3 max-w-[56ch]">{timing.intro}</p>
+          </div>
+
+          <ul className="mt-8 grid border-t border-rule sm:grid-cols-3">
+            {timing.items.map((t) => (
+              <li key={t.label} className="border-b border-rule py-6 sm:border-b-0 sm:pr-6 [&:not(:first-child)]:sm:border-l [&:not(:first-child)]:sm:pl-6">
+                <h4 className="label">{t.label}</h4>
+                <p className="mt-3 flex items-baseline gap-3">
+                  <span className="font-display text-[clamp(2.75rem,2rem+3vw,4.5rem)] leading-none text-steel">{t.range}</span>
+                  <span className="anno">working days</span>
+                </p>
+                <p className="mt-3 max-w-[40ch]">{t.text}</p>
+              </li>
+            ))}
+          </ul>
+
+          <p className="timing-caveat mt-8 max-w-[68ch]">
+            <span className="label block">Please note</span>
+            <span className="mt-2 block">{timing.caveat}</span>
+          </p>
+        </div>
+
         {/* Payment schedule */}
         <div className="mt-20 lg:mt-28">
           <div className="border-t border-ink pt-4">
@@ -320,17 +353,6 @@ export default function Process() {
           <p className="anno mt-4">{payments.footnote}</p>
         </div>
 
-        {/* General notes */}
-        <div className="mt-16 border-t border-ink pt-4 lg:mt-20">
-          <h3 className="label">Timeline notes</h3>
-          <ul className="process-list mt-4">
-            {process.notes.map((note) => (
-              <li key={note} className="max-w-[60ch] border-b border-rule py-3 [&::before]:top-[1.4em]">
-                {note}
-              </li>
-            ))}
-          </ul>
-        </div>
       </div>
     </section>
   )

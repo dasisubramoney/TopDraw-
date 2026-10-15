@@ -1,8 +1,10 @@
-import { useId, useRef, useState } from 'react'
-import { AnimatePresence, m } from 'framer-motion'
+import { useEffect, useRef, useState } from 'react'
 import { contact, projectTypes, sectors, whatsappHref } from '../content.js'
-import { useReducedMotion } from '../lib/motion.js'
-import SectionHead from './SectionHead.jsx'
+
+// Contact: a dark street map of Johannesburg (OpenStreetMap data, see scripts/build-map.py)
+// behind a step-by-step consultation form: one question at a time, a progress line under
+// it and a round "Next" button. Before JavaScript runs (and in the prerendered HTML) every
+// field is listed, so the form never depends on the stepper.
 
 const empty = { name: '', phone: '', email: '', suburb: '', sector: '', projectType: '', message: '', company: '' }
 
@@ -19,73 +21,77 @@ const rules = {
   message: (v) => (v.length > 1500 ? 'Keep the message under 1500 characters.' : ''),
 }
 
-const validate = (values) =>
-  Object.fromEntries(Object.entries(rules).map(([k, fn]) => [k, fn(values[k])]).filter(([, msg]) => msg))
+const steps = [
+  { key: 'name', label: 'Your name', type: 'text', autoComplete: 'name', placeholder: 'Your name' },
+  { key: 'phone', label: 'Contact number', type: 'tel', autoComplete: 'tel', placeholder: '082 000 0000' },
+  { key: 'email', label: 'Email address', type: 'email', autoComplete: 'email', placeholder: 'you@example.co.za' },
+  { key: 'suburb', label: 'Suburb', type: 'text', autoComplete: 'address-level3', placeholder: 'Your suburb' },
+  { key: 'sector', label: 'Residential or commercial?', choices: sectors },
+  { key: 'projectType', label: 'Type of project', choices: projectTypes },
+  { key: 'message', label: 'Anything else Trevor should know? (optional)', textarea: true, placeholder: 'The room, the style you like, your timing…' },
+]
 
-function Field({ name, label, error, optional, children }) {
+function Choices({ step, value, onPick }) {
   return (
-    <div className="flex flex-col gap-1.5 py-3">
-      <label htmlFor={`f-${name}`} className="anno text-rule">
-        {label}
-        {optional && <span className="ml-2">(optional)</span>}
-      </label>
-      {children}
-      {error && (
-        <p id={`f-${name}-err`} className="anno flex gap-2 text-paper normal-case">
-          <span aria-hidden="true" className="font-medium">!</span>
-          {error}
-        </p>
-      )}
+    <div role="radiogroup" aria-labelledby={`f-${step.key}-label`} className="cs-choices">
+      {step.choices.map((c, i) => (
+        <label key={c} className="cs-choice" data-checked={value === c ? '' : undefined}>
+          <input
+            type="radio"
+            name={step.key}
+            id={i === 0 ? `f-${step.key}` : undefined}
+            value={c}
+            checked={value === c}
+            onChange={() => onPick(c)}
+            className="sr-only"
+          />
+          {c}
+        </label>
+      ))}
     </div>
   )
 }
 
-const inputCls = (err) =>
-  `w-full min-h-12 bg-transparent py-2 text-[1.0625rem] text-paper outline-offset-4 border-b ${
-    err ? 'border-b-2 border-paper' : 'border-rule'
-  } focus:border-paper`
-
 export default function Contact() {
   const [values, setValues] = useState(empty)
-  const [errors, setErrors] = useState({})
-  const [touched, setTouched] = useState({})
+  const [step, setStep] = useState(0)
+  const [error, setError] = useState('')
   const [status, setStatus] = useState('idle') // idle | sending | sent | failed
-  const reduced = useReducedMotion()
-  const formRef = useRef(null)
-  const summaryId = useId()
+  const [enhanced, setEnhanced] = useState(false)
+  const [mapNear, setMapNear] = useState(false)
+  const root = useRef(null)
+  const moved = useRef(false)
 
+  // Stepper only once JavaScript is running.
+  useEffect(() => setEnhanced(true), [])
 
-  const set = (k) => (e) => {
-    const next = { ...values, [k]: e.target.value }
-    setValues(next)
-    if (touched[k]) setErrors(validate(next))
+  // Load the map image only when the section is close.
+  useEffect(() => {
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (e.isIntersecting) {
+          setMapNear(true)
+          io.disconnect()
+        }
+      },
+      { rootMargin: '100% 0px' },
+    )
+    io.observe(root.current)
+    return () => io.disconnect()
+  }, [])
+
+  // Move focus to the new question after Next / Back (not on first load).
+  useEffect(() => {
+    if (!moved.current) return
+    root.current?.querySelector(`#f-${steps[step].key}`)?.focus()
+  }, [step])
+
+  const set = (k, v) => {
+    setValues((s) => ({ ...s, [k]: v }))
+    if (error) setError('')
   }
-  const blur = (k) => () => {
-    setTouched((t) => ({ ...t, [k]: true }))
-    setErrors(validate(values))
-  }
 
-  const aria = (k) => ({
-    id: `f-${k}`,
-    name: k,
-    value: values[k],
-    onChange: set(k),
-    onBlur: blur(k),
-    'aria-invalid': errors[k] && touched[k] ? 'true' : undefined,
-    'aria-describedby': errors[k] && touched[k] ? `f-${k}-err` : undefined,
-  })
-  const shown = (k) => (touched[k] ? errors[k] : '')
-
-  const onSubmit = async (e) => {
-    e.preventDefault()
-    const errs = validate(values)
-    setErrors(errs)
-    setTouched(Object.fromEntries(Object.keys(rules).map((k) => [k, true])))
-    const first = Object.keys(rules).find((k) => errs[k])
-    if (first) {
-      formRef.current?.querySelector(`#f-${first}`)?.focus()
-      return
-    }
+  const submit = async () => {
     if (values.company) return // honeypot
     setStatus('sending')
     try {
@@ -98,153 +104,192 @@ export default function Contact() {
     }
   }
 
-  const errorCount = Object.keys(errors).filter((k) => touched[k]).length
-  const fade = reduced
-    ? { initial: false, animate: { opacity: 1 }, exit: { opacity: 0, transition: { duration: 0 } } }
-    : { initial: { opacity: 0, y: 8 }, animate: { opacity: 1, y: 0 }, exit: { opacity: 0 }, transition: { duration: 0.24, ease: [0.22, 1, 0.36, 1] } }
+  const next = () => {
+    const k = steps[step].key
+    const msg = rules[k](values[k])
+    if (msg) {
+      setError(msg)
+      root.current?.querySelector(`#f-${k}`)?.focus()
+      return
+    }
+    moved.current = true
+    if (step < steps.length - 1) setStep(step + 1)
+    else submit()
+  }
+  const back = () => {
+    moved.current = true
+    setError('')
+    setStep((s) => Math.max(0, s - 1))
+  }
+
+  const onSubmit = (e) => {
+    e.preventDefault()
+    if (enhanced) return next()
+    // Without the stepper: validate everything at once.
+    const first = Object.keys(rules).find((k) => rules[k](values[k]))
+    if (first) {
+      setError(rules[first](values[first]))
+      root.current?.querySelector(`#f-${first}`)?.focus()
+      return
+    }
+    submit()
+  }
+
+  const renderField = (s, active) => {
+    const common = {
+      id: `f-${s.key}`,
+      name: s.key,
+      value: values[s.key],
+      onChange: (e) => set(s.key, e.target.value),
+      'aria-invalid': active && error ? 'true' : undefined,
+      'aria-describedby': active && error ? 'f-error' : undefined,
+    }
+    if (s.choices) return <Choices step={s} value={values[s.key]} onPick={(c) => set(s.key, c)} />
+    if (s.textarea) return <textarea {...common} rows={3} placeholder={s.placeholder} className="cs-input cs-textarea" />
+    return (
+      <input
+        {...common}
+        type={s.type}
+        inputMode={s.type === 'tel' ? 'tel' : undefined}
+        autoComplete={s.autoComplete}
+        placeholder={s.placeholder}
+        className="cs-input"
+      />
+    )
+  }
+
+  const current = steps[step]
+  const last = step === steps.length - 1
+
+  const details = [
+    ['Phone', contact.phoneHref ? <a className="link-underline" href={contact.phoneHref}>{contact.phoneDisplay}</a> : contact.phoneDisplay],
+    ['Email', <a className="link-underline" href={`mailto:${contact.email}`}>{contact.email}</a>],
+    ['Area', contact.area],
+  ]
 
   return (
-    <section id="contact" aria-labelledby="contact-title" className="on-dark section-pad bg-ink text-paper">
-      <div className="wrap">
-        <SectionHead title="Book a site consultation" id="contact-title" dark />
+    <section id="contact" ref={root} aria-labelledby="contact-title" className="contact-map on-dark bg-ink text-paper">
+      {mapNear && <img src="/images/map-johannesburg.svg" alt="" aria-hidden="true" className="cm-map" decoding="async" />}
+      <div aria-hidden="true" className="cm-pin">
+        <span className="cm-pin-ring" />
+        <span className="cm-pin-dot" />
+        <span className="cm-pin-label">{contact.area}</span>
+      </div>
 
-        <div className="grid-12 gap-y-14">
-          <div className="col-span-12 lg:col-span-4">
-            <p className="max-w-[40ch] text-body-l">
-              Tell us about the room and what you have in mind. Trevor will call you back to arrange a time to visit and measure up.
-            </p>
-            <a href={whatsappHref()} target="_blank" rel="noopener" className="btn btn-secondary mt-8">
-              WhatsApp Trevor <span className="anno" aria-hidden="true">↗</span>
-              <span className="sr-only">(opens WhatsApp)</span>
-            </a>
+      <div className="wrap relative section-pad">
+        <header className="cm-head">
+          <p className="text-body-l text-rule">How to reach Trevor</p>
+          <h2 id="contact-title" className="mt-2 text-display-xl">
+            Book a site consultation
+          </h2>
+        </header>
 
-            <dl className="mt-12 border-t border-rule">
-              {[
-                ['Phone', contact.phoneHref ? <a className="link-underline" href={contact.phoneHref}>{contact.phoneDisplay}</a> : contact.phoneDisplay],
-                ['Email', contact.email.includes('@') ? <a className="link-underline" href={`mailto:${contact.email}`}>{contact.email}</a> : contact.email],
-                ['Area', contact.area],
-              ].map(([k, v]) => (
-                <div key={k} className="grid grid-cols-[5.5rem_1fr] gap-4 border-b border-rule py-3">
-                  <dt className="anno pt-[0.3rem] text-rule">{k}</dt>
-                  <dd>{v}</dd>
-                </div>
-              ))}
-            </dl>
-          </div>
+        <dl className="cm-details">
+          {details.map(([k, v]) => (
+            <div key={k}>
+              <dt className="label text-rule">{k}</dt>
+              <dd className="mt-3">{v}</dd>
+            </div>
+          ))}
+        </dl>
+        <a href={whatsappHref()} target="_blank" rel="noopener" className="btn btn-secondary mt-8">
+          WhatsApp Trevor <span className="anno" aria-hidden="true">↗</span>
+          <span className="sr-only">(opens WhatsApp)</span>
+        </a>
 
-          <div className="col-span-12 lg:col-span-7 lg:col-start-6">
-            <AnimatePresence mode="wait" initial={false}>
-              {status === 'sent' ? (
-                <m.div key="sent" {...fade} role="status" className="border-t border-rule pt-8">
-                  <p className="font-display text-display-m">Thanks, {values.name.trim().split(' ')[0]}.</p>
-                  <p className="mt-4 max-w-[46ch] text-body-l">
-                    Trevor will call you on {values.phone} to arrange a site visit. If it’s urgent, WhatsApp him directly.
-                  </p>
-                </m.div>
-              ) : (
-                <m.form
-                  key="form"
-                  {...fade}
-                  ref={formRef}
-                  name="consultation"
-                  method="POST"
-                  data-netlify="true"
-                  noValidate
-                  onSubmit={onSubmit}
-                  aria-describedby={summaryId}
-                  className="grid gap-x-[var(--gutter)] border-t border-rule sm:grid-cols-2"
-                >
-                  <input type="hidden" name="form-name" value="consultation" />
-                  <p className="hidden" aria-hidden="true">
-                    <label>
-                      Company <input name="company" tabIndex={-1} autoComplete="off" value={values.company} onChange={set('company')} />
-                    </label>
-                  </p>
+        <div className="cm-form-wrap">
+          <h3 className="cm-subhead text-body-l">Get in touch</h3>
 
-                  <Field name="name" label="Name" error={shown('name')}>
-                    <input {...aria('name')} type="text" autoComplete="name" required className={inputCls(shown('name'))} />
-                  </Field>
-                  <Field name="phone" label="Contact number" error={shown('phone')}>
-                    <input {...aria('phone')} type="tel" inputMode="tel" autoComplete="tel" required className={inputCls(shown('phone'))} />
-                  </Field>
-                  <Field name="email" label="Email" error={shown('email')}>
-                    <input {...aria('email')} type="email" autoComplete="email" required className={inputCls(shown('email'))} />
-                  </Field>
-                  <Field name="suburb" label="Suburb" error={shown('suburb')}>
-                    <input {...aria('suburb')} type="text" autoComplete="address-level3" required className={inputCls(shown('suburb'))} />
-                  </Field>
-                  <fieldset
-                    className="flex flex-col gap-1.5 py-3 sm:col-span-2"
-                    aria-invalid={shown('sector') ? 'true' : undefined}
-                    aria-describedby={shown('sector') ? 'f-sector-err' : undefined}
-                  >
-                    <legend className="anno float-left mb-1.5 w-full text-rule">Industry sector</legend>
-                    <div className="flex flex-wrap gap-x-8">
-                      {sectors.map((s, i) => (
-                        <label key={s} className="inline-flex min-h-11 cursor-pointer items-center gap-3 text-[1.0625rem]">
-                          <input
-                            type="radio"
-                            name="sector"
-                            id={i === 0 ? 'f-sector' : undefined}
-                            value={s}
-                            checked={values.sector === s}
-                            onChange={set('sector')}
-                            onBlur={blur('sector')}
-                            required
-                            className="h-5 w-5 cursor-pointer accent-steel"
-                          />
-                          {s}
-                        </label>
+          {status === 'sent' ? (
+            <div role="status" className="mt-8">
+              <p className="font-display text-display-m">Thanks, {values.name.trim().split(' ')[0]}.</p>
+              <p className="mt-4 max-w-[46ch] text-body-l">
+                Trevor will call you on {values.phone} to arrange a site visit. If it’s urgent, WhatsApp him directly.
+              </p>
+            </div>
+          ) : (
+            <form name="consultation" method="POST" data-netlify="true" noValidate onSubmit={onSubmit} className="mt-8">
+              <input type="hidden" name="form-name" value="consultation" />
+              <p className="hidden" aria-hidden="true">
+                <label>
+                  Company <input name="company" tabIndex={-1} autoComplete="off" value={values.company} onChange={(e) => set('company', e.target.value)} />
+                </label>
+              </p>
+
+              {enhanced ? (
+                <div className="cs">
+                  <div className="cs-field">
+                    <div key={current.key} className="cs-enter">
+                      <label id={`f-${current.key}-label`} htmlFor={current.choices ? undefined : `f-${current.key}`} className="sr-only">
+                        {current.label}
+                      </label>
+                      <div
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' && !current.textarea) {
+                            e.preventDefault()
+                            next()
+                          }
+                        }}
+                      >
+                        {renderField(current, true)}
+                      </div>
+                    </div>
+
+                    <div className="cs-progress" aria-hidden="true">
+                      {steps.map((s, i) => (
+                        <span key={s.key} data-state={i < step ? 'done' : i === step ? 'current' : undefined} />
                       ))}
                     </div>
-                    {shown('sector') && (
-                      <p id="f-sector-err" className="anno flex gap-2 text-paper normal-case">
-                        <span aria-hidden="true" className="font-medium">!</span>
-                        {shown('sector')}
+                    <div className="cs-captions">
+                      <span>{current.label}</span>
+                      {!last && <span className="cs-upcoming">{steps[step + 1].label}</span>}
+                    </div>
+                    <p className="sr-only" aria-live="polite">
+                      Question {step + 1} of {steps.length}: {current.label}
+                    </p>
+                    {error && (
+                      <p id="f-error" role="alert" className="cs-error">
+                        {error}
                       </p>
                     )}
-                  </fieldset>
-                  <div className="sm:col-span-2">
-                    <Field name="projectType" label="Project type" error={shown('projectType')}>
-                      <div className="relative">
-                        <select {...aria('projectType')} required className={`${inputCls(shown('projectType'))} cursor-pointer appearance-none pr-8`}>
-                          <option value="" className="text-ink">Choose one</option>
-                          {projectTypes.map((t) => (
-                            <option key={t} value={t} className="text-ink">
-                              {t}
-                            </option>
-                          ))}
-                        </select>
-                        <span aria-hidden="true" className="anno pointer-events-none absolute right-0 top-1/2 -translate-y-1/2">
-                          ▾
-                        </span>
-                      </div>
-                    </Field>
-                  </div>
-                  <div className="sm:col-span-2">
-                    <Field name="message" label="About the project" error={shown('message')} optional>
-                      <textarea {...aria('message')} rows={4} className={`${inputCls(shown('message'))} resize-y`} />
-                    </Field>
+                    {status === 'failed' && <p className="cs-error">Your request didn’t send. Check your connection and try again, or WhatsApp Trevor.</p>}
                   </div>
 
-                  <div className="flex flex-col gap-4 pt-6 sm:col-span-2 sm:flex-row sm:items-center sm:gap-6">
-                    <button type="submit" disabled={status === 'sending'} className="btn btn-primary disabled:opacity-100">
-                      {status === 'sending' ? 'Sending…' : 'Book a site consultation'}
+                  <div className="cs-actions">
+                    {step > 0 && (
+                      <button type="button" onClick={back} className="cs-back">
+                        Back
+                      </button>
+                    )}
+                    <button type="submit" disabled={status === 'sending'} className="cs-next">
+                      <span className="cs-next-text">{status === 'sending' ? 'Sending…' : last ? 'Send' : 'Next'}</span>
+                      <span className="cs-next-ring" aria-hidden="true">
+                        →
+                      </span>
                     </button>
-                    <p id={summaryId} aria-live="polite" className="anno text-rule normal-case">
-                      {errorCount > 0
-                        ? `${errorCount} ${errorCount === 1 ? 'field needs' : 'fields need'} attention.`
-                        : status === 'failed'
-                          ? 'Your request didn’t send. Check your connection and try again, or WhatsApp Trevor.'
-                          : 'Trevor reads every request himself.'}
-                    </p>
                   </div>
-                </m.form>
+                </div>
+              ) : (
+                <div className="grid gap-8">
+                  {steps.map((s) => (
+                    <div key={s.key}>
+                      <label id={`f-${s.key}-label`} htmlFor={s.choices ? undefined : `f-${s.key}`} className="label text-rule">
+                        {s.label}
+                      </label>
+                      <div className="mt-2">{renderField(s, false)}</div>
+                    </div>
+                  ))}
+                  {error && <p className="cs-error">{error}</p>}
+                  <button type="submit" className="btn btn-primary w-fit">
+                    Book a site consultation
+                  </button>
+                </div>
               )}
-            </AnimatePresence>
-          </div>
+            </form>
+          )}
         </div>
       </div>
+      <p className="cm-credit anno">Map data © OpenStreetMap contributors</p>
     </section>
   )
 }

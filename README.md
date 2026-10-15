@@ -393,8 +393,28 @@ Rebuilt the Process section from Trevor's workflow PDF (Rev 1) as a project prog
 
 - This branch (Services Scroll Stack with a pinned heading, the "The Artisan" heading, instant nav jumps, and the rebuilt footer) was merged with Das's changes on `main` (the Process programme redesign and the removal of the Trade section). There were no text conflicts. Checked after the merge: nothing still points at the removed Trade section (the nav and footer links come from the same list), the nav jumps land correctly on every section including the new pinned Process, the Services stack and the Projects gallery behave as before, the footer has no overflow at 1440, 1024 or 390 px, and the production build passes.
 
+### Update: Process timing block (15 October 2026)
+
+- The four plain "Timeline notes" are now a "How long it takes" block, placed before the payment schedule: manufacturing, site preparation and installation as large working-day figures (10–20, 7–10, 5–10), each with its short explanation, matching the payment cells. The caveat that these are estimates, not a guaranteed completion date, sits in a shaded "Please note" panel. Same facts as Trevor's PDF.
+
+### Update: Process background (15 October 2026)
+
+- Removed the grid background from the Process section. It now sits on plain white inside a drawing-sheet frame: a fine border just inside the section edge, with small blue crop marks at the corners, like a printed technical drawing. It sets the programme apart from the neighbouring sections without adding colour.
+
+### Update: shadcn/TypeScript setup (15 October 2026)
+
+- Project supports shadcn-style structure and TypeScript alongside the existing JavaScript: `@` alias to `src` (vite.config.js, tsconfig.json), `components.json`, `src/lib/utils.ts` (`cn`), `src/components/ui/` with the shadcn Button. Do not run `npx shadcn init` (it rewrites `src/index.css`); add components with `npx shadcn add <name>`.
+- The letter-style consultation form and the service-area globe were tried and removed; the contact form is back to its original layout.
+
+### Update: contact section with map and step-by-step form (15 October 2026)
+
+- Contact is now set over a dark street map of Johannesburg's northern suburbs (Rosebank to Sandton), generated from OpenStreetMap data by `scripts/build-map.py` into `public/images/map-johannesburg.svg` (55 KB gzipped, loaded only when Contact is near), with "Map data © OpenStreetMap contributors" credited on the page. A ringed pin marks the service area (Gauteng).
+- Layout: a beige accent bar beside "How to reach Trevor / Book a site consultation", the phone, email and area in columns (the site-visit fee was removed by Damian's 15 October change), the WhatsApp button, then "Get in touch".
+- The form asks one question at a time (name, contact number, email, suburb, residential or commercial, project type, optional note) with a segmented progress line, the current and next question named under it, a round "Next" button (Enter also works) and Back. Each answer is checked before moving on. Same fields and Netlify submission as before. Without JavaScript all fields show as a plain list.
+
 ### Session summary (15 October 2026)
 
 **Prepared for:** Dasendhran Subramoney
 
 Projects: the drag gallery after the PROJECTS zoom was removed and replaced by a still, staggered grid of twenty project photos on black (twelve chosen from Trevor's album, then eight more; nine were already on the site, the rest are new). Footer: reversed to white with dark text. Service area changed from "Greater Johannesburg" to "Gauteng" everywhere. The R795 site visit fee was removed from Contact and the footer (Trevor has scrapped it for now). Section headings: every heading now has a small label with that section's nav name, led by an arrow whose tip lines up with the heading, and all five headings share one size, weight and spacing. The Trevor heading stays pinned while its drawing animates. Still to supply or decide: Instagram and Facebook links, project suburbs, confirmation that WhatsApp uses 082 332 1112, Trevor's OK on the line under PROJECTS and on showing the clients' homes and shops in the photo grid, the hero photo behind PROJECTS, and the logo typeface if one is chosen.
+Process: the timeline notes became a "How long it takes" block with large working-day figures and a "Please note" panel, and the grid background was replaced by a drawing-sheet frame. Contact: a letter-style form and a globe were tried and removed; the section is now a dark Johannesburg street map (OpenStreetMap) with a step-by-step form. Added shadcn-style structure and TypeScript support (`@` alias, `components.json`, `src/lib/utils.ts`, `src/components/ui/`).

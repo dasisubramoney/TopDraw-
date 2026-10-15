@@ -90,7 +90,7 @@ Fonts are self-hosted from `public/fonts`, Latin-subset with fonttools: Newsread
 - **Leader note**: short angled line from a point on an image to a mono note (`Oak veneer / 18 mm`). Max 1 per image.
 - **Footer**: light (`paper` background, `ink` text; reversed from dark on 15 October 2026) section laid out as four columns on desktop (pitch with the two ways to get in touch; quick links to the sections; contact details; hours and social icons), then a ruled closing line with the copyright and a back-to-top link. Based on a common footer pattern, adapted: no newsletter form (the site has no mailing list), no dark-mode switch, square icon buttons (no rounded corners), icons drawn inline. The old drawing-style title block footer was replaced on 14 October 2026.
 - **Buttons**: rectangular, no radius. Primary: steel fill, paper text 19px bold, 1px steel border (paper fill with ink text on the dark section, where blue would be only 1.57:1). Secondary: paper fill, ink 1px border, ink text. WhatsApp is secondary, with a small mono `↗` not a logo blob.
-- **Blueprint grid**: allowed on the **Process** section only, 24px `rule` grid at very low visual weight (lines drawn in mist on paper).
+- **Drawing-sheet frame** (Process only, replaced the blueprint grid on 15 October 2026): plain paper, a 1px `rule` border inset 10 to 28px from the section edge, with 2px `steel` crop marks at the four corners, like a printed drawing sheet.
 - **Images**: hard edges, 1px rule frame, mist while loading. Responsive WebP in `public/images` (800/1600 widths). No photos of Trevor (his wish); the Trevor section uses the steel-frame bench photo.
 
 ## 6. Motion (Krehel primary, Kowalski secondary)
@@ -115,7 +115,7 @@ Quiet, precise, purposeful. Motion explains structure; it never decorates.
    - Desktop with motion: the stage pins for 400vh and a steel cursor is scrubbed across the chart (scrub 0.6), one equal slice of scroll per stage. Bars grow behind the cursor, steps and payment markers light as it passes, the active row stays ink and the rest dim, and the active stage's full text swaps in beside the chart (300 ms fade, 10 px rise).
    - Under 1024px: no chart; the stages stack with a rail that fills on scroll and nodes that light as each stage arrives.
    - Reduced motion or no JavaScript: chart fully drawn, every stage listed in two columns.
-   - Below, in every mode: the payment schedule (a 70 / 20 / 10 split bar that draws in once, then three cells) and the timeline notes as general notes. All copy is in `process` in `src/content.js`.
+   - Below, in every mode: "How long it takes" (three large working-day figures in steel, then the estimates caveat in a mist panel with a 2 px steel left edge), then the payment schedule (a 70 / 20 / 10 split bar that draws in once, then three cells). All copy is in `process` in `src/content.js`.
 5. **Gallery images**: clip-path inset reveal from the top edge, 700 ms, once. No parallax beyond 6% translate on the hero image only.
 6. **Press**: buttons `scale(0.98)` on active, 120 ms. No hover-scale on images or cards.
 
@@ -151,3 +151,4 @@ Quiet, precise, purposeful. Motion explains structure; it never decorates.
 
 ## Hero (revised 13 October 2026)
 After the intro, the hero carries a single title block, bottom left, framed in 1px ink on paper: the Top Draw Projects logo, a mono descriptor line, then the two buttons, each in its own cell divided by ink rules. The rest of the frame is the finished kitchen. The block wipes in from the left, then the logo, then the descriptor and buttons. The nav brand stays hidden until the hero has scrolled away, so the logo never appears twice on one screen.
+

@@ -211,12 +211,17 @@ export const process = {
       payment: 2,
     },
   ],
-  notes: [
-    'Manufacturing: allow about 10 to 20 working days for material sourcing and manufacturing after final sign-off.',
-    'Site preparation: allow about 7 to 10 working days, depending on the work required. It runs alongside manufacturing wherever possible.',
-    'Installation: allow about 5 to 10 working days, depending on the size and complexity of the project.',
-    'These are estimated working days, not a guaranteed completion date. Some work runs at the same time, and the overall duration depends on material availability, the scope of work, site readiness and the coordination of trades.',
-  ],
+  timing: {
+    title: 'How long it takes',
+    intro: 'Once you sign off, these are the working days to plan around.',
+    items: [
+      { label: 'Manufacturing', range: '10–20', text: 'Material sourcing and manufacturing, after final sign-off.' },
+      { label: 'Site preparation', range: '7–10', text: 'Depending on the work required. Runs alongside manufacturing wherever possible.' },
+      { label: 'Installation', range: '5–10', text: 'Depending on the size and complexity of the project.' },
+    ],
+    caveat:
+      'These are estimated working days, not a guaranteed completion date. Some work runs at the same time, and the overall duration depends on material availability, the scope of work, site readiness and the coordination of trades.',
+  },
   payments: {
     intro: 'Payments are tied to three milestones, in step with the progress of your kitchen or cabinetry.',
     items: [
