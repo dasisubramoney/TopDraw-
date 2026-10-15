@@ -10,8 +10,7 @@ export const contact = {
   // Assumed to be the same as the phone number; change it if Trevor uses another.
   whatsappNumber: '27823321112',
   whatsappMessage: 'Hi Trevor, I found Top Draw online and would like to talk about a project.',
-  area: 'Greater Johannesburg',
-  siteVisit: 'R795',
+  area: 'Gauteng',
   hours: [
     { days: 'Mon to Fri', time: '08:00 to 17:00' },
     { days: 'Sat and Sun', time: 'Closed' },
@@ -49,6 +48,15 @@ export const img = {
   benchFrame: { name: 'bench-steel-frame', widths: [800, 1600], w: 2400, h: 1800, alt: 'End view of a black steel frame wrapping a pale timber top, showing the welded corners' },
   balustrade: { name: 'loft-balustrade', widths: [800, 1600], w: 2400, h: 1800, alt: 'Loft under a thatched roof with a long timber pole balustrade along the edge and a staircase opening' },
   tallUnit: { name: 'tall-unit-charcoal', widths: [800, 1600], w: 1800, h: 2400, alt: 'Charcoal full-height cupboard beside a low open shelving unit with a white top and black floating shelves above' },
+  barCounter: { name: 'bar-counter-steel-timber', widths: [800, 1600], w: 2400, h: 1800, alt: 'Long timber-topped bar counter on a painted steel frame in front of a brick-pattern wall, with four swivel bar stools on a concrete floor' },
+  deli: { name: 'deli-island-shopfit', widths: [800, 1600], w: 2400, h: 1560, alt: 'Corner deli counter in a supermarket: a pale timber-look shelving base with a black top and angled glass display cases' },
+  hutch: { name: 'painted-cabinet', widths: [800, 1600], w: 1800, h: 2400, alt: 'Painted open-shelf cabinet with a drawer and two panelled doors below, standing in a corner' },
+  glossKitchen: { name: 'kitchen-white-gloss-pendants', widths: [800, 1600], w: 2400, h: 1800, alt: 'Kitchen with white gloss wall units, timber-look base units, a black granite peninsula, a metro tile splashback and three glass pendant lights' },
+  laundry: { name: 'laundry-white-charcoal', widths: [800, 1600], w: 1800, h: 2400, alt: 'Laundry room with white wall cupboards, charcoal base units, a marble-look worktop with a double sink and a herringbone timber-look floor' },
+  fridgeUnit: { name: 'tall-unit-fridge-surround', widths: [800, 1600], w: 1800, h: 2400, alt: 'Pale oak-look tall cabinets built around a stainless steel fridge, with a microwave shelf and a bank of drawers' },
+  longVanity: { name: 'bathroom-long-vanity', widths: [800, 1600], w: 2400, h: 1800, alt: 'Long bathroom vanity with pale drawers and doors, a stone top with two basins and a framed mirror above, beside a corner bath' },
+  graniteKitchen: { name: 'kitchen-black-granite', widths: [800, 1600], w: 1800, h: 2400, alt: 'Light woodgrain kitchen with a black granite worktop, full-height wall units, a hob and an eye-level oven' },
+  wardrobeWall: { name: 'wardrobe-wall-white', widths: [800, 1600], w: 2400, h: 1800, alt: 'Wall of floor-to-ceiling white wardrobe doors with brushed metal handles' },
 }
 
 export const hero = {
@@ -61,7 +69,7 @@ export const hero = {
     alt: 'Top Draw Projects.',
   },
   mark: { src: '/images/logo-mark.webp', w: 467, h: 277 },
-  descriptor: 'Bespoke kitchens, bathrooms and interiors / Greater Johannesburg',
+  descriptor: 'Bespoke kitchens, bathrooms and interiors / Gauteng',
   // Not shown on screen: read by screen readers and search engines as part of the
   // page's main heading, after the logo.
   headline: 'Bespoke kitchens, bathrooms and interiors. Designed, built and installed by one team.',

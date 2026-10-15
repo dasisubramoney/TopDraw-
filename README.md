@@ -294,6 +294,61 @@ Folded the Trevor closing statement into the drawing sequence as chapter 04 "Tod
 - Layout: a pitch ("Let's talk about your project." with "Book a site consultation" and "WhatsApp Trevor"), quick links to every section, contact details (phone, email, area, site visit R795), hours, Instagram and Facebook icons, then the copyright line with "Back to top". Stacks to one column on phones; no horizontal overflow at 1440, 1024 or 390 px.
 - Left out on purpose, because there is nothing real behind them: the newsletter sign-up (no mailing list or backend), the dark-mode switch, Twitter and LinkedIn icons, and the Privacy, Terms and Cookie links (no such pages exist; tell me if they are needed and what they should say). The social icons are dashed placeholders until the real Instagram and Facebook links go into `contact.social` in `src/content.js`.
 
+
+### Update: gallery animation removed (15 October 2026)
+
+- Removed the infinite drag gallery after the PROJECTS zoom (the draggable grid that moved with the scroll, the glide into its resting position, and the photo pop-in). The twelve project photos now sit in a still grid on solid black, four across on desktop and two on phones, with the soft shadow kept. The PROJECTS zoom itself is unchanged, and the page then flows into the Contact section, which is also black.
+- Deleted `src/components/InfiniteGallery.jsx` and its styles; the separate drag chunk (about 20 KB gzipped, framer-motion drag) is no longer downloaded. The plain captioned project list for no-JavaScript and reduced motion, and the screen-reader summary inside the portal, are unchanged.
+- The earlier README entries about the gallery describe a version that no longer exists.
+
+
+### Update: twelve photos chosen from the album (15 October 2026)
+
+- Went through all 87 photos in the shared Google Photos album ("Website - Carpentry") and chose twelve for the Projects grid: finished, well-lit, uncluttered work across kitchens, bathrooms, built-in cabinetry, furniture and shopfitting, with no faces and no baked-in black bars. Nine were already on the site (charcoal kitchen island, patterned-tile kitchen, library with ladder, thatched loft interior, vanity with mirror cabinet, floating oak vanity, wardrobe under the eaves, steel-and-oak dining table, charcoal tall unit); three are new: a timber-topped steel-frame bar counter, a supermarket deli island, and a painted cabinet with drawer and panelled doors.
+- The grid is now a staggered layout where each photo keeps its own shape (the mix of portrait and landscape shots would have been badly cropped in uniform tiles). New images are in `public/images` at 800 and 1600 px wide (WebP); entries added to `img` in `src/content.js` with descriptive alt text.
+- Considered and left out: duplicates of the same kitchens, unfinished handover shots (bare plaster, cables, sticker residue), cluttered lived-in kitchens, workshop and in-progress shots, shots with people, and phone-watermarked photos (the one watermarked photo used, the deli island, is cropped to remove it).
+- **To check with Trevor:** the deli island shows a SuperSpar sign in the background and the bar counter shows a computer and a fire alarm; confirm he is happy to show these clients' spaces. The plain captioned list (no JavaScript / reduced motion) still uses the earlier six projects.
+
+
+### Update: footer colours reversed (15 October 2026)
+
+- The footer is now white with dark text instead of black with white text, so it contrasts with the black Contact section above it. Buttons use their normal light-background styles (blue "Book a site consultation", outlined "WhatsApp Trevor"). Secondary labels use the dark text colour rather than the light beige, which would be hard to read on white. Dividers stay in the light beige hairline colour.
+
+
+### Update: service area is now Gauteng (15 October 2026)
+
+- "Greater Johannesburg" is now "Gauteng" wherever it appears on the site: the Contact section and footer (Area), the line under the logo in the hero ("Bespoke kitchens, bathrooms and interiors / Gauteng"), the search-engine data (`areaServed`) and the no-JavaScript fallback text. Earlier entries in this log still say "Greater Johannesburg" because they describe what was true at the time. The word "Johannesburg" on its own (header tagline, footer text, page title) is unchanged.
+
+
+### Update: section headings unified, with eyebrows (15 October 2026)
+
+- Every section heading now has a small label above it with that section's navigation name ("Services" above "Areas of Expertise", "Process" above "Concept to completion", "Trevor" above "The Artisan", "Work" above "Built and installed", "Contact" above "Book a site consultation"). The label comes from the navigation list, so it stays in step if a nav name changes.
+- All five headings are now exactly alike: same size (55 px desktop, 30 px phone), same regular weight, same spacing (measured: 49 px from the rule to the label and 12 px from the label to the title on desktop, identical in every section). Trevor's heading used to be larger and Services had its own centred spacing; both variants are gone. The Services heading still stays pinned while its cards stack, and the nav jumps still land with the section top under the header.
+- The Work heading is only visible in the plain list (no JavaScript or reduced motion); in the zoom, the "Top Draw / PROJECTS" lockup is that section's heading, unchanged.
+
+
+### Update: arrows on the section labels (15 October 2026)
+
+- Each small section label now starts with a small right-pointing arrow, drawn as an inline SVG so its left tip sits on the same vertical line as the left edge of the large heading below it; the label text is pushed about 26 px to the right by the arrow. Measured on desktop and phone: the arrow is within 2 px of where each title's first letter starts (the spread is just the letter shapes). The arrow takes the label's colour (blue on light sections, light beige on the dark Contact section).
+
+
+### Update: Trevor heading stays in frame (15 October 2026)
+
+- On desktop the "The Artisan" heading (rule, "Trevor" label and title) now stays pinned under the site header while the steel, balustrade and timber drawing animates, instead of scrolling away just before the animation starts. The drawing stage pins directly below it. Fitting the heading in meant tightening the pinned stage slightly (less padding, a smaller gap above the chapter list; on windows under 860 px tall the intro sentence steps down a size). Measured at 1440x900, 1366x768, 1920x1080 and 1536x730: the heading stays at the same position through the whole animation and nothing in the stage runs outside its area. Phones and reduced motion are unchanged (no pinning).
+
+
+### Update: eight more photos in the Projects grid (15 October 2026)
+
+- The grid now has twenty photos. Added eight more from Trevor's album: two already on the site (the charcoal island kitchen with wrapped pendants, and the loft balustrade) and six new (white gloss kitchen with black granite peninsula and glass pendants; laundry in white and charcoal; pale oak tall cabinets around a stainless fridge; long bathroom vanity with two basins; light woodgrain kitchen with black granite and an eye-level oven; floor-to-ceiling white wardrobe wall). New images are in `public/images` at 800 and 1600 px (WebP), with alt text in `src/content.js`.
+- Left out: duplicates of kitchens already shown, rooms with clutter or an orange colour cast, an oversized file that would not convert, and anything with people in frame. The pet dogs in one kitchen photo were why that one was skipped.
+- **To check with Trevor:** the fridge unit photo shows a visible brand name (Hisense), and these are clients' homes, so confirm he has permission to show them.
+
+
+### Update: site visit fee removed (15 October 2026)
+
+- Trevor has scrapped the R795 site visit / consultation fee for now. Removed the "Site visit R795" line from the Contact details table and from the footer, and deleted the `siteVisit` value from `src/content.js`. No other page text mentioned the fee. Earlier README entries still mention R795 because they describe what was true then. To bring a fee back, add the line and value again.
+- The Process section's text and the Process PDF draft sent to Trevor earlier also described the R795 consultation fee; the live Process copy no longer mentions it, but the old PDF is out of date.
+
 ### Session summary: branch `feature/work-glyph-portal` (13 October 2026)
 
 **Prepared for:** Dasendhran Subramoney
@@ -337,3 +392,9 @@ Rebuilt the Process section from Trevor's workflow PDF (Rev 1) as a project prog
 ### Merge note: branch `feature/services-scroll-stack` with Das's main (14 October 2026)
 
 - This branch (Services Scroll Stack with a pinned heading, the "The Artisan" heading, instant nav jumps, and the rebuilt footer) was merged with Das's changes on `main` (the Process programme redesign and the removal of the Trade section). There were no text conflicts. Checked after the merge: nothing still points at the removed Trade section (the nav and footer links come from the same list), the nav jumps land correctly on every section including the new pinned Process, the Services stack and the Projects gallery behave as before, the footer has no overflow at 1440, 1024 or 390 px, and the production build passes.
+
+### Session summary (15 October 2026)
+
+**Prepared for:** Dasendhran Subramoney
+
+Projects: the drag gallery after the PROJECTS zoom was removed and replaced by a still, staggered grid of twenty project photos on black (twelve chosen from Trevor's album, then eight more; nine were already on the site, the rest are new). Footer: reversed to white with dark text. Service area changed from "Greater Johannesburg" to "Gauteng" everywhere. The R795 site visit fee was removed from Contact and the footer (Trevor has scrapped it for now). Section headings: every heading now has a small label with that section's nav name, led by an arrow whose tip lines up with the heading, and all five headings share one size, weight and spacing. The Trevor heading stays pinned while its drawing animates. Still to supply or decide: Instagram and Facebook links, project suburbs, confirmation that WhatsApp uses 082 332 1112, Trevor's OK on the line under PROJECTS and on showing the clients' homes and shops in the photo grid, the hero photo behind PROJECTS, and the logo typeface if one is chosen.

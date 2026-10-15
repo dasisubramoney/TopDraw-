@@ -1,16 +1,18 @@
 import { useRef } from 'react'
+import { nav } from '../content.js'
 import { useMotionEffect } from '../lib/motion.js'
 
-// Section header: a full-width rule with the title under it. `titleBelow` makes the title larger.
-// `centered` sets the title midway between this rule and the line that follows the header
-// `pinned` keeps the whole header (rule and title, on an opaque background) fixed under the site
-// header for as long as its parent is on screen; the space below it becomes padding so the
-// background covers it, and it needs `centered`.
-// (the same total space, split evenly above and below), measured from the top of the capitals
-// to the baseline, which is how the eye reads a heading; the small 0.14em nudge down is that
-// correction (the line box has more space above the capitals than below the baseline).
-export default function SectionHead({ title, id, dark = false, titleBelow = false, centered = false, pinned = false }) {
+// The one section header used by every section, so they all match: a full-width rule, a small
+// eyebrow (the section's name from the navigation bar, found from the heading id, e.g.
+// "services-title" -> "Services"), then the title. The space above the eyebrow and below the
+// title is the same everywhere (--head-gap), and the title is always the same size and weight.
+// A small arrow leads the eyebrow: its left edge lines up with the title's left edge, which
+// pushes the eyebrow text a little to the right.
+// `pinned` keeps the whole header fixed under the site header for as long as its parent is on
+// screen (opaque background; the space below becomes padding so the background covers it).
+export default function SectionHead({ title, id, dark = false, pinned = false }) {
   const rule = useRef(null)
+  const eyebrow = nav.find((n) => id.startsWith(n.id))?.label
 
   useMotionEffect(({ gsap }) => {
     const tween = gsap.fromTo(
@@ -25,18 +27,24 @@ export default function SectionHead({ title, id, dark = false, titleBelow = fals
   })
 
   return (
-    <header className={`${pinned ? "sticky top-[var(--header-h)] z-20 bg-mist pb-8 lg:pb-[var(--head-gap)]" : `relative ${centered ? "mb-8 lg:mb-[var(--head-gap)]" : "mb-12 lg:mb-20"}`}`} style={centered ? { "--head-gap": "50px" } : undefined}>
+    <header
+      className={`section-head ${pinned ? 'sticky top-[var(--header-h)] z-20 bg-mist pb-[var(--head-gap)]' : 'relative mb-[var(--head-gap)]'}`}
+      style={{ '--head-gap': 'clamp(28px, 3.4vw, 50px)' }}
+    >
       <div ref={rule} aria-hidden="true" className={`h-px origin-left ${dark ? 'bg-rule' : 'bg-ink'}`} />
-      <div className={centered ? "pt-8 lg:pt-[var(--head-gap)]" : "pt-4 lg:pt-5"}>
-        {titleBelow ? (
-          <h2 id={id} className="mt-5 text-display-xl lg:mt-8">
-            {title}
-          </h2>
-        ) : (
-          <h2 id={id} className={`text-display-l lg:max-w-[75%] ${centered ? "relative top-[0.14em]" : ""}`}>
-            {title}
-          </h2>
+      <div className="pt-[var(--head-gap)]">
+        {eyebrow && (
+          <p className={`label flex items-center gap-2.5 ${dark ? 'text-rule' : 'text-steel'}`}>
+            {/* Drawn arrow, so its left tip sits exactly on the title's left edge (no font side bearing). */}
+            <svg aria-hidden="true" viewBox="0 0 16 10" className="h-[10px] w-4 shrink-0" fill="none" stroke="currentColor" strokeWidth="1.4">
+              <path d="M0 5h14.5M10.5 1l4 4-4 4" />
+            </svg>
+            {eyebrow}
+          </p>
         )}
+        <h2 id={id} className="mt-3 text-display-l lg:max-w-[75%]">
+          {title}
+        </h2>
       </div>
     </header>
   )

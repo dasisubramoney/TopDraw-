@@ -23,12 +23,12 @@ const icons = {
 // adapted to the site (no newsletter, no dark-mode switch, no rounded corners).
 export default function Footer() {
   return (
-    <footer className="on-dark bg-ink pb-[calc(32px+env(safe-area-inset-bottom,0px))] text-paper">
+    <footer className="bg-paper pb-[calc(32px+env(safe-area-inset-bottom,0px))] text-ink">
       <div className="wrap">
-        <div className="grid gap-12 border-t border-rule pt-12 sm:grid-cols-2 lg:grid-cols-12 lg:gap-x-[var(--gutter)] lg:pt-16">
+        <div className="grid gap-12 pt-12 sm:grid-cols-2 lg:grid-cols-12 lg:gap-x-[var(--gutter)] lg:pt-16">
           <div className="sm:col-span-2 lg:col-span-5">
             <p className="font-display text-display-m">Let’s talk about your project.</p>
-            <p className="mt-4 max-w-[40ch] text-[0.9375rem] text-rule">
+            <p className="mt-4 max-w-[40ch] text-[0.9375rem] text-ink">
               Bespoke cabinetry, furniture and interiors in Johannesburg. Call, message or book a site visit.
             </p>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
@@ -43,7 +43,7 @@ export default function Footer() {
           </div>
 
           <nav aria-label="Footer" className="lg:col-span-2">
-            <p className="anno text-rule">Quick links</p>
+            <p className="anno text-ink">Quick links</p>
             <ul className="mt-3 flex flex-col">
               {nav.map((n) => (
                 <li key={n.id}>
@@ -56,10 +56,10 @@ export default function Footer() {
           </nav>
 
           <div className="lg:col-span-3">
-            <p className="anno text-rule">Contact us</p>
+            <p className="anno text-ink">Contact us</p>
             <address className="mt-3 flex flex-col gap-3 not-italic">
               <div>
-                <p className="anno text-rule">Phone</p>
+                <p className="anno text-ink">Phone</p>
                 {contact.phoneHref ? (
                   <a className="link-underline inline-flex min-h-11 items-center" href={contact.phoneHref}>
                     {contact.phoneDisplay}
@@ -69,7 +69,7 @@ export default function Footer() {
                 )}
               </div>
               <div>
-                <p className="anno text-rule">Email</p>
+                <p className="anno text-ink">Email</p>
                 {contact.email.includes('@') ? (
                   <a className="link-underline inline-flex min-h-11 items-center break-all" href={`mailto:${contact.email}`}>
                     {contact.email}
@@ -79,25 +79,24 @@ export default function Footer() {
                 )}
               </div>
               <div>
-                <p className="anno text-rule">Area</p>
+                <p className="anno text-ink">Area</p>
                 <p>{contact.area}</p>
-                <p className="text-rule">Site visit {contact.siteVisit}</p>
               </div>
             </address>
           </div>
 
           <div className="lg:col-span-2">
-            <p className="anno text-rule">Hours</p>
+            <p className="anno text-ink">Hours</p>
             <dl className="mt-3 flex flex-col gap-3">
               {contact.hours.map((h) => (
                 <div key={h.days}>
-                  <dt className="anno text-rule">{h.days}</dt>
+                  <dt className="anno text-ink">{h.days}</dt>
                   <dd>{h.time}</dd>
                 </div>
               ))}
             </dl>
 
-            <p className="anno mt-8 text-rule">Follow us</p>
+            <p className="anno mt-8 text-ink">Follow us</p>
             <ul className="mt-3 flex gap-3">
               {contact.social.map((s) => (
                 <li key={s.label}>
@@ -106,14 +105,14 @@ export default function Footer() {
                       href={s.href}
                       target="_blank"
                       rel="noopener"
-                      className="inline-flex h-11 w-11 items-center justify-center border border-rule transition-colors duration-200 hover:bg-paper hover:text-ink"
+                      className="inline-flex h-11 w-11 items-center justify-center border border-ink transition-colors duration-200 hover:bg-ink hover:text-paper"
                     >
                       {icons[s.label]}
                       <span className="sr-only">{s.label} (opens in a new tab)</span>
                     </a>
                   ) : (
                     // Placeholder until the real address is supplied (see content.js).
-                    <span className="inline-flex h-11 w-11 items-center justify-center border border-dashed border-rule text-rule" title={`${s.label} ${s.href}`}>
+                    <span className="inline-flex h-11 w-11 items-center justify-center border border-dashed border-ink text-ink" title={`${s.label} ${s.href}`}>
                       {icons[s.label]}
                       <span className="sr-only">
                         {s.label} {s.href}
@@ -126,7 +125,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="anno mt-12 flex flex-col gap-3 border-t border-rule pt-6 text-rule sm:flex-row sm:items-center sm:justify-between lg:mt-16">
+        <div className="anno mt-12 flex flex-col gap-3 border-t border-rule pt-6 text-ink sm:flex-row sm:items-center sm:justify-between lg:mt-16">
           <span>© {new Date().getFullYear()} Top Draw. All work shown designed, built and installed by Top Draw.</span>
           <a href="#top" className="link-underline inline-flex min-h-11 items-center">
             Back to top ↑

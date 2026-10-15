@@ -123,7 +123,6 @@ export default function Contact() {
                 ['Phone', contact.phoneHref ? <a className="link-underline" href={contact.phoneHref}>{contact.phoneDisplay}</a> : contact.phoneDisplay],
                 ['Email', contact.email.includes('@') ? <a className="link-underline" href={`mailto:${contact.email}`}>{contact.email}</a> : contact.email],
                 ['Area', contact.area],
-                ['Site visit', contact.siteVisit],
               ].map(([k, v]) => (
                 <div key={k} className="grid grid-cols-[5.5rem_1fr] gap-4 border-b border-rule py-3">
                   <dt className="anno pt-[0.3rem] text-rule">{k}</dt>
