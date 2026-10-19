@@ -10,9 +10,10 @@ import { useMotionEffect } from '../lib/motion.js'
 // pushes the eyebrow text a little to the right.
 // `pinned` keeps the whole header fixed under the site header for as long as its parent is on
 // screen (opaque background; the space below becomes padding so the background covers it).
-export default function SectionHead({ title, id, dark = false, pinned = false }) {
+// `eyebrow` overrides the nav-derived name, for sections that are not in the navigation.
+export default function SectionHead({ title, id, dark = false, pinned = false, eyebrow: eyebrowText }) {
   const rule = useRef(null)
-  const eyebrow = nav.find((n) => id.startsWith(n.id))?.label
+  const eyebrow = eyebrowText ?? nav.find((n) => id.startsWith(n.id))?.label
 
   useMotionEffect(({ gsap }) => {
     const tween = gsap.fromTo(

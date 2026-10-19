@@ -6,6 +6,7 @@ import Services from './components/Services.jsx'
 import Process from './components/Process.jsx'
 import Trevor from './components/Trevor.jsx'
 import Work from './components/Work.jsx'
+import Partner from './components/Partner.jsx'
 import Contact from './components/Contact.jsx'
 import Footer from './components/Footer.jsx'
 
@@ -25,6 +26,7 @@ export default function App() {
         <Process />
         <Trevor />
         <Work />
+        <Partner />
         <Contact />
       </main>
       <Footer />

@@ -418,3 +418,16 @@ Rebuilt the Process section from Trevor's workflow PDF (Rev 1) as a project prog
 
 Projects: the drag gallery after the PROJECTS zoom was removed and replaced by a still, staggered grid of twenty project photos on black (twelve chosen from Trevor's album, then eight more; nine were already on the site, the rest are new). Footer: reversed to white with dark text. Service area changed from "Greater Johannesburg" to "Gauteng" everywhere. The R795 site visit fee was removed from Contact and the footer (Trevor has scrapped it for now). Section headings: every heading now has a small label with that section's nav name, led by an arrow whose tip lines up with the heading, and all five headings share one size, weight and spacing. The Trevor heading stays pinned while its drawing animates. Still to supply or decide: Instagram and Facebook links, project suburbs, confirmation that WhatsApp uses 082 332 1112, Trevor's OK on the line under PROJECTS and on showing the clients' homes and shops in the photo grid, the hero photo behind PROJECTS, and the logo typeface if one is chosen.
 Process: the timeline notes became a "How long it takes" block with large working-day figures and a "Please note" panel, and the grid background was replaced by a drawing-sheet frame. Contact: a letter-style form and a globe were tried and removed; the section is now a dark Johannesburg street map (OpenStreetMap) with a step-by-step form. Added shadcn-style structure and TypeScript support (`@` alias, `components.json`, `src/lib/utils.ts`, `src/components/ui/`).
+
+### Update: steel partner section (19 October 2026)
+
+- New section between Work and Contact: "Need steel or sheet metal work?" Trevor recommends BoerBoel Sheet Metal Fabrication (https://www.sheetmetal.co.za/index.html) for work beyond joinery, with their main services listed (taken from their website). A "Visit BoerBoel" button opens their site in a new tab, with "Mention Top Draw when you get in touch." beside it.
+- Trevor earns a commission on referrals, so the section discloses it: "Top Draw is a referral partner of BoerBoel and may earn a referral fee when you do business with them." The link is marked `rel="sponsored"` for search engines. Copy is in `partner` in `src/content.js`.
+- To do: agree with BoerBoel how referrals are tracked (a referral code or tracked link), and replace the link if they provide one.
+- BoerBoel's logo now sits under the "Visit BoerBoel" button and also links to their site. Their site only has a white logo, so it was recoloured to the site's ink colour for the white section (`public/images/partner-boerboel.webp`). Worth confirming with BoerBoel that they are happy for their logo to be used.
+
+### Session summary (19 October 2026)
+
+**Prepared for:** Dasendhran Subramoney
+
+Added a "Steel partner" section between Work and Contact recommending BoerBoel Sheet Metal Fabrication (sheetmetal.co.za), with their services, a "Visit BoerBoel" button, their logo (recoloured to ink) linking to their site, and a disclosure that Top Draw may earn a referral fee. To do: agree a referral code or tracked link with BoerBoel, and confirm they are happy for their logo to be used.

@@ -286,3 +286,18 @@ export const work = [
 export const sectors = ['Residential', 'Commercial']
 
 export const projectTypes = ['Kitchen', 'Bathroom', 'Dressing room or built-in cupboards', 'Furniture', 'Full turnkey project', 'Trade project (to spec)', 'Something else']
+
+// Referral partner. Trevor earns a commission when someone he refers does business with them,
+// so the section says so (fair-trading and advertising rules expect the relationship disclosed).
+// Services and history are taken from their website (October 2026).
+export const partner = {
+  name: 'BoerBoel Sheet Metal Fabrication',
+  url: 'https://www.sheetmetal.co.za/index.html',
+  title: 'Need steel or sheet metal work?',
+  intro:
+    'Trevor started out in steel. When a job calls for more than joinery, such as laser-cut panels, bent and powder-coated steel, welded frames or electrical enclosures, he recommends BoerBoel Sheet Metal Fabrication, in business since 1983.',
+  services: ['Laser and plasma cutting', 'CNC bending and punching', 'CNC tube bending', 'Welding and fabrication', 'Powder coating and painting', 'Electrical enclosures', 'CNC machining'],
+  cta: 'Visit BoerBoel',
+  mention: 'Mention Top Draw when you get in touch.',
+  disclosure: 'Top Draw is a referral partner of BoerBoel and may earn a referral fee when you do business with them.',
+}
