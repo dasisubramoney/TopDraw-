@@ -431,3 +431,30 @@ Process: the timeline notes became a "How long it takes" block with large workin
 **Prepared for:** Dasendhran Subramoney
 
 Added a "Steel partner" section between Work and Contact recommending BoerBoel Sheet Metal Fabrication (sheetmetal.co.za), with their services, a "Visit BoerBoel" button, their logo (recoloured to ink) linking to their site, and a disclosure that Top Draw may earn a referral fee. To do: agree a referral code or tracked link with BoerBoel, and confirm they are happy for their logo to be used.
+
+### Update: Work link opens the gallery (20 October 2026)
+
+- Clicking "Work" in the navigation (desktop or mobile menu), or any other link to `#work`, now jumps straight to the photo gallery, skipping the PROJECTS zoom intro and the kitchen photo behind it. Scrolling down the page normally still plays the intro. The target is set in `jumpTargets` in `src/lib/motion.js`.
+- Follow-up: once a link to Work has been used, the PROJECTS zoom intro is removed for the rest of the visit, so scrolling back up from the gallery goes straight into the Trevor section instead of replaying the dark kitchen screen. Visitors who never use the link still get the intro when they scroll down. (`OPEN_WORK` event in `src/lib/motion.js`, handled in `Work.jsx`.)
+
+### Update: full-screen gallery (20 October 2026)
+
+- New "Gallery" item in the navigation (desktop and mobile menu). It opens the twenty project photos full screen, one photo per screen with its description underneath and a "3 of 20" counter. Move between photos by scrolling, swiping, the arrow keys, or the up/down buttons; Close or Escape returns to the page exactly where you were.
+- Clicking any photo in the Work grid opens the gallery at that photo.
+- Built on the browser's `<dialog>` (focus stays inside while open; screen readers announce it as "Project gallery"). Full-size photos load only when the gallery opens. Code in `src/components/Gallery.jsx`; the photo order (`galleryOrder`) is shared with the Work grid.
+
+### Pre-launch check for Netlify (20 October 2026)
+
+**Prepared for:** Dasendhran Subramoney
+
+- Clean install (`npm ci`) and build tested in a fresh copy of the repo, as Netlify will run them: both succeed with no warnings.
+- `netlify.toml` now pins Node 22 (Vite 8 needs Node 20.19 or newer). Build command `npm run build`, publish folder `dist`.
+- All 54 image, video and font paths, and every code import, match the file names exactly (Netlify's servers are case-sensitive; Windows is not).
+- The page has one Netlify form definition, `consultation` (the hidden form in `index.html`, with the honeypot), covering every field the contact form sends. The duplicate `data-netlify` on the React form was removed.
+- Smoke test of the production build at 1440, 768 and 375 px and with reduced motion: no console errors, no broken images or failed requests, no sideways scrolling, nav, Work, Gallery and the contact form all work.
+- Placeholders are hidden on the live page until real details are added: the footer "Follow us" icons appear once a real Instagram or Facebook URL is in `src/content.js`, and project suburbs appear once `[SUBURB]` is replaced.
+
+**After connecting the repo in Netlify:**
+1. Build settings are read from `netlify.toml`; leave the build command and publish directory as they are.
+2. In Site configuration > Forms, turn on form detection, then redeploy, so the consultation form is picked up. Add a form notification to topdraw19@gmail.com so Trevor receives each request.
+3. Once the site has its real address, change `VITE_SITE_URL` in `.env` (canonical link, social sharing image, Google business details), commit and push.

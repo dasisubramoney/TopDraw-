@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
-import { work } from '../content.js'
-import { loadMotion, useMotionEffect, useReducedMotion } from '../lib/motion.js'
+import { img, work } from '../content.js'
+import { galleryOrder, openGallery } from './Gallery.jsx'
+import { OPEN_WORK, loadMotion, useMotionEffect, useReducedMotion } from '../lib/motion.js'
 import SectionHead from './SectionHead.jsx'
 import Picture from './Picture.jsx'
 import { Leader } from './Annotations.jsx'
@@ -49,7 +50,7 @@ function WorkContent() {
                 <figcaption className="mt-3 border-b border-rule pb-3">
                   <div className="flex items-baseline justify-between gap-4">
                     <h3 className="label">{w.type}</h3>
-                    <span className="anno">{w.place}</span>
+                    {!w.place.startsWith('[') && <span className="anno">{w.place}</span>}
                   </div>
                   <p className="mt-1.5 text-[0.9375rem] leading-[1.5]">{w.text}</p>
                 </figcaption>
@@ -87,14 +88,17 @@ function WorkSummary() {
 // cropped. Decorative (the captioned list is the content for assistive tech; see WorkSummary).
 // Twenty photos chosen from Trevor's album: finished, well-lit work across kitchens, bathrooms,
 // built-ins, furniture and shopfitting.
-const gridOrder = ['kitchen2', 'library', 'dining', 'loftShell', 'vanityOak', 'glossKitchen', 'kitchenTile', 'hutch', 'laundry', 'deli', 'newBuild', 'vanityInstall', 'fridgeUnit', 'wardrobe', 'longVanity', 'tallUnit', 'balustrade', 'graniteKitchen', 'barCounter', 'wardrobeWall']
+// The order is shared with the full-screen gallery (galleryOrder in Gallery.jsx); each photo
+// opens the gallery at that photo.
 function PhotoGrid() {
   return (
     <div className="bg-ink">
-      <ul aria-hidden="true" className="wrap columns-2 gap-4 py-24 sm:gap-6 lg:columns-4 lg:gap-8 lg:py-36">
-        {gridOrder.map((k) => (
+      <ul className="wrap columns-2 gap-4 py-24 sm:gap-6 lg:columns-4 lg:gap-8 lg:py-36">
+        {galleryOrder.map((k, i) => (
           <li key={k} className="mb-4 break-inside-avoid shadow-[0_22px_48px_-10px_rgba(0,0,0,0.6)] sm:mb-6 lg:mb-8">
-            <Picture k={k} alt="" sizes="(min-width: 1024px) 24vw, 46vw" className="block h-auto w-full" />
+            <button type="button" onClick={() => openGallery(i)} className="group block w-full cursor-zoom-in" aria-label={`View full screen: ${img[k].alt}`}>
+              <Picture k={k} alt="" sizes="(min-width: 1024px) 24vw, 46vw" className="block h-auto w-full transition-opacity duration-200 group-hover:opacity-90" />
+            </button>
           </li>
         ))}
       </ul>
@@ -109,6 +113,14 @@ export default function Work() {
   const root = useRef(null)
   const reduced = useReducedMotion()
   const [parts, setParts] = useState(null)
+  // Set when a link to Work is followed: show the gallery directly, without the zoom intro.
+  const [direct, setDirect] = useState(false)
+
+  useEffect(() => {
+    const open = () => setDirect(true)
+    window.addEventListener(OPEN_WORK, open)
+    return () => window.removeEventListener(OPEN_WORK, open)
+  }, [])
   const Portal = parts?.Portal
 
   useEffect(() => {
@@ -166,6 +178,15 @@ export default function Work() {
     },
     [Portal],
   )
+
+  if (direct) {
+    return (
+      <section id="work" ref={root} aria-labelledby="work-title" className="on-dark bg-ink text-paper">
+        <WorkSummary />
+        <PhotoGrid />
+      </section>
+    )
+  }
 
   return (
     <section id="work" ref={root} aria-labelledby="work-title" className={Portal ? '' : 'section-pad bg-mist'}>

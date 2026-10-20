@@ -77,8 +77,9 @@ export function useSmoothScroll(reduced) {
         const el = id ? document.getElementById(id) : document.documentElement
         if (!el) return
         e.preventDefault()
+        if (!a.closest('.work-portal')) announce(id)
         if (a.closest('.work-portal')) lenis.scrollTo(el, { duration: 1.4 })
-        else jumpTo(el)
+        else jumpTo(id ? () => resolveTarget(id) : el)
         if (id) history.replaceState(null, '', '#' + id)
       }
       document.addEventListener('click', onAnchor)
@@ -96,11 +97,22 @@ export function useSmoothScroll(reduced) {
   )
 }
 
+// Where a nav link lands, when it is not the top of the section. Work goes straight to the
+// photo gallery, past the PROJECTS zoom intro (the portal's content panel). The portal only
+// mounts once Work is near the screen, so this is re-resolved while the jump settles.
+const jumpTargets = { work: '#work [data-gp-content]' }
+// Following a link to Work also tells the Work section to drop its zoom intro for the rest of
+// the visit, so scrolling back up from the gallery does not replay it (see Work.jsx).
+export const OPEN_WORK = 'td:open-work'
+const announce = (id) => id === 'work' && window.dispatchEvent(new Event(OPEN_WORK))
+const resolveTarget = (id) => (jumpTargets[id] && document.querySelector(jumpTargets[id])) || document.getElementById(id)
+
 // Jump to a section, respecting reduced motion and the sticky header.
 export function scrollToId(id) {
-  const el = document.getElementById(id)
+  announce(id)
+  const el = resolveTarget(id)
   if (!el) return
-  if (lenis) jumpTo(el)
+  if (lenis) jumpTo(() => resolveTarget(id))
   else el.scrollIntoView({ behavior: 'auto', block: 'start' })
 }
 
@@ -109,14 +121,17 @@ export function scrollToId(id) {
 // screen and makes its section several screens taller), which moves the target; re-checking
 // puts the page back on it. Any scroll input from the visitor stops the correcting.
 let stopCorrecting = () => {}
-function jumpTo(el) {
+function jumpTo(target) {
   stopCorrecting()
-  lenis.scrollTo(el, { immediate: true })
+  const resolve = typeof target === 'function' ? target : () => target
+  lenis.scrollTo(resolve(), { immediate: true })
   const bar = () => parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 0
   const until = performance.now() + 2500
   let frame = 0
   const tick = () => {
     if (performance.now() > until) return stopCorrecting()
+    const el = resolve()
+    if (!el) return stopCorrecting()
     const drift = el.getBoundingClientRect().top - (el === document.documentElement ? 0 : bar())
     if (Math.abs(drift) > 3) lenis.scrollTo(el, { immediate: true })
     frame = requestAnimationFrame(tick)

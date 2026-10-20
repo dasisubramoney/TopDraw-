@@ -96,9 +96,12 @@ export default function Footer() {
               ))}
             </dl>
 
+            {/* Shown only once at least one real social link is in content.js; placeholders stay hidden on the live site. */}
+            {contact.social.some((s) => isUrl(s.href)) && (
+            <>
             <p className="anno mt-8 text-ink">Follow us</p>
             <ul className="mt-3 flex gap-3">
-              {contact.social.map((s) => (
+              {contact.social.filter((s) => isUrl(s.href)).map((s) => (
                 <li key={s.label}>
                   {isUrl(s.href) ? (
                     <a
@@ -122,6 +125,8 @@ export default function Footer() {
                 </li>
               ))}
             </ul>
+            </>
+            )}
           </div>
         </div>
 

@@ -208,7 +208,7 @@ export default function Contact() {
               </p>
             </div>
           ) : (
-            <form name="consultation" method="POST" data-netlify="true" noValidate onSubmit={onSubmit} className="mt-8">
+            <form name="consultation" method="POST" noValidate onSubmit={onSubmit} className="mt-8">
               <input type="hidden" name="form-name" value="consultation" />
               <p className="hidden" aria-hidden="true">
                 <label>

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, m } from 'framer-motion'
 import { hero, nav, whatsappHref } from '../content.js'
 import { getLenis, requestSkipIntro, scrollToId, useReducedMotion } from '../lib/motion.js'
+import { openGallery } from './Gallery.jsx'
 
 function useActiveSection() {
   const [active, setActive] = useState('')
@@ -114,6 +115,18 @@ export default function Header() {
                 </a>
               </li>
             ))}
+            <li>
+              <button
+                type="button"
+                onClick={() => {
+                  requestSkipIntro()
+                  openGallery(0)
+                }}
+                className="label inline-flex min-h-11 cursor-pointer items-center border-b-2 border-transparent pt-[2px] transition-colors duration-200 hover:border-rule"
+              >
+                Gallery
+              </button>
+            </li>
           </ul>
         </nav>
 
@@ -165,6 +178,18 @@ export default function Header() {
                     </a>
                   </li>
                 ))}
+                <li className="border-b border-rule">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setOpen(false)
+                      openGallery(0)
+                    }}
+                    className="flex w-full items-baseline gap-5 py-4 text-left"
+                  >
+                    <span className="font-display text-[1.75rem] leading-tight">Gallery</span>
+                  </button>
+                </li>
               </ul>
               <div className="mt-auto flex flex-col gap-3 pt-10">
                 <a href="#contact" onClick={(e) => go(e, 'contact')} className="btn btn-primary">

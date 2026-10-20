@@ -9,6 +9,7 @@ import Work from './components/Work.jsx'
 import Partner from './components/Partner.jsx'
 import Contact from './components/Contact.jsx'
 import Footer from './components/Footer.jsx'
+import Gallery from './components/Gallery.jsx'
 
 export default function App() {
   const reduced = useReducedMotion()
@@ -30,6 +31,7 @@ export default function App() {
         <Contact />
       </main>
       <Footer />
+      <Gallery />
     </LazyMotion>
   )
 }
