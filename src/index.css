@@ -176,6 +176,11 @@ html[data-intro="play"] .skip-intro { display: inline-flex; align-items: center;
   text-wrap: balance;
 }
 .trevor-chapter-note { padding-top: 32px; }
+/* Phones and tablets: chapter 04 reads "Today" first, then closes on the statement. */
+@media (max-width: 1023px) {
+  .trevor-chapter:has(.trevor-chapter-note) { display: flex; flex-direction: column; }
+  .trevor-chapter:has(.trevor-chapter-note) .trevor-chapter-note { order: 2; padding-top: 4px; padding-bottom: 32px; }
+}
 @media (min-width: 1024px) {
   /* Stacked on desktop (reduced motion / no JavaScript): drawing left, text right. */
   .trevor-chapter { display: grid; grid-template-columns: 55fr 45fr; column-gap: calc(var(--gutter) * 2); align-items: center; }
@@ -310,7 +315,9 @@ html[data-intro="play"] .skip-intro { display: inline-flex; align-items: center;
 .pay-seg:nth-child(2) { background: var(--color-ink); }
 .pay-seg:nth-child(3) { background: var(--color-rule); color: var(--color-ink); }
 
-@media (max-width: 1023px) {
+/* The programme chart needs about 1200px to keep its labels apart; tablets (including
+   landscape) use the stacked stage list with the rail. */
+@media (max-width: 1199px) {
   .process-chart { display: none; }
   .process-steps-wrap { position: relative; padding-left: 30px; }
   .process-rail { position: absolute; left: 5px; top: 8px; bottom: 0; width: 1px; background: var(--color-rule); }
@@ -329,7 +336,7 @@ html[data-intro="play"] .skip-intro { display: inline-flex; align-items: center;
   .process[data-mode="rail"] .process-node { background: var(--color-paper); }
   .process[data-mode="rail"] .process-step[data-lit] .process-node { background: var(--color-steel); }
 }
-@media (min-width: 1024px) {
+@media (min-width: 1200px) {
   .process-rail, .process-node { display: none; }
   /* Static desktop (reduced motion / no JavaScript): chart, then every stage in two columns. */
   .process-steps { display: grid; grid-template-columns: 1fr 1fr; column-gap: calc(var(--gutter) * 2); margin-top: 48px; }
@@ -444,7 +451,7 @@ html[data-intro="play"] .skip-intro { display: inline-flex; align-items: center;
 .cs-progress span[data-state] { opacity: 1; background: var(--color-beige); }
 .cs-progress span[data-state="current"] { background: var(--color-rule); }
 .cs-captions { display: flex; justify-content: space-between; gap: 16px; margin-top: 12px; font-size: 0.9375rem; }
-.cs-upcoming { color: var(--color-rule); opacity: 0.55; text-align: right; }
+.cs-upcoming { color: var(--color-beige); text-align: right; }
 .cs-error { margin-top: 14px; padding-left: 14px; border-left: 2px solid var(--color-beige); color: var(--color-paper); }
 .cs-choices { display: flex; flex-wrap: wrap; gap: 10px; padding-bottom: 12px; }
 .cs-choice {
@@ -563,6 +570,13 @@ html[data-intro="play"] .skip-intro { display: inline-flex; align-items: center;
 .gallery-nav button:disabled { opacity: 0.3; cursor: default; }
 @media (max-width: 639px) {
   .gallery-nav { display: none; }
+}
+
+/* Short screens (landscape phones): the hero fits the screen and the logo panel shrinks. */
+@media (max-height: 520px) {
+  #top { min-height: 0; }
+  #top [data-hero-logo] { padding-block: 12px; }
+  #top [data-hero-logo] img { width: 14rem; }
 }
 
 /* Lenis */

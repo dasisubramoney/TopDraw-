@@ -92,7 +92,7 @@ export default function Header() {
         <a
           href="#top"
           onClick={(e) => go(e, 'top')}
-          className={`flex items-center gap-3 no-underline transition-[opacity,visibility] duration-300 ${showBrand ? 'visible opacity-100' : 'invisible opacity-0'}`}
+          className={`flex min-h-11 items-center gap-3 no-underline transition-[opacity,visibility] duration-300 ${showBrand ? 'visible opacity-100' : 'invisible opacity-0'}`}
         >
           <img src={hero.mark.src} alt="" width={hero.mark.w} height={hero.mark.h} className="h-7 w-auto lg:h-8" />
           <span className="whitespace-nowrap font-display text-[1.375rem] leading-none tracking-[-0.01em] lg:text-[1.5rem]">Top Draw</span>

@@ -153,7 +153,7 @@ export default function Process() {
     const mm = gsap.matchMedia()
 
     // Desktop: pin the programme and scrub a cursor across it.
-    mm.add('(min-width: 1024px)', () => {
+    mm.add('(min-width: 1200px)', () => {
       section.dataset.mode = 'live'
       const stage = section.querySelector('[data-process-stage]')
       const chart = section.querySelector('[data-programme]')
@@ -215,7 +215,7 @@ export default function Process() {
     })
 
     // Mobile: the stage rail fills with scroll; each node lights as its stage arrives.
-    mm.add('(max-width: 1023px)', () => {
+    mm.add('(max-width: 1199px)', () => {
       const list = section.querySelector('[data-process-list]')
       const steps = [...list.querySelectorAll('[data-process-step]')]
       section.dataset.mode = 'rail'
@@ -310,8 +310,8 @@ export default function Process() {
             {timing.items.map((t) => (
               <li key={t.label} className="border-b border-rule py-6 sm:border-b-0 sm:pr-6 [&:not(:first-child)]:sm:border-l [&:not(:first-child)]:sm:pl-6">
                 <h4 className="label">{t.label}</h4>
-                <p className="mt-3 flex items-baseline gap-3">
-                  <span className="font-display text-[clamp(2.75rem,2rem+3vw,4.5rem)] leading-none text-steel">{t.range}</span>
+                <p className="mt-3 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                  <span className="whitespace-nowrap font-display text-[clamp(2.75rem,2rem+3vw,4.5rem)] leading-none text-steel">{t.range}</span>
                   <span className="anno">working days</span>
                 </p>
                 <p className="mt-3 max-w-[40ch]">{t.text}</p>

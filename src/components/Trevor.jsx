@@ -75,7 +75,7 @@ function TitleBlock() {
 
 // Title block reveal: rule draws, statement rises word by word behind a mask.
 function revealTitleBlock(gsap, SplitText, tl, block, at) {
-  const split = SplitText.create(block.querySelector('[data-tb-statement]'), { type: 'words', mask: 'words' })
+  const split = SplitText.create(block.querySelector('[data-tb-statement]'), { type: 'words', mask: 'words', aria: 'none' })
   const rule = block.querySelector('[data-tb-rule]')
   gsap.set(rule, { scaleX: 0 })
   gsap.set(split.words, { yPercent: 105 })

@@ -22,9 +22,9 @@ export default function Partner() {
             {/* BoerBoel's own logo (their white version, recoloured to ink for this light section). */}
             <a href={partner.url} target="_blank" rel="noopener sponsored" className="mt-8 inline-block opacity-90 transition-opacity duration-200 hover:opacity-100">
               <img
-                src="/images/partner-boerboel.webp"
-                width="1503"
-                height="412"
+                src="/images/partner-boerboel-600.webp"
+                width="600"
+                height="164"
                 alt="BoerBoel, laser cutting and sheet metal services"
                 loading="lazy"
                 decoding="async"

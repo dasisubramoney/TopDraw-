@@ -458,3 +458,22 @@ Added a "Steel partner" section between Work and Contact recommending BoerBoel S
 1. Build settings are read from `netlify.toml`; leave the build command and publish directory as they are.
 2. In Site configuration > Forms, turn on form detection, then redeploy, so the consultation form is picked up. Add a form notification to topdraw19@gmail.com so Trevor receives each request.
 3. Once the site has its real address, change `VITE_SITE_URL` in `.env` (canonical link, social sharing image, Google business details), commit and push.
+
+### Mobile and tablet check (20 October 2026)
+
+Audited the production build at 320, 360, 390 and 414 px phones, an 844 x 390 landscape phone, and 768, 820, 1024 x 768 and 1024 x 1366 tablets: overflow, tap-target size, text size, image weight, the pinned sections, and touch behaviour. Fixed:
+- Process programme chart now starts at 1200 px wide. On landscape tablets (1024 px) its labels collided; tablets now get the stacked stage list with the progress rail, as on phones.
+- Landscape phones: the hero no longer forces a 600 px height, and the logo panel shrinks on short screens, so it fits.
+- "How long it takes": the figures (10–20, 7–10, 5–10) no longer break across lines in the three-column layout.
+- Nav logo link enlarged to a 44 px tap area; the TD mark and BoerBoel logo are now served at the size they display (200 px and 600 px versions).
+- Accessibility: removed a disallowed `aria-label` the text animation added to the Trevor statement, and raised the contrast of the faded "next question" hint in the contact form.
+
+Result: no sideways scrolling, no text under 12 px and no console errors at any size. Mobile Lighthouse: accessibility 100, SEO 100, performance 80 to 93 across runs on this machine (the main cost is the work done on first load by the animations, drawings and map). Best practices shows 82 only because local testing is over HTTP; Netlify serves HTTPS. The letter buttons in the PROJECTS intro are 26 to 39 px wide on narrow phones, above the 24 px minimum, and phones also get a dropdown to choose the letter.
+
+- Follow-up: on phones and tablets, chapter 04 now shows the "Today" text first and closes on "The material changed. The standard didn’t." (desktop unchanged).
+
+### Session summary (20 October 2026)
+
+**Prepared for:** Dasendhran Subramoney
+
+Work link opens the gallery directly (and drops the zoom intro afterwards); new full-screen Gallery; pre-launch checks for Netlify (Node 22 pinned, single form definition, case-sensitive paths verified, placeholders hidden); mobile and tablet audit at nine sizes with fixes to the Process chart breakpoint, landscape-phone hero, timing figures, tap targets, logo image sizes and two accessibility issues; chapter 04 order swapped on phones and tablets.

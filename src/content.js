@@ -68,7 +68,7 @@ export const hero = {
     h: 277,
     alt: 'Top Draw Projects.',
   },
-  mark: { src: '/images/logo-mark.webp', w: 467, h: 277 },
+  mark: { src: '/images/logo-mark-200.webp', w: 200, h: 119 },
   descriptor: 'Bespoke kitchens, bathrooms and interiors / Gauteng',
   // Not shown on screen: read by screen readers and search engines as part of the
   // page's main heading, after the logo.
