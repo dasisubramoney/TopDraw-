@@ -1,7 +1,7 @@
-# PRODUCT.md — Top Draw
+# PRODUCT.md — Top Draw Projects
 
 ## One line
-Top Draw designs, builds and installs high-end bespoke cabinetry, furniture and interiors in Johannesburg. One team, led by one craftsman, from site measure to final completion.
+Top Draw Projects designs, builds and installs high-end bespoke cabinetry, furniture and interiors in Gauteng. One team, led by one craftsman, from site measure to final completion.
 
 ## Owner
 Trevor, owner and lead craftsman. Former boilermaker and sheet metal worker (stainless steel fabrication for food and beverage), then architectural metalwork specialising in custom balustrading, then high-end furniture, bespoke cabinetry and interior design. He brings an engineer's tolerances to joinery. Hands-on. Gets it right the first time. Goes the extra mile.

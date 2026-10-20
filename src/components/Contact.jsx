@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { contact, projectTypes, sectors, whatsappHref } from '../content.js'
 
-// Contact: a dark street map of Johannesburg (OpenStreetMap data, see scripts/build-map.py)
+// Contact: a dark section with a plain outline of Gauteng behind it (Natural Earth data, see scripts/build-gauteng-outline.mjs)
 // behind a step-by-step consultation form: one question at a time, a progress line under
 // it and a round "Next" button. Before JavaScript runs (and in the prerendered HTML) every
 // field is listed, so the form never depends on the stepper.
@@ -65,7 +65,7 @@ export default function Contact() {
   // Stepper only once JavaScript is running.
   useEffect(() => setEnhanced(true), [])
 
-  // Load the map image only when the section is close.
+  // Load the outline only when the section is close.
   useEffect(() => {
     const io = new IntersectionObserver(
       ([e]) => {
@@ -169,12 +169,13 @@ export default function Contact() {
 
   return (
     <section id="contact" ref={root} aria-labelledby="contact-title" className="contact-map on-dark bg-ink text-paper">
-      {mapNear && <img src="/images/map-johannesburg.svg" alt="" aria-hidden="true" className="cm-map" decoding="async" />}
-      <div aria-hidden="true" className="cm-pin">
-        <span className="cm-pin-ring" />
-        <span className="cm-pin-dot" />
-        <span className="cm-pin-label">{contact.area}</span>
-      </div>
+      {/* Decorative outline of the province served. It marks no place: no pin, no street, no suburb. */}
+      {mapNear && (
+        <div aria-hidden="true" className="cm-outline">
+          <span className="cm-outline-shape" />
+          <span className="cm-outline-label">{contact.area}</span>
+        </div>
+      )}
 
       <div className="wrap relative section-pad">
         <header className="cm-head">
@@ -289,7 +290,6 @@ export default function Contact() {
           )}
         </div>
       </div>
-      <p className="cm-credit anno">Map data © OpenStreetMap contributors</p>
     </section>
   )
 }
