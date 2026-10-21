@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "verify": "node scripts/verify.mjs",
     "verify:ssl": "node scripts/verify-ssl.mjs",
-    "verify:domain": "node scripts/verify-domain.mjs"
+    "verify:domain": "node scripts/verify-domain.mjs",
+    "deploy": "netlify deploy --prod --site ca761055-fa39-49c6-9361-f0d82f33a930"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.5.0",
