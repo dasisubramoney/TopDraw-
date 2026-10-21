@@ -26,3 +26,5 @@
   [headers.values]
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+    # STOPGAP: keep the staging site out of Google. REMOVE at go-live, then rebuild.
+    X-Robots-Tag = "noindex"
