@@ -21,6 +21,12 @@
     <meta property="og:image:alt" content="Charcoal kitchen with a stone-topped island, built and installed by Top Draw Projects" />
     <meta name="twitter:card" content="summary_large_image" />
 
+    <!-- The hero logo is the largest thing in the first view. Same srcset and sizes as the logo image in Hero.jsx. -->
+    <link rel="preload" as="image" href="/images/logo-top-draw.webp" imagesrcset="/images/logo-top-draw-sm.webp 654w, /images/logo-top-draw.webp 1308w" imagesizes="(min-width: 1024px) 32rem, (min-width: 640px) 28rem, 90vw" fetchpriority="high" />
+    <!-- Fonts used in the first view: body and buttons, the descriptor line, and the mono labels. -->
+    <link rel="preload" href="/fonts/schibsted-grotesk-wght.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/plex-mono-400.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/plex-mono-500.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/newsreader-opsz-400.woff2" as="font" type="font/woff2" crossorigin />
     <!-- Decides the hero intro mode before first paint (see src/components/Hero.jsx). -->
     <script>

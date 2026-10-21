@@ -257,6 +257,38 @@ Branch `feature/seo-foundation`, not committed.
 - Nav jumps: with the new element the first landing on Contact was 1 px off (70.7 px against 71.7 px under the header). The outline was not the cause; see the next entry for the real one. `npm run verify` also fails if a street-map credit or a pin ever returns.
 - **TODO / flag:** the Natural Earth boundary is a 1:10m cartographic boundary, not a survey boundary; fine for a decorative graphic, not for anything that needs exact borders.
 
+### Performance pass on the first view (21 October 2026)
+
+Branch `feature/seo-foundation`, not committed, not deployed.
+
+**Why the live mobile Lighthouse run scored 78** (FCP 2.7 s, LCP 3.3 s, Speed Index 19.1 s). Read from the saved report and reproduced locally with applied throttling (`--throttling-method=devtools`; the project's default simulated mode hides bandwidth contention):
+
+- LCP was not a download problem. The logo is 27 KB and `srcset` picks the right file. The LCP phases were TTFB 6 ms and **element render delay 4,579 ms of 4,585**. During the intro `html[data-intro="play"] .hero-reveal` is `visibility: hidden`, so the title panel only appears when the intro ends or a fallback fires.
+- The inline fallback in `Hero.jsx` waited 2.5 s from when its script ran, not from navigation start. That script runs after the render-blocking CSS, so on a slow link the panel showed about 5.2 s in (live observed LCP 5,274 ms).
+- Speed Index: the hero is empty until the kitchen frame is drawn, which needs enough of the 388 KB intro video to seek to `finalFrame`. On the live run the video (Low priority) shared a roughly 1.5 Mbps link with fonts and scripts and finished at 16.4 s; last visual change 14.8 s.
+- Fonts: only Newsreader was preloaded; the fonts used by the title panel were found only after the CSS parsed.
+
+**Changed:** `fetchpriority="high"` on the hero logo; a preload for the logo (same `srcset`/`sizes`); preloads for Schibsted Grotesk and IBM Plex Mono 400 and 500 (Newsreader stays); the inline fallback now counts 2.5 s from navigation start (`Math.max(0, 2500 - performance.now())`), as the comment in `Hero.jsx` already said it should. The intro animation, captions, video and reveal timeline are untouched.
+
+**Not changed, needs a decision (design):** whenever the intro plays, the title panel is hidden by design, so LCP is gated by the intro. On the React path, when the video has not started by 2.5 s, `finish('stalled')` still waits for the gsap chunk before the wipe reveal; the inline path shows the panel at once. Making both show at once on a stalled start would cut LCP further but changes the reveal for those visitors.
+
+**Measured** (local build, mobile Lighthouse, median of 3, same machine, baseline built from the previous commit):
+
+| | FCP | LCP | TBT | CLS | Speed Index | TTI | Score |
+|---|---|---|---|---|---|---|---|
+| Applied throttling, before | 1.64 s | 4.60 s | 595 ms | 0 | 4.49 s | 4.02 s | 66 |
+| Applied throttling, after | 1.71 s | 2.54 s | 527 ms | 0 | 4.17 s | 4.53 s | 80 |
+| Project script (simulated), before | 1.81 s | 2.56 s | 2 ms | 0 | 1.87 s | 3.20 s | 96 |
+| Project script (simulated), after | 1.81 s | 2.72 s | 3 ms | 0 | 1.82 s | 3.29 s | 95 |
+
+The LCP gain under applied throttling comes from the font preloads and the timer together: with the fonts preloaded React hydrates after 2.5 s, so the inline fallback decides. Without the font preloads that run was unchanged from before (LCP 4.63 s). In the project's simulated mode nothing improved (LCP +0.16 s, within the spread of the before runs). TTI is about 0.3 s later under applied throttling. These are local numbers, not the live Netlify numbers; the live site has not been re-measured.
+
+**Behaviour to know about:** at 1.6 Mbps and 150 ms (three runs each) the old build skipped the intro at 2.5 s because the video had not started; the new build starts the video at about 2.1 s, so the intro plays. At 0.8 Mbps and 300 ms the panel is now visible at 2.5 s, against about 4.8 s (wipe finished about 6.1 s) before.
+
+**Checklist items 13 and 14:** there is no numbered checklist in the repo (`DESIGN.md` section 8 has 8 unnumbered items). Checked from the code: 13, gsap is imported only in `src/lib/motion.js` (`gsap`, `gsap/ScrollTrigger`, `gsap/SplitText`, `gsap/MorphSVGPlugin`; never `gsap/all`), all through `loadMotion()`; MorphSVGPlugin is used (the `morphSVG` tween in `Trevor.jsx`). 14, partly: the motion library loads right after hydration, each animation then starts at its own ScrollTrigger position, but every section's ScrollTrigger and SplitText setup runs at once when gsap lands (the main-thread cost behind TBT under throttling). Contact, Gallery and the glyph portal defer their heavy parts with IntersectionObserver.
+
+**Mistake caught by the checks:** a first attempt removed MorphSVGPlugin as unused (a case-sensitive search missed `morphSVG:`); the console check showed Trevor's tweens warning, and it was put back. A comment containing a literal img tag in `index.html` also made `npm run verify` count a tenth image without alt; reworded.
+
 ### Gallery tiles no longer change height on load (20 October 2026)
 
 Branch `feature/seo-foundation`, not committed.
