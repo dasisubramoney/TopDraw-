@@ -34,6 +34,19 @@ const env = loadEnv('production', process.cwd(), 'VITE_')
 const expectedSite = (process.env.VITE_SITE_URL || env.VITE_SITE_URL || '').replace(/\/+$/, '')
 const { contact, services } = await import(pathToFileURL(resolve('src/content.js')).href)
 
+// Words that must never appear on the public site (the workshop suburb, for one). They are read from
+// .hidden-terms, an untracked, gitignored file, so this repository never names them. One term per line;
+// blank lines and lines starting with # are ignored. Without the file, only streetAddress and postalCode
+// are checked, and the script says so.
+const hiddenTerms = existsSync(resolve('.hidden-terms'))
+  ? readFileSync(resolve('.hidden-terms'), 'utf8').split(/\r?\n/).map((l) => l.trim()).filter((l) => l && !l.startsWith('#'))
+  : []
+const hiddenRe = hiddenTerms.length
+  ? new RegExp(hiddenTerms.map((t) => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&').replace(/\s+/g, '\\s*')).join('|'), 'i')
+  : null
+const hiddenNote = hiddenRe ? '' : '.hidden-terms not found: only streetAddress and postalCode were checked'
+const hasHiddenTerm = (s) => (hiddenRe ? hiddenRe.test(s) : false)
+
 let failures = 0
 const results = []
 const check = (name, ok, detail = '') => {
@@ -86,7 +99,7 @@ check('Email in raw HTML', text.includes(contact.email))
 check(`Service area "${contact.area}" in raw HTML`, text.includes(contact.area))
 check('No "[PLACEHOLDER]" text visible', !/\[(SUBURB|INSTAGRAM URL|FACEBOOK URL|PHONE|EMAIL|AREA)\]/.test(text))
 check('No %VITE_SITE_URL% in the page', !html.includes('%VITE_SITE_URL%'))
-check('Hidden address stays hidden: "Florida Glen" / street / postal code appear nowhere in the page', !/florida\s*glen/i.test(html) && !/streetAddress|postalCode/.test(html))
+check('Hidden address stays hidden: no workshop suburb, street or postal code anywhere in the page', !hasHiddenTerm(html) && !/streetAddress|postalCode/.test(html), hiddenNote)
 check('No street-map credit or location marker left in the page (no OpenStreetMap, no pin)', !/OpenStreetMap|Map data/i.test(html) && !/cm-pin/.test(html))
 check('<title> present', /<title>[^<]{10,}<\/title>/.test(html))
 check('meta description present', /<meta name="description" content="[^"]{50,}"/.test(html))
@@ -112,7 +125,7 @@ check('sitemap <loc> uses VITE_SITE_URL', local || sm.text.includes(`<loc>${expe
 const llms = await get('/llms.txt')
 check('/llms.txt 200', llms.status === 200)
 check('llms.txt hours: Monday to Friday, 08:00 to 17:00, closed Saturday and Sunday', /Opening hours: Monday to Friday, 08:00 to 17:00\. Closed Saturday and Sunday\./.test(llms.text))
-check('llms.txt does not contain a street address', !/florida\s*glen/i.test(llms.text))
+check('llms.txt does not contain a street address', !hasHiddenTerm(llms.text) && !/streetAddress|postalCode/.test(llms.text), hiddenNote)
 check('llms.txt names the business, phone, email and area', llms.text.startsWith('# Top Draw Projects') && llms.text.includes(contact.email) && llms.text.includes(contact.area) && /\+27\s?82\s?332\s?1112/.test(llms.text))
 
 // ---- 4. noindex on the *.netlify.app hostname only ---------------------------------------------

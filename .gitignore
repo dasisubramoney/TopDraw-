@@ -6,3 +6,6 @@ dist
 screenshots
 dist-ssr
 lighthouse-reports
+
+# Local-only list of terms scripts/verify.mjs must not find on the site
+.hidden-terms
