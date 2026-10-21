@@ -11,6 +11,8 @@ export const contact = {
   whatsappNumber: '27823321112',
   whatsappMessage: 'Hi Trevor, I found Top Draw online and would like to talk about a project.',
   area: 'Gauteng',
+  // Consultation fee (Trevor, October 2026): first visit free, further visits hourly, agreed with the client.
+  consultation: { first: 'First visit free', further: 'Further visits: hourly rate, agreed with you' },
   hours: [
     { days: 'Mon to Fri', time: '08:00 to 17:00' },
     { days: 'Sat and Sun', time: 'Closed' },
@@ -164,6 +166,7 @@ export const process = {
       short: 'Visit and quote',
       title: 'Site visit and quotation',
       text: 'We visit your space to take measurements and talk through your needs, your preferences and how you use the room. Once the scope is clear, you get a quotation, a preliminary design concept and a proposed project timeline.',
+      note: 'The first consultation visit is free. Any further consultation visits are charged at an hourly rate, discussed and agreed with you first.',
     },
     {
       short: 'Sign-off',
@@ -285,7 +288,7 @@ export const work = [
 
 export const sectors = ['Residential', 'Commercial']
 
-export const projectTypes = ['Kitchen', 'Bathroom', 'Dressing room or built-in cupboards', 'Furniture', 'Full turnkey project', 'Trade project (to spec)', 'Something else']
+export const projectTypes = ['Kitchen', 'Bathroom', 'Dressing room or built-in cupboards', 'Furniture', 'Full turnkey project', 'Trade project (to spec)', 'Installing BoerBoel steel or sheet metal work', 'Something else']
 
 // Referral partner. Trevor earns a commission when someone he refers does business with them,
 // so the section says so (fair-trading and advertising rules expect the relationship disclosed).
@@ -298,6 +301,16 @@ export const partner = {
     'Trevor started out in steel. When a job calls for more than joinery, such as laser-cut panels, bent and powder-coated steel, welded frames or electrical enclosures, he recommends BoerBoel Sheet Metal Fabrication, in business since 1983.',
   services: ['Laser and plasma cutting', 'CNC bending and punching', 'CNC tube bending', 'Welding and fabrication', 'Powder coating and painting', 'Electrical enclosures', 'CNC machining'],
   cta: 'Visit BoerBoel',
-  mention: 'Mention Top Draw when you get in touch.',
-  disclosure: 'Top Draw is a referral partner of BoerBoel and may earn a referral fee when you do business with them.',
+  referral: {
+    label: 'When you contact BoerBoel',
+    headline: 'Tell them Top Draw referred you.',
+    text: 'Mention Top Draw by name when you call, email or ask for a quote, so BoerBoel knows Trevor sent you.',
+  },
+  install: {
+    label: 'Need it installed?',
+    title: 'Trevor can fit it for you.',
+    text: 'If BoerBoel makes your steel or sheet metal work and you need an installer, Trevor can install it.',
+    cta: 'Ask Trevor about installation',
+    whatsapp: 'Hi Trevor, I’m having work made by BoerBoel and need it installed. Can you help?',
+  },
 }

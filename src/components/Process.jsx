@@ -285,6 +285,7 @@ export default function Process() {
                 <h3 className="-mt-[3px] text-display-m lg:mt-0">{s.title}</h3>
                 {s.duration && <p className="anno mt-2">{s.duration}</p>}
                 <p className="mt-3 max-w-[52ch]">{s.text}</p>
+                {s.note && <p className="timing-caveat mt-4 max-w-[52ch] !py-3 text-[0.9375rem]">{s.note}</p>}
                 {s.list && (
                   <ul className="process-list mt-3 max-w-[52ch]">
                     {s.list.map((item) => (

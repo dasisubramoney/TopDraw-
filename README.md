@@ -477,3 +477,21 @@ Result: no sideways scrolling, no text under 12 px and no console errors at any 
 **Prepared for:** Dasendhran Subramoney
 
 Work link opens the gallery directly (and drops the zoom intro afterwards); new full-screen Gallery; pre-launch checks for Netlify (Node 22 pinned, single form definition, case-sensitive paths verified, placeholders hidden); mobile and tablet audit at nine sizes with fixes to the Process chart breakpoint, landscape-phone hero, timing figures, tap targets, logo image sizes and two accessibility issues; chapter 04 order swapped on phones and tablets.
+
+### Update: consultation fee (21 October 2026)
+
+- Trevor's new consultation fee: first visit free; further visits charged at an hourly rate, discussed with the client. Shown in the contact details ("Consultation: First visit free / Further visits: hourly rate, agreed with you") and as a note on Process stage 2, "Site visit and quotation". Wording is in `contact.consultation` and the stage's `note` in `src/content.js`.
+
+### Update: BoerBoel referral and installation (21 October 2026)
+
+- The referral reminder is now the main callout in the Steel partner section: a shaded panel with a blue edge, "When you contact BoerBoel / Tell them Top Draw referred you.", explaining that visitors should mention Top Draw by name when they call, email or ask for a quote. The "Visit BoerBoel" button and logo sit inside it; the referral-fee disclosure stays directly underneath.
+- New "Need it installed? Trevor can fit it for you." block under BoerBoel's services: Trevor can install steel or sheet metal work that BoerBoel makes. Its "Ask Trevor about installation" button opens WhatsApp with a ready-made message; a second link goes to the consultation form.
+- Contact form: new project type "Installing BoerBoel steel or sheet metal work", so these enquiries are easy to spot.
+
+- Follow-up: the referral-fee disclosure line under the BoerBoel panel was removed at the owner's request. The BoerBoel links keep `rel="sponsored"` so search engines still treat them as a paid relationship.
+
+### Session summary (21 October 2026)
+
+**Prepared for:** Dasendhran Subramoney
+
+Added Trevor's consultation fee (first visit free, further visits hourly by agreement) to the contact details and Process stage 2; made the "Tell them Top Draw referred you" reminder the main panel in the BoerBoel section; added Trevor's offer to install work BoerBoel makes, with a WhatsApp button and a matching project type in the contact form; removed the referral-fee disclosure line at the owner's request.

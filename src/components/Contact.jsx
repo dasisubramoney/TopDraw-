@@ -165,6 +165,13 @@ export default function Contact() {
     ['Phone', contact.phoneHref ? <a className="link-underline" href={contact.phoneHref}>{contact.phoneDisplay}</a> : contact.phoneDisplay],
     ['Email', <a className="link-underline" href={`mailto:${contact.email}`}>{contact.email}</a>],
     ['Area', contact.area],
+    [
+      'Consultation',
+      <>
+        {contact.consultation.first}
+        <span className="mt-1 block text-[0.9375rem] text-rule">{contact.consultation.further}</span>
+      </>,
+    ],
   ]
 
   return (
