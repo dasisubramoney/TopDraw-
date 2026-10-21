@@ -15,13 +15,14 @@ const { sources } = intro
 // page (React omits `muted` from server markup, which would block autoplay). The inline
 // script runs during HTML parsing, before React loads. It stops playback when the intro
 // is not due to play, and, until React takes over (window.__tdIntro), it shows the copy
-// if nothing has played 2.5 s after load or the video ends: on a slow connection the
+// if nothing has played 2.5 s after navigation start (not after this script runs, which on a
+// slow connection is itself seconds in) or the video ends: on a slow connection the
 // page must not wait for JavaScript to reveal the hero.
 const videoHtml = `<video class="hero-video" autoplay muted playsinline preload="auto" disablepictureinpicture disableremoteplayback aria-hidden="true" tabindex="-1">
 <source src="${sources.mobile}" type="video/mp4" media="(max-width: 767px)">
 <source src="${sources.webm}" type="video/webm">
 <source src="${sources.mp4}" type="video/mp4">
-</video><script>(function(){var v=document.currentScript.previousElementSibling,d=document.documentElement;function end(){v.autoplay=false;v.pause();var s=function(){v.currentTime=${intro.finalFrame}};if(v.readyState>0)s();else v.addEventListener('loadedmetadata',s,{once:true})}if(d.getAttribute('data-intro')!=='play'){v.removeAttribute('autoplay');end();return}function bail(){if(window.__tdIntro||d.getAttribute('data-intro')!=='play')return;d.setAttribute('data-intro','still');d.classList.remove('intro-lock');end()}setTimeout(function(){if(v.currentTime<0.05)bail()},2500);v.addEventListener('ended',bail)})()</script>`
+</video><script>(function(){var v=document.currentScript.previousElementSibling,d=document.documentElement;function end(){v.autoplay=false;v.pause();var s=function(){v.currentTime=${intro.finalFrame}};if(v.readyState>0)s();else v.addEventListener('loadedmetadata',s,{once:true})}if(d.getAttribute('data-intro')!=='play'){v.removeAttribute('autoplay');end();return}function bail(){if(window.__tdIntro||d.getAttribute('data-intro')!=='play')return;d.setAttribute('data-intro','still');d.classList.remove('intro-lock');end()}setTimeout(function(){if(v.currentTime<0.05)bail()},Math.max(0,2500-performance.now()));v.addEventListener('ended',bail)})()</script>`
 
 export default function Hero() {
   const root = useRef(null)
@@ -257,6 +258,7 @@ export default function Hero() {
               height={hero.logo.h}
               alt={hero.logo.alt}
               decoding="async"
+              fetchpriority="high"
               className="block h-auto w-full max-w-[20rem] sm:w-[28rem] sm:max-w-none lg:w-[32rem]"
             />
             <span className="sr-only"> {hero.headline}</span>

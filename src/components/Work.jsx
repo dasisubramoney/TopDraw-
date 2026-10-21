@@ -97,7 +97,7 @@ function PhotoGrid() {
         {galleryOrder.map((k, i) => (
           <li key={k} className="mb-4 break-inside-avoid shadow-[0_22px_48px_-10px_rgba(0,0,0,0.6)] sm:mb-6 lg:mb-8">
             <button type="button" onClick={() => openGallery(i)} className="group block w-full cursor-zoom-in" aria-label={`View full screen: ${img[k].alt}`}>
-              <Picture k={k} alt="" sizes="(min-width: 1024px) 24vw, 46vw" className="block h-auto w-full transition-opacity duration-200 group-hover:opacity-90" />
+              <Picture k={k} alt="" fixedRatio sizes="(min-width: 1024px) 24vw, 46vw" className="block h-auto w-full transition-opacity duration-200 group-hover:opacity-90" />
             </button>
           </li>
         ))}

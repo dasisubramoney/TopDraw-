@@ -9,12 +9,12 @@ export const contact = {
   // WhatsApp number in international format without + or spaces.
   // Assumed to be the same as the phone number; change it if Trevor uses another.
   whatsappNumber: '27823321112',
-  whatsappMessage: 'Hi Trevor, I found Top Draw online and would like to talk about a project.',
+  whatsappMessage: 'Hi Trevor, I found Top Draw Projects online and would like to talk about a project.',
   area: 'Gauteng',
   // Consultation fee (Trevor, October 2026): first visit free, further visits hourly, agreed with the client.
   consultation: { first: 'First visit free', further: 'Further visits: hourly rate, agreed with you' },
   hours: [
-    { days: 'Mon to Fri', time: '08:00 to 17:00' },
+    { days: 'Monday to Friday', time: '08:00 to 17:00' },
     { days: 'Sat and Sun', time: 'Closed' },
   ],
   social: [
@@ -68,7 +68,7 @@ export const hero = {
     srcSmall: '/images/logo-top-draw-sm.webp',
     w: 1308,
     h: 277,
-    alt: 'Top Draw Projects.',
+    alt: 'Top Draw Projects',
   },
   mark: { src: '/images/logo-mark-200.webp', w: 200, h: 119 },
   descriptor: 'Bespoke kitchens, bathrooms and interiors / Gauteng',

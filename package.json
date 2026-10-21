@@ -5,8 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && vite build --ssr src/entry-server.jsx --outDir dist-ssr && node scripts/prerender.mjs",
-    "preview": "vite preview"
+    "build": "vite build && vite build --ssr src/entry-server.jsx --outDir dist-ssr && node scripts/prerender.mjs && node scripts/seo-build.mjs",
+    "preview": "vite preview",
+    "verify": "node scripts/verify.mjs",
+    "verify:ssl": "node scripts/verify-ssl.mjs",
+    "verify:domain": "node scripts/verify-domain.mjs"
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.5.0",

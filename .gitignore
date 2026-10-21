@@ -5,3 +5,4 @@ dist
 .netlify
 screenshots
 dist-ssr
+lighthouse-reports

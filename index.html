@@ -3,24 +3,30 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>Top Draw | Bespoke kitchens, bathrooms and interiors, Johannesburg</title>
-    <meta name="description" content="Bespoke cabinetry, kitchens, bathrooms and full turnkey interiors in Johannesburg. Designed, built and installed by one team, led by craftsman Trevor. Book a site consultation." />
+    <title>Top Draw Projects | Bespoke kitchens, bathrooms and interiors, Gauteng</title>
+    <meta name="description" content="Bespoke cabinetry, kitchens, bathrooms and full turnkey interiors in Gauteng. Designed, built and installed by one team, led by craftsman Trevor. Book a site consultation." />
     <meta name="theme-color" content="#FFFFFF" />
     <link rel="canonical" href="%VITE_SITE_URL%/" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="en_ZA" />
-    <meta property="og:site_name" content="Top Draw" />
-    <meta property="og:title" content="Top Draw | Bespoke kitchens, bathrooms and interiors" />
-    <meta property="og:description" content="Designed, built and installed by one team in Johannesburg. Book a site consultation or WhatsApp Trevor." />
+    <meta property="og:site_name" content="Top Draw Projects" />
+    <meta property="og:title" content="Top Draw Projects | Bespoke kitchens, bathrooms and interiors" />
+    <meta property="og:description" content="Designed, built and installed by one team in Gauteng. Book a site consultation or WhatsApp Trevor." />
     <meta property="og:url" content="%VITE_SITE_URL%/" />
     <meta property="og:image" content="%VITE_SITE_URL%/images/og.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content="Charcoal kitchen with a stone-topped island, built and installed by Top Draw" />
+    <meta property="og:image:alt" content="Charcoal kitchen with a stone-topped island, built and installed by Top Draw Projects" />
     <meta name="twitter:card" content="summary_large_image" />
 
+    <!-- The hero logo is the largest thing in the first view. Same srcset and sizes as the logo image in Hero.jsx. -->
+    <link rel="preload" as="image" href="/images/logo-top-draw.webp" imagesrcset="/images/logo-top-draw-sm.webp 654w, /images/logo-top-draw.webp 1308w" imagesizes="(min-width: 1024px) 32rem, (min-width: 640px) 28rem, 90vw" fetchpriority="high" />
+    <!-- Fonts used in the first view: body and buttons, the descriptor line, and the mono labels. -->
+    <link rel="preload" href="/fonts/schibsted-grotesk-wght.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/plex-mono-400.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/plex-mono-500.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/newsreader-opsz-400.woff2" as="font" type="font/woff2" crossorigin />
     <!-- Decides the hero intro mode before first paint (see src/components/Hero.jsx). -->
     <script>
@@ -43,16 +49,16 @@
       {
         "@context": "https://schema.org",
         "@type": "HomeAndConstructionBusiness",
-        "name": "Top Draw",
+        "name": "Top Draw Projects",
         "description": "Bespoke cabinetry, furniture and interiors. Kitchens, bathrooms, dressing rooms and full turnkey projects, designed, built and installed by one team.",
         "url": "%VITE_SITE_URL%/",
         "image": "%VITE_SITE_URL%/images/og.jpg",
         "telephone": "+27 82 332 1112",
-        "email": "topdraw19@gmail.com",
+        "email": "%CONTACT_EMAIL%",
         "founder": { "@type": "Person", "name": "Trevor", "jobTitle": "Owner and lead craftsman" },
         "address": {
           "@type": "PostalAddress",
-          "addressLocality": "Johannesburg",
+          "addressLocality": "Roodepoort",
           "addressRegion": "Gauteng",
           "addressCountry": "ZA"
         },
@@ -72,7 +78,7 @@
   </head>
   <body>
     <noscript>
-      <p style="padding:24px;font-family:Georgia,serif">Top Draw: bespoke kitchens, bathrooms and interiors in Gauteng. Phone 082 332 1112 or email topdraw19@gmail.com to book a site consultation.</p>
+      <p style="padding:24px;font-family:Georgia,serif">Top Draw Projects: bespoke kitchens, bathrooms and interiors in Gauteng. Phone 082 332 1112 or email %CONTACT_EMAIL% to book a site consultation.</p>
     </noscript>
     <!-- Static copy of the contact form so Netlify Forms can detect it at build time. -->
     <form name="consultation" data-netlify="true" netlify-honeypot="company" hidden>

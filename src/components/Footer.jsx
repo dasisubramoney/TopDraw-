@@ -27,9 +27,9 @@ export default function Footer() {
       <div className="wrap">
         <div className="grid gap-12 pt-12 sm:grid-cols-2 lg:grid-cols-12 lg:gap-x-[var(--gutter)] lg:pt-16">
           <div className="sm:col-span-2 lg:col-span-5">
-            <p className="font-display text-display-m">Let’s talk about your project.</p>
+            <h2 className="font-display text-display-m">Let’s talk about your project.</h2>
             <p className="mt-4 max-w-[40ch] text-[0.9375rem] text-ink">
-              Bespoke cabinetry, furniture and interiors in Johannesburg. Call, message or book a site visit.
+              Bespoke cabinetry, furniture and interiors in Gauteng. Call, message or book a site visit.
             </p>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <a href="#contact" className="btn btn-primary">
@@ -131,7 +131,7 @@ export default function Footer() {
         </div>
 
         <div className="anno mt-12 flex flex-col gap-3 border-t border-rule pt-6 text-ink sm:flex-row sm:items-center sm:justify-between lg:mt-16">
-          <span>© {new Date().getFullYear()} Top Draw. All work shown designed, built and installed by Top Draw.</span>
+          <span>© {new Date().getFullYear()} Top Draw Projects. All work shown designed, built and installed by Top Draw Projects.</span>
           <a href="#top" className="link-underline inline-flex min-h-11 items-center">
             Back to top ↑
           </a>

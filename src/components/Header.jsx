@@ -96,7 +96,7 @@ export default function Header() {
         >
           <img src={hero.mark.src} alt="" width={hero.mark.w} height={hero.mark.h} className="h-7 w-auto lg:h-8" />
           <span className="whitespace-nowrap font-display text-[1.375rem] leading-none tracking-[-0.01em] lg:text-[1.5rem]">Top Draw</span>
-          <span className="anno hidden whitespace-nowrap md:inline lg:hidden xl:inline">Bespoke interiors / Johannesburg</span>
+          <span className="anno hidden whitespace-nowrap md:inline lg:hidden xl:inline">Bespoke interiors / Gauteng</span>
         </a>
 
         <nav aria-label="Main" className="hidden lg:block">

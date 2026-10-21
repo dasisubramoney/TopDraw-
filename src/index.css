@@ -380,42 +380,45 @@ html[data-intro="play"] .skip-intro { display: inline-flex; align-items: center;
   .process[data-mode="live"] .pg-pay:not([data-reached]) { opacity: 0; }
 }
 
-/* Contact: street map + step-by-step form (Contact.jsx). */
+/* Contact: a plain outline of Gauteng behind a step-by-step form (Contact.jsx). It marks no place.
+   Absolutely positioned, so it adds no height. The shape is a mask filled with a colour token. */
 .contact-map { position: relative; overflow: hidden; }
-.cm-map {
+.cm-outline {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  top: 50%;
+  right: -6%;
+  width: min(60vw, 46rem);
+  aspect-ratio: 1016 / 1047;
+  transform: translateY(-50%);
   pointer-events: none;
   opacity: 0;
   animation: cm-fade 1.2s var(--ease-out) forwards;
 }
 @keyframes cm-fade { to { opacity: 1; } }
-.cm-pin { position: absolute; top: 34%; left: 74%; width: 0; height: 0; pointer-events: none; }
-.cm-pin-ring {
+.cm-outline-shape {
   position: absolute;
-  left: -52px;
-  top: -52px;
-  width: 104px;
-  height: 104px;
-  border: 1px solid var(--color-rule);
-  border-radius: 50%;
-  opacity: 0.5;
+  inset: 0;
+  background: var(--color-rule);
+  opacity: 0.3;
+  -webkit-mask: url(/images/gauteng-outline.svg) center / contain no-repeat;
+  mask: url(/images/gauteng-outline.svg) center / contain no-repeat;
 }
-.cm-pin-dot { position: absolute; left: -6px; top: -6px; width: 12px; height: 12px; background: var(--color-beige); border-radius: 50%; }
-.cm-pin-label {
+/* Label centre = the province's centroid (printed by scripts/build-gauteng-outline.mjs). */
+.cm-outline-label {
   position: absolute;
-  left: 64px;
-  top: -10px;
-  white-space: nowrap;
+  left: 50.2%;
+  top: 55.3%;
+  transform: translate(-50%, -50%);
   font-family: var(--font-mono);
   font-size: var(--text-anno);
   letter-spacing: 0.04em;
   color: var(--color-beige);
+  opacity: 0.8;
 }
-.cm-credit { position: absolute; right: var(--margin); bottom: 12px; color: var(--color-rule); opacity: 0.7; }
+@media (max-width: 899px) {
+  .cm-outline { top: auto; bottom: -6%; right: -40vw; width: 120vw; transform: none; }
+  .cm-outline-label { display: none; }
+}
 
 .cm-head { position: relative; padding-left: 28px; }
 .cm-head::before { content: ""; position: absolute; left: 0; top: 4px; bottom: 6px; width: 5px; background: var(--color-beige); }
@@ -484,11 +487,6 @@ html[data-intro="play"] .skip-intro { display: inline-flex; align-items: center;
 .cs-next:hover .cs-next-ring { background: var(--color-beige); color: var(--color-ink); }
 .cs-next:active .cs-next-ring { transform: scale(0.96); }
 .cs-next:disabled { cursor: progress; }
-@media (max-width: 899px) {
-  .cm-pin { top: auto; bottom: 120px; left: auto; right: 22%; }
-  .cm-pin-label { display: none; }
-}
-
 /* Full-screen gallery (Gallery.jsx): a <dialog> with one photo per screen, snapped. */
 .gallery {
   position: fixed;
