@@ -241,6 +241,25 @@ export default function Hero() {
       aria-labelledby="hero-title"
       className="relative -mt-[calc(var(--header-h)+1px)] h-[100svh] min-h-[600px] overflow-hidden bg-mist"
     >
+      {/* Poster: the video's own first frame, under the video. The video paints nothing until its first
+          frame is decoded, then covers this with the identical frame, so the hand-over cannot jump. It is
+          also the largest image in the first view, so it is the LCP element. Phones get the square frame
+          that matches the 720 x 720 phone video. */}
+      <picture>
+        <source media="(max-width: 767px)" srcSet={hero.poster.mobile.srcSet} sizes="100vw" />
+        <img
+          src={hero.poster.desktop.src}
+          srcSet={hero.poster.desktop.srcSet}
+          sizes="100vw"
+          width={hero.poster.desktop.w}
+          height={hero.poster.desktop.h}
+          alt=""
+          aria-hidden="true"
+          decoding="async"
+          fetchpriority="high"
+          className="hero-video"
+        />
+      </picture>
       <div ref={media} className="absolute inset-0" dangerouslySetInnerHTML={{ __html: videoHtml }} />
       {/* The finished-kitchen frame, captured from the video, for the fade back in. */}
       <canvas data-hero-final aria-hidden="true" className="hero-video invisible opacity-0" />

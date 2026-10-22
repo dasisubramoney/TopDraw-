@@ -21,6 +21,10 @@
     <meta property="og:image:alt" content="Charcoal kitchen with a stone-topped island, built and installed by Top Draw Projects" />
     <meta name="twitter:card" content="summary_large_image" />
 
+    <!-- The hero poster (first frame of the intro video) is the largest image in the first view, so it is the
+         LCP element. Same files, srcset and sizes as the picture in Hero.jsx (src/content.js: hero.poster). -->
+    <link rel="preload" as="image" media="(max-width: 767px)" href="/images/hero-poster-m-720.webp" imagesrcset="/images/hero-poster-m-480.webp 480w, /images/hero-poster-m-720.webp 720w" imagesizes="100vw" fetchpriority="high" />
+    <link rel="preload" as="image" media="(min-width: 768px)" href="/images/hero-poster-d-1920.webp" imagesrcset="/images/hero-poster-d-960.webp 960w, /images/hero-poster-d-1440.webp 1440w, /images/hero-poster-d-1920.webp 1920w" imagesizes="100vw" fetchpriority="high" />
     <!-- The hero logo is the largest thing in the first view. Same srcset and sizes as the logo image in Hero.jsx. -->
     <link rel="preload" as="image" href="/images/logo-top-draw.webp" imagesrcset="/images/logo-top-draw-sm.webp 654w, /images/logo-top-draw.webp 1308w" imagesizes="(min-width: 1024px) 32rem, (min-width: 640px) 28rem, 90vw" fetchpriority="high" />
     <!-- Fonts used in the first view: body and buttons, the descriptor line, and the mono labels. -->

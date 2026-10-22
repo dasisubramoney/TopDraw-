@@ -177,6 +177,7 @@ export default function Work() {
       return () => ctx.revert()
     },
     [Portal],
+    { near: root },
   )
 
   if (direct) {

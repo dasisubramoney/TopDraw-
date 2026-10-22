@@ -141,6 +141,7 @@ export default function Trevor() {
         scrub: 0.6,
         animation: tl,
         invalidateOnRefresh: true,
+        refreshPriority: 1, // below Process (2) on the page: see Process.jsx
         onUpdate: (self) => {
           const time = self.progress * tl.duration()
           setActive(time >= tl.labels.c4 ? 3 : time >= tl.labels.c3 ? 2 : time >= tl.labels.c2 ? 1 : 0)
@@ -185,7 +186,7 @@ export default function Trevor() {
     })
 
     return () => mm.revert()
-  })
+  }, [], { near: root, shifts: true })
 
   return (
     <section id="trevor" ref={root} aria-labelledby="trevor-title" className="trevor section-pad">

@@ -198,6 +198,9 @@ export default function Process() {
           pin: true,
           scrub: 0.6,
           invalidateOnRefresh: true,
+          // Sections now set up as they come near, in whatever order the visitor reaches them. A pinned
+          // trigger higher on the page must measure before the ones below it (Trevor is 1, this is 2).
+          refreshPriority: 2,
         },
       })
       ScrollTrigger.refresh()
@@ -252,7 +255,7 @@ export default function Process() {
       split.revert()
       mm.revert()
     }
-  })
+  }, [], { near: root, shifts: true })
 
   const { payments, timing } = process
 

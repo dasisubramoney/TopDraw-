@@ -71,6 +71,13 @@ export const hero = {
     alt: 'Top Draw Projects',
   },
   mark: { src: '/images/logo-mark-200.webp', w: 200, h: 119 },
+  // First frame of the intro video (the empty room it starts on), shown until the video paints its own
+  // first frame. Made by scripts/build-hero-poster.mjs. Mobile matches the 720 x 720 phone video, desktop
+  // the 1920 x 1080 one. index.html preloads these same files: keep the two in step.
+  poster: {
+    mobile: { src: '/images/hero-poster-m-720.webp', srcSet: '/images/hero-poster-m-480.webp 480w, /images/hero-poster-m-720.webp 720w' },
+    desktop: { src: '/images/hero-poster-d-1920.webp', srcSet: '/images/hero-poster-d-960.webp 960w, /images/hero-poster-d-1440.webp 1440w, /images/hero-poster-d-1920.webp 1920w', w: 1920, h: 1080 },
+  },
   descriptor: 'Bespoke kitchens, bathrooms and interiors / Gauteng',
   // Not shown on screen: read by screen readers and search engines as part of the
   // page's main heading, after the logo.

@@ -18,20 +18,70 @@ export function loadMotion() {
 
 // Runs `setup(motion)` once the motion chunk has loaded, unless the visitor prefers
 // reduced motion. `setup` may return a cleanup function.
-export function useMotionEffect(setup, deps = []) {
+//
+// `near` (a ref) defers the setup until that element is within a viewport of the screen, then
+// sets it up once and stops watching. Setting up every section the moment the chunk loads put
+// all of their pinning, scrubbing and text splitting into one long main-thread task. The
+// prerendered page is complete without any of it, so nothing is hidden while a section waits.
+// `shifts` says the setup changes the page's height (pinned sections add several screens):
+// if the section is wholly above the screen when it runs, the page is scrolled by the height it
+// added, so the visitor stays where they were.
+export function useMotionEffect(setup, deps = [], { near, shifts = false } = {}) {
   useEffect(() => {
     if (prefersReducedMotion()) return
     let cleanup
     let cancelled = false
-    loadMotion().then((m) => {
-      if (!cancelled) cleanup = setup(m)
-    })
+    let io
+    const start = (el) =>
+      loadMotion().then((m) => {
+        if (cancelled) return
+        cleanup = shifts && el ? holdPlace(el, () => setup(m)) : setup(m)
+      })
+    const el = near?.current
+    if (el && typeof IntersectionObserver !== 'undefined') {
+      io = new IntersectionObserver(
+        (entries) => {
+          if (!entries.some((e) => e.isIntersecting)) return
+          io.disconnect()
+          start(el)
+        },
+        { rootMargin: '100% 0px' },
+      )
+      io.observe(el)
+    } else {
+      start(null)
+    }
     return () => {
       cancelled = true
+      io?.disconnect()
       cleanup?.()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps)
+}
+
+// Runs `setup`, and if `el` is wholly above the screen, scrolls by however much taller the page
+// became, so what the visitor is looking at does not move. The target is worked out from where the
+// page was before `setup` ran, not from where it is after: switching a section to its pinned
+// layout first shrinks it (the browser's own scroll anchoring moves the scroll position to match),
+// the pin spacer then adds the scroll distance, and the net change is what has to be made up.
+function holdPlace(el, setup) {
+  // "Above the screen" includes the strip behind the sticky header, which nobody can see. After a nav
+  // jump the section just above the target ends exactly there.
+  const bar = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 0
+  const above = el.getBoundingClientRect().bottom <= bar + 1
+  const y0 = window.scrollY
+  const before = document.documentElement.scrollHeight
+  const cleanup = setup()
+  if (above) {
+    const grew = document.documentElement.scrollHeight - before
+    if (Math.abs(grew) > 0.5) {
+      const y = y0 + grew
+      if (lenis) lenis.scrollTo(y, { immediate: true, force: true })
+      else window.scrollTo(0, y)
+    }
+  }
+  return cleanup
 }
 
 const query = '(prefers-reduced-motion: reduce)'

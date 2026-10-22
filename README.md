@@ -257,6 +257,33 @@ Branch `feature/seo-foundation`, not committed.
 - Nav jumps: with the new element the first landing on Contact was 1 px off (70.7 px against 71.7 px under the header). The outline was not the cause; see the next entry for the real one. `npm run verify` also fails if a street-map credit or a pin ever returns.
 - **TODO / flag:** the Natural Earth boundary is a 1:10m cartographic boundary, not a survey boundary; fine for a decorative graphic, not for anything that needs exact borders.
 
+### Hero poster and staggered section setup (22 October 2026)
+
+Branch `main`, not committed, not deployed. The hero intro video and its timeline are unchanged.
+
+**Hero poster.** Until the video decodes its first frame the hero was an empty beige panel (`bg-mist`). The intro starts on the empty room, so the poster is the video's own first frame (t = 0), exported by `scripts/build-hero-poster.mjs` (Chrome decodes the video and encodes the WebP; no npm packages): `public/images/hero-poster-m-480|720.webp` (square, matches the 720 x 720 phone video) and `hero-poster-d-960|1440|1920.webp` (16:9, matches the desktop video), 9 to 35 KB each. It is a `<picture>` under the video in `Hero.jsx` (so it is in the prerendered HTML), with media-gated preloads in `index.html` (`fetchpriority="high"`, same `srcset`/`sizes`); sources live in `hero.poster` in `src/content.js`. The video paints nothing until its first frame, then covers the poster with the identical frame. Measured poster against the video's frame 0 as displayed: mean difference 1.1 to 1.45 out of 255 at 360, 390, 412, 1440 and 1920 px wide, at most 0.25% of pixels differing noticeably.
+- **It is not the LCP element, and cannot be.** Chrome ignores images that fill the viewport when picking LCP (checked with a PerformanceObserver: full-bleed poster, only the Skip button is reported; poster made 6 px shorter, the poster is reported at 744 ms against 1,344 ms). Shortening it just to move the metric would leave a visible strip until the video paints, so it was not done.
+- **Reduced motion and skipped intros:** those end on the finished kitchen (video t = 4.3 s), so the poster (empty room) is replaced by the kitchen once the video seeks, where before it was beige then kitchen. A second poster for that case is possible; it was not asked for.
+
+**Staggered setup.** `useMotionEffect` in `src/lib/motion.js` takes `{ near, shifts }`: with `near` (a ref) the setup waits until that element is within a viewport of the screen (`IntersectionObserver`, `rootMargin: '100% 0px'`), runs once and disconnects. Used for every section header rule, Process, Trevor and Work's reveals. The central loader, the named plugin imports and `LazyMotion` are unchanged; Services, Contact, Gallery and the glyph portal already deferred their heavy parts. With `shifts`, if the section is wholly above the screen (including the strip behind the sticky header) when it sets up, the page is scrolled by the height it added. Pinned triggers got `refreshPriority` (Process 2, Trevor 1) so they measure in page order whichever sets up first.
+- **A bug found on the way:** the first version compensated from the scroll position *after* setup. Switching Trevor to its pinned layout first shrinks it (Chrome's scroll anchoring moves the scroll position), then the pin spacer adds its distance; the compensation must start from the position before setup. Fixed; the test below caught it as a 246 px jump.
+- **Tested:** jump to Contact, then wheel upward through every unset-up section at 1440 and 390 px wide, recording the centre element's position every frame: no frame moves more than a normal scroll step (largest 74 px at 1440, 12.5 px at 390). All five nav jumps land exactly under the header (72 px desktop, within 0.5 px of 56 px on phones), each with a single position change. Scrolling down in fixed steps: the final document height and scroll positions match the old build, phone width is pixel-identical at every checkpoint, desktop is identical except the pinned Process and Trevor stages (next point). With JavaScript off, the same four elements are hidden as before (hero canvas, intro captions, one SVG label); no inline hiding styles in the HTML.
+- **One visual change, a fix:** on desktop with a classic scrollbar the pinned Process and Trevor content now sits 7.5 px further left, exactly on the wrapper edge (104.5 px, in line with the logo). The old build set its pins up while the intro had scrolling locked (no scrollbar), so their width and position were measured for the full 1440 px, not the 1425 px left beside the scrollbar; that stale geometry is gone.
+
+**Measured** (local build, mobile Lighthouse, old = previous commit built in a scratch worktree, runs alternated old/new; local numbers, not the live Netlify numbers). Lighthouse files: `lh-out/before.json`, `after.json` (project default mode), `before-devtools.json`, `after-devtools.json`, `old8.json`, `new8.json` (applied throttling).
+
+| Applied throttling, 5 alternating pairs, median | Score | FCP | LCP | TBT | CLS | Speed Index | TTI |
+|---|---|---|---|---|---|---|---|
+| Before | 82 | 1.70 s | 2.54 s | 481 ms | 0 | 4.11 s | 4.46 s |
+| After | 93 | 1.69 s | 2.54 s | 195 ms | 0 | 2.78 s | 4.63 s (3.30 to 4.71, two clusters) |
+
+| Project default (simulated), 5 alternating pairs, median | Score | FCP | LCP | TBT | CLS | Speed Index | TTI |
+|---|---|---|---|---|---|---|---|
+| Before | 95 | 1.81 s | 2.71 s | 5 ms | 0 | 1.92 s | 3.29 s |
+| After | 95 | 1.81 s | 2.72 s | 0 ms | 0 | 1.86 s | 2.72 s |
+
+LCP is unchanged in both modes (see the poster note). Filmstrips: the first frames match exactly; later frames differ by up to 12 out of 255, which is the run-to-run spread of the old build too (the video is playing).
+
 ### Performance pass on the first view (21 October 2026)
 
 Branch `feature/seo-foundation`, not committed, not deployed.

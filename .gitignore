@@ -9,3 +9,6 @@ lighthouse-reports
 
 # Local-only list of terms scripts/verify.mjs must not find on the site
 .hidden-terms
+
+# Lighthouse output from the performance passes
+lh-out

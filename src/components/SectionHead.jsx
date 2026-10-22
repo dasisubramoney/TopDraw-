@@ -15,17 +15,21 @@ export default function SectionHead({ title, id, dark = false, pinned = false, e
   const rule = useRef(null)
   const eyebrow = eyebrowText ?? nav.find((n) => id.startsWith(n.id))?.label
 
-  useMotionEffect(({ gsap }) => {
-    const tween = gsap.fromTo(
-      rule.current,
-      { scaleX: 0 },
-      { scaleX: 1, duration: 0.6, ease: 'power3.inOut', scrollTrigger: { trigger: rule.current, start: 'top 92%', once: true } },
-    )
-    return () => {
-      tween.scrollTrigger?.kill()
-      tween.kill()
-    }
-  })
+  useMotionEffect(
+    ({ gsap }) => {
+      const tween = gsap.fromTo(
+        rule.current,
+        { scaleX: 0 },
+        { scaleX: 1, duration: 0.6, ease: 'power3.inOut', scrollTrigger: { trigger: rule.current, start: 'top 92%', once: true } },
+      )
+      return () => {
+        tween.scrollTrigger?.kill()
+        tween.kill()
+      }
+    },
+    [],
+    { near: rule },
+  )
 
   return (
     <header
