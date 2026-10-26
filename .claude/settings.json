@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "deny": [
+      "Bash(git push *)",
+      "Bash(git push --force *)",
+      "Bash(git push -f *)",
+      "Bash(git push --force-with-lease *)",
+      "Bash(git -C * push)",
+      "Bash(git -C * push *)",
+      "Bash(git -c * push)",
+      "Bash(git -c * push *)",
+      "Bash(git --git-dir=* push)",
+      "Bash(git --git-dir=* push *)",
+      "Bash(*/git push)",
+      "Bash(*/git push *)",
+      "Bash(*git.exe* push)",
+      "Bash(*git.exe* push *)",
+
+      "Bash(git reset --hard *)",
+      "Bash(git reset * --hard)",
+      "Bash(git reset * --hard *)",
+      "Bash(git -C * reset --hard)",
+      "Bash(git -C * reset --hard *)",
+
+      "Bash(netlify* deploy*)",
+      "Bash(npx netlify* deploy*)",
+      "Bash(npx * netlify* deploy*)",
+      "Bash(npm exec netlify* deploy*)",
+      "Bash(npm exec * netlify* deploy*)",
+      "Bash(*/netlify* deploy*)",
+      "Bash(npm run deploy*)",
+      "Bash(npm run-script deploy*)",
+      "Bash(pnpm run deploy*)",
+      "Bash(pnpm deploy*)",
+      "Bash(yarn deploy*)",
+      "Bash(yarn run deploy*)",
+
+      "Bash(*lockDeploy*)",
+      "Bash(*deploys/*lock*)",
+
+      "PowerShell(git push *)",
+      "PowerShell(git push --force *)",
+      "PowerShell(git push -f *)",
+      "PowerShell(git push --force-with-lease *)",
+      "PowerShell(git -C * push)",
+      "PowerShell(git -C * push *)",
+      "PowerShell(git -c * push)",
+      "PowerShell(git -c * push *)",
+      "PowerShell(git --git-dir=* push)",
+      "PowerShell(git --git-dir=* push *)",
+      "PowerShell(*git.exe* push)",
+      "PowerShell(*git.exe* push *)",
+
+      "PowerShell(git reset --hard *)",
+      "PowerShell(git reset * --hard)",
+      "PowerShell(git reset * --hard *)",
+      "PowerShell(git -C * reset --hard)",
+      "PowerShell(git -C * reset --hard *)",
+
+      "PowerShell(netlify* deploy*)",
+      "PowerShell(npx netlify* deploy*)",
+      "PowerShell(npx * netlify* deploy*)",
+      "PowerShell(npm exec netlify* deploy*)",
+      "PowerShell(npm exec * netlify* deploy*)",
+      "PowerShell(npm run deploy*)",
+      "PowerShell(npm run-script deploy*)",
+      "PowerShell(pnpm run deploy*)",
+      "PowerShell(pnpm deploy*)",
+      "PowerShell(yarn deploy*)",
+      "PowerShell(yarn run deploy*)",
+
+      "PowerShell(*lockDeploy*)",
+      "PowerShell(*deploys/*lock*)",
+
+      "mcp__claude_ai_Netlify__netlify-deploy-services-updater",
+      "mcp__claude_ai_Netlify__netlify-extension-services-updater",
+      "mcp__claude_ai_Netlify__netlify-project-services-updater"
+    ]
+  }
+}
