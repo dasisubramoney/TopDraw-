@@ -93,11 +93,14 @@ function WorkSummary() {
 function PhotoGrid() {
   return (
     <div className="bg-ink">
-      <ul className="wrap columns-2 gap-4 py-24 sm:gap-6 lg:columns-4 lg:gap-8 lg:py-36">
+      {/* Square tiles in an even grid (4 across on desktop, 2 on phones), so the grid ends in a
+          straight edge. Each tile is cropped from the centre; the full-screen gallery shows the
+          whole photo. */}
+      <ul className="wrap grid grid-cols-2 gap-4 py-24 sm:gap-6 lg:grid-cols-4 lg:gap-8 lg:py-36">
         {galleryOrder.map((k, i) => (
-          <li key={k} className="mb-4 break-inside-avoid shadow-[0_22px_48px_-10px_rgba(0,0,0,0.6)] sm:mb-6 lg:mb-8">
-            <button type="button" onClick={() => openGallery(i)} className="group block w-full cursor-zoom-in" aria-label={`View full screen: ${img[k].alt}`}>
-              <Picture k={k} alt="" fixedRatio sizes="(min-width: 1024px) 24vw, 46vw" className="block h-auto w-full transition-opacity duration-200 group-hover:opacity-90" />
+          <li key={k} className="aspect-square shadow-[0_22px_48px_-10px_rgba(0,0,0,0.6)]">
+            <button type="button" onClick={() => openGallery(i)} className="group block h-full w-full cursor-zoom-in" aria-label={`View full screen: ${img[k].alt}`}>
+              <Picture k={k} alt="" sizes="(min-width: 1024px) 24vw, 46vw" className="block h-full w-full object-cover transition-opacity duration-200 group-hover:opacity-90" />
             </button>
           </li>
         ))}

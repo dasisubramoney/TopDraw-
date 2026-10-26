@@ -633,3 +633,17 @@ Work link opens the gallery directly (and drops the zoom intro afterwards); new 
 **Prepared for:** Dasendhran Subramoney
 
 Added Trevor's consultation fee (first visit free, further visits hourly by agreement) to the contact details and Process stage 2; made the "Tell them Top Draw referred you" reminder the main panel in the BoerBoel section; added Trevor's offer to install work BoerBoel makes, with a WhatsApp button and a matching project type in the contact form; removed the referral-fee disclosure line at the owner's request.
+
+### Update: new photos from WhatsApp (26 October 2026)
+
+- Added six photos Trevor sent on WhatsApp (22 October 2026) to the Work grid and the full-screen gallery: a navy shaker-style kitchen (three views) and grey oak-look built-ins (two wardrobe walls and a wall of open shelving). Converted to WebP at 800 and 1600 px (`kitchen-navy-*`, `wardrobes-grey-oak`, `wardrobe-desk-grey-oak`, `shelving-wall-grey-oak`); the original JPEGs are kept in `design/photos/whatsapp-2026-10-22/` and are not published.
+- The thatched loft photos (`loft-balustrade`, `loft-shell-in-progress`) were removed. The Work list's balustrading entry is now the navy kitchen, and the Services entry that pointed at the loft photo now points at the navy kitchen.
+- The gallery now has 24 photos and opens on the navy kitchen; the order is `galleryOrder` in `src/components/Gallery.jsx`.
+
+- Follow-up: the Work photo grid now uses square tiles in an even grid (4 across on desktop, 2 on phones), so it ends in a straight edge instead of ragged columns. Tiles are cropped from the centre; clicking a photo opens the full uncropped photo in the gallery.
+
+### Session summary (26 October 2026)
+
+**Prepared for:** Dasendhran Subramoney
+
+Added six photos from Trevor's WhatsApp (navy shaker kitchen, grey oak-look wardrobes and shelving) to the Work grid and gallery, now 24 photos; removed the two thatched loft photos; changed the Work grid to square tiles so it ends in a straight edge.

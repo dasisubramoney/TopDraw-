@@ -41,14 +41,12 @@ export const img = {
   kitchen2: { name: 'kitchen-charcoal-island-2', widths: [800, 1600], w: 2400, h: 1800, alt: 'Charcoal kitchen with a white stone-topped island, pendant lights, a full-height panel and a fridge recess' },
   newBuild: { name: 'kitchen-new-build', widths: [800, 1000], w: 1000, h: 750, alt: 'Open-plan new-build kitchen with a dark waterfall island, timber-faced units and a wine rack, pendant lights still wrapped before handover' },
   library: { name: 'library-ladder', widths: [750], w: 750, h: 1000, alt: 'Floor-to-ceiling painted library shelving with a rolling ladder and cupboards below' },
-  loftShell: { name: 'loft-shell-in-progress', widths: [800, 1600], w: 2400, h: 1800, alt: 'Thatched double-volume room mid-renovation, with a stone chimney, timber loft balustrade and new kitchen base units' },
   vanityInstall: { name: 'vanity-mirror-cabinet', widths: [800, 1600], w: 1800, h: 2064, alt: 'Bathroom vanity in timber-look drawers with a white top and a full-width mirrored cabinet, offcuts still on the counter during installation' },
   kitchenTile: { name: 'kitchen-patterned-tile', widths: [800, 1600], w: 2400, h: 1800, alt: 'Light kitchen with a patterned tile splashback, open floating shelves and a peninsula worktop' },
   vanityOak: { name: 'vanity-floating-oak', widths: [800, 1600], w: 1800, h: 2400, alt: 'Wall-hung timber vanity with two drawers, a round basin and matching floating shelves beside the bath' },
   wardrobe: { name: 'wardrobe-eaves-oak', widths: [800, 1600], w: 2400, h: 1800, alt: 'Full-height timber wardrobe with a bulkhead, built into a room with a sloping ceiling, with open shelves and a desk shelf under the eaves' },
   dining: { name: 'dining-table-steel-oak', widths: [800, 1600], w: 2400, h: 1800, alt: 'Dining table and bench in pale timber, each held in black steel box-section frames' },
   benchFrame: { name: 'bench-steel-frame', widths: [800, 1600], w: 2400, h: 1800, alt: 'End view of a black steel frame wrapping a pale timber top, showing the welded corners' },
-  balustrade: { name: 'loft-balustrade', widths: [800, 1600], w: 2400, h: 1800, alt: 'Loft under a thatched roof with a long timber pole balustrade along the edge and a staircase opening' },
   tallUnit: { name: 'tall-unit-charcoal', widths: [800, 1600], w: 1800, h: 2400, alt: 'Charcoal full-height cupboard beside a low open shelving unit with a white top and black floating shelves above' },
   barCounter: { name: 'bar-counter-steel-timber', widths: [800, 1600], w: 2400, h: 1800, alt: 'Long timber-topped bar counter on a painted steel frame in front of a brick-pattern wall, with four swivel bar stools on a concrete floor' },
   deli: { name: 'deli-island-shopfit', widths: [800, 1600], w: 2400, h: 1560, alt: 'Corner deli counter in a supermarket: a pale timber-look shelving base with a black top and angled glass display cases' },
@@ -59,6 +57,13 @@ export const img = {
   longVanity: { name: 'bathroom-long-vanity', widths: [800, 1600], w: 2400, h: 1800, alt: 'Long bathroom vanity with pale drawers and doors, a stone top with two basins and a framed mirror above, beside a corner bath' },
   graniteKitchen: { name: 'kitchen-black-granite', widths: [800, 1600], w: 1800, h: 2400, alt: 'Light woodgrain kitchen with a black granite worktop, full-height wall units, a hob and an eye-level oven' },
   wardrobeWall: { name: 'wardrobe-wall-white', widths: [800, 1600], w: 2400, h: 1800, alt: 'Wall of floor-to-ceiling white wardrobe doors with brushed metal handles' },
+  // Added 22 October 2026 from Trevor's WhatsApp photos.
+  shelvingWall: { name: 'shelving-wall-grey-oak', widths: [800, 1600], w: 1600, h: 1200, alt: 'Floor-to-ceiling open shelving in a grey oak-look finish beside a staircase' },
+  wardrobesGrey: { name: 'wardrobes-grey-oak', widths: [800, 1600], w: 1600, h: 1200, alt: 'Two banks of full-height grey oak-look wardrobes with black bar handles and drawers, facing each other across a room' },
+  navyKitchenFridge: { name: 'kitchen-navy-fridge-wall', widths: [800, 1600], w: 1200, h: 1600, alt: 'Navy shaker-style kitchen with wall units to the ceiling, a fridge recess and space for a washing machine and dishwasher' },
+  wardrobeDesk: { name: 'wardrobe-desk-grey-oak', widths: [800, 1600], w: 1200, h: 1600, alt: 'Grey oak-look wardrobe unit with a bank of drawers, a built-in desk and a cupboard above' },
+  navyKitchen: { name: 'kitchen-navy-shaker', widths: [800, 1600], w: 1600, h: 1200, alt: 'Navy shaker-style kitchen with stone worktops, a farmhouse sink under the window, a canopy extractor and a patterned tile splashback' },
+  navyKitchenRange: { name: 'kitchen-navy-range', widths: [800, 1600], w: 1200, h: 1600, alt: 'Navy shaker-style kitchen with a canopy extractor over a freestanding cooker, a patterned tile splashback and a microwave cubby' },
 }
 
 export const hero = {
@@ -146,8 +151,8 @@ export const services = [
     num: '04',
     title: 'Shell prep for new cabinetry',
     text: 'Walls, floors and services checked and set out true before a single carcass arrives on site.',
-    image: 'loftShell',
-    caption: 'Renovation, mid-build',
+    image: 'navyKitchenFridge',
+    caption: 'Kitchen, ready for appliances',
   },
   {
     num: '05',
@@ -289,7 +294,7 @@ export const work = [
   { key: 'W-02', type: 'Bathroom', image: 'vanityOak', text: 'Wall-hung vanity with matching floating shelves', place: '[SUBURB]' },
   { key: 'W-03', type: 'Furniture', image: 'dining', text: 'Dining table and bench, steel frames, timber tops', place: '[SUBURB]' },
   { key: 'W-04', type: 'Dressing room', image: 'wardrobe', text: 'Full-height wardrobe and desk under a sloping ceiling', place: '[SUBURB]' },
-  { key: 'W-05', type: 'Balustrading', image: 'balustrade', text: 'Loft balustrade under thatch', place: '[SUBURB]' },
+  { key: 'W-05', type: 'Kitchen', image: 'navyKitchen', text: 'Navy shaker-style kitchen, stone worktops, patterned tile splashback', place: '[SUBURB]' },
   { key: 'W-06', type: 'Furniture', image: 'benchFrame', text: 'Steel frame, timber top', place: '[SUBURB]' },
 ]
 

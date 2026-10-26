@@ -2,8 +2,8 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { img } from '../content.js'
 import { getLenis } from '../lib/motion.js'
 
-// The twenty project photos, in the order shown in the Work grid and the gallery.
-export const galleryOrder = ['kitchen2', 'library', 'dining', 'loftShell', 'vanityOak', 'glossKitchen', 'kitchenTile', 'hutch', 'laundry', 'deli', 'newBuild', 'vanityInstall', 'fridgeUnit', 'wardrobe', 'longVanity', 'tallUnit', 'balustrade', 'graniteKitchen', 'barCounter', 'wardrobeWall']
+// The project photos (24), in the order shown in the Work grid and the gallery.
+export const galleryOrder = ['navyKitchen', 'kitchen2', 'wardrobesGrey', 'library', 'dining', 'navyKitchenRange', 'vanityOak', 'glossKitchen', 'shelvingWall', 'kitchenTile', 'hutch', 'laundry', 'navyKitchenFridge', 'deli', 'newBuild', 'vanityInstall', 'wardrobeDesk', 'fridgeUnit', 'wardrobe', 'longVanity', 'tallUnit', 'graniteKitchen', 'barCounter', 'wardrobeWall']
 
 // Full-screen gallery of the project photos. Opened from the "Gallery" nav item, or by
 // clicking a photo in the Work grid (which opens it at that photo). Built on <dialog>, so
