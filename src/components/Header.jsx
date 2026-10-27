@@ -101,7 +101,7 @@ export default function Header() {
 
         <nav aria-label="Main" className="hidden lg:block">
           <ul className="flex items-center gap-7">
-            {nav.filter((n) => n.id !== 'contact').map((n) => (
+            {nav.filter((n) => n.id !== 'contact' && n.menu !== false).map((n) => (
               <li key={n.id}>
                 <a
                   href={`#${n.id}`}
@@ -171,7 +171,7 @@ export default function Header() {
           >
             <nav aria-label="Mobile" className="wrap flex min-h-full flex-col pb-[calc(24px+env(safe-area-inset-bottom,0px))] pt-4">
               <ul className="border-t border-rule">
-                {nav.map((n) => (
+                {nav.filter((n) => n.menu !== false).map((n) => (
                   <li key={n.id} className="border-b border-rule">
                     <a href={`#${n.id}`} onClick={(e) => go(e, n.id)} className="flex items-baseline gap-5 py-4">
                       <span className="font-display text-[1.75rem] leading-tight">{n.label}</span>

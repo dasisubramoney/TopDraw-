@@ -32,7 +32,8 @@ export const nav = [
   { id: 'services', code: 'A-01', label: 'Services' },
   { id: 'process', code: 'A-02', label: 'Process' },
   { id: 'trevor', code: 'A-03', label: 'Trevor' },
-  { id: 'work', code: 'A-04', label: 'Work' },
+  // Not in the header menus (the Gallery button replaces it); kept here for the section eyebrow.
+  { id: 'work', code: 'A-04', label: 'Work', menu: false },
   { id: 'contact', code: 'A-05', label: 'Contact' },
 ]
 
