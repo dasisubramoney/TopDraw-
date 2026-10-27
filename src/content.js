@@ -316,8 +316,8 @@ export const partner = {
   cta: 'Visit BoerBoel',
   referral: {
     label: 'When you contact BoerBoel',
-    headline: 'Tell them Top Draw referred you.',
-    text: 'Mention Top Draw by name when you call, email or ask for a quote, so BoerBoel knows Trevor sent you.',
+    headline: 'Tell them Top Draw Projects referred you.',
+    text: 'Mention Top Draw Projects by name when you call, email or ask for a quote, so BoerBoel knows Trevor sent you.',
   },
   install: {
     label: 'Need it installed?',

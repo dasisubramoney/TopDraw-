@@ -2,7 +2,7 @@ import { contact, partner } from '../content.js'
 import SectionHead from './SectionHead.jsx'
 
 // Referral partner: BoerBoel Sheet Metal Fabrication. Sits under Work.
-// The "tell them Top Draw referred you" message is the section's main callout, so the
+// The "tell them Top Draw Projects referred you" message is the section's main callout, so the
 // referral is recorded.
 // Right column: BoerBoel's services, then Trevor's offer to install work BoerBoel makes.
 const installHref = () => {
