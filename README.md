@@ -647,3 +647,23 @@ Added Trevor's consultation fee (first visit free, further visits hourly by agre
 **Prepared for:** Dasendhran Subramoney
 
 Added six photos from Trevor's WhatsApp (navy shaker kitchen, grey oak-look wardrobes and shelving) to the Work grid and gallery, now 24 photos; removed the two thatched loft photos; changed the Work grid to square tiles so it ends in a straight edge.
+
+### Update: steel partner callout says "Top Draw Projects" (27 October 2026)
+
+- The referral callout in the Steel partner section now reads "Tell them Top Draw Projects referred you." and asks visitors to mention Top Draw Projects by name when they call, email or ask for a quote. The wording is `partner.referral` in `src/content.js`. The header wordmark and the Work eyebrow still say "Top Draw" on purpose.
+
+### Update: Work link removed from the menus (27 October 2026)
+
+- Das removed "Work" from the desktop and mobile header menus, since the Gallery button replaces it. The entry stays in `nav` in `src/content.js` with `menu: false`, so the Work section keeps its eyebrow.
+
+### Update: tooling and deploy (26 to 27 October 2026)
+
+- `npm run deploy` deploys `dist` to the live site, with the Netlify site ID written into the script. Build first (`npm run build`), then deploy, then run `npm run verify -- https://topdrawprojects.netlify.app/`. Deploys are manual because Netlify builds triggered by Damian's pushes are blocked ("Unrecognized Git contributor"). The token is a Windows user environment variable, never a file in the repo.
+- `npm run verify` was upgraded: the live commit check is cache-busted and retried, and says what is wrong when it fails (wrong deploy published, a cached copy, or a fetch that failed). It also runs Lighthouse mobile and fails on any SEO problem, re-running once if Lighthouse times out fetching `robots.txt`. It reports STALE after a commit until the next deploy; that is correct.
+- `CLAUDE.md` holds the standing rules for working in this repo with Claude Code (checks before every commit, no push or deploy by Claude, the hidden-address rule, no secrets in `.env`). `.claude/settings.json` holds the deny list that backs them up.
+
+### Session summary (27 October 2026)
+
+**Prepared for:** Dasendhran Subramoney
+
+The Steel partner callout now says "Top Draw Projects"; Das removed Work from the header menus; `npm run deploy` and a stricter `npm run verify` are in place, with `CLAUDE.md` and a deny list for Claude Code.
