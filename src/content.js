@@ -301,9 +301,78 @@ export const work = [
 
 export const sectors = ['Residential', 'Commercial']
 
-export const projectTypes = ['Kitchen', 'Bathroom', 'Dressing room or built-in cupboards', 'Furniture', 'Full turnkey project', 'Trade project (to spec)', 'Installing BoerBoel steel or sheet metal work', 'Something else']
+// 'Installing BoerBoel steel or sheet metal work' goes back in (before 'Something else') when the
+// partner section returns.
+export const projectTypes = ['Kitchen', 'Bathroom', 'Dressing room or built-in cupboards', 'Furniture', 'Full turnkey project', 'Trade project (to spec)', 'Something else']
 
-// Referral partner. Trevor earns a commission when someone he refers does business with them,
+// Common questions. From Trevor's answers to the "Website FAQs" form (November 2026), edited to
+// the site's voice. Contact details and hours are read from `contact`, so they stay in step.
+export const faq = {
+  title: 'Questions, answered',
+  intro: 'The things people usually ask before they book. Anything else, ask Trevor at the site consultation.',
+  items: [
+    {
+      q: 'Is the first consultation free?',
+      a: 'Yes. The first consultation visit is free. If you need more visits, they are charged at an hourly rate that we agree with you first.',
+    },
+    {
+      q: 'Which areas do you work in?',
+      a: `We work across ${contact.area}.`,
+    },
+    {
+      q: 'How much does a custom kitchen cost?',
+      a: 'Every project is quoted on its own after a site visit, because the price depends on the job. The main things that move it are the size of the space, how detailed the design is, the materials and finishes you choose, the hardware, and how much of the installation we take on. The first consultation is free, and your approved quotation sets out every milestone and amount.',
+    },
+    {
+      q: 'How long does it take?',
+      a: 'As an estimate, material sourcing and manufacturing takes 10 to 20 working days, site preparation 7 to 10 working days and kitchen installation 5 to 10 working days. These are estimates, not a guaranteed completion date. Stock availability, design changes and the scheduling of other trades can add time.',
+    },
+    {
+      q: 'What are the steps from first enquiry to handover?',
+      a: 'There are eight stages: enquiry; site visit and quotation; approval and sign-off; material sourcing and manufacturing; site preparation; installation scheduling; installation; and snagging and handover.',
+    },
+    {
+      q: 'How and when do I pay?',
+      a: 'Payment is generally in three milestones, depending on the size of the project: an initial deposit of up to 70% when you accept the quotation, so the project can start; roughly 20% as an installation deposit on delivery to site; and the balance on final handover. Your approved quotation sets out every amount.',
+    },
+    {
+      q: 'Do you install what you build, and do you manage the other trades?',
+      a: 'Yes. We measure on site, build in our workshop and install the work ourselves. On turnkey projects the site manager also co-ordinates the plumber, electrician and stone fitter, so you deal with one point of contact. The other trades are included in the quote; any additional work is quoted separately.',
+    },
+    {
+      q: 'What is white boxing, or shell preparation?',
+      a: 'We prepare the shell of the room to suit the new design, and prepare the footprint for your new kitchen, so the installation goes smoothly.',
+    },
+    {
+      q: 'Do you only do kitchens, and can I see your work?',
+      a: 'No. We also design and install bathrooms, and make built-in cupboards, libraries, shelving, ironmongery, trim and custom shopfitting, all made in our workshop and fitted on site. We also do bespoke steelwork. The Work section of this website shows projects we have built and installed, and we can show you more work similar to yours on request.',
+    },
+    {
+      q: 'What materials do you work with?',
+      a: 'Exotic timbers, stainless steel, custom glass finishes and general hardware.',
+    },
+    {
+      q: 'Is there a guarantee on your work?',
+      // Trevor's answer, as written: "Supplier warranty on hardware. 6 months." CONFIRM whether
+      // Top Draw also guarantees its own workmanship, and for how long.
+      a: 'Hardware carries the supplier’s warranty of 6 months.',
+    },
+    {
+      q: 'How should I prepare my home before work starts?',
+      a: 'It depends on the scope of work. We go through it with you in detail before the project starts.',
+    },
+    {
+      q: 'How do I get a quote?',
+      a: `Call or WhatsApp Trevor on ${contact.phoneDisplay}, or email ${contact.email}. Tell us what you want built and where, and we will arrange your free first consultation visit. We are available ${contact.hours[0].days}, ${contact.hours[0].time}.`,
+    },
+    {
+      q: 'Do you take on work outside your usual scope?',
+      a: 'Yes. Contact us to ask about your project.',
+    },
+  ],
+}
+
+// Referral partner. Hidden for now (not rendered in App.jsx); kept for later use. Trevor earns a commission when someone he refers does business with them,
 // so the section says so (fair-trading and advertising rules expect the relationship disclosed).
 // Services and history are taken from their website (October 2026).
 export const partner = {

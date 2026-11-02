@@ -6,10 +6,13 @@ import Services from './components/Services.jsx'
 import Process from './components/Process.jsx'
 import Trevor from './components/Trevor.jsx'
 import Work from './components/Work.jsx'
-import Partner from './components/Partner.jsx'
+// BoerBoel partner section: hidden for now, kept for later. To bring it back, import
+// './components/Partner.jsx' and render <Partner /> where <Faq /> is (or just above it).
+import Faq from './components/Faq.jsx'
 import Contact from './components/Contact.jsx'
 import Footer from './components/Footer.jsx'
 import Gallery from './components/Gallery.jsx'
+import { bespokePhotos } from './lib/bespoke.js'
 
 export default function App() {
   const reduced = useReducedMotion()
@@ -27,11 +30,12 @@ export default function App() {
         <Process />
         <Trevor />
         <Work />
-        <Partner />
+        <Faq />
         <Contact />
       </main>
       <Footer />
       <Gallery />
+      <Gallery set="bespoke" title="Bespoke projects" photos={bespokePhotos} />
     </LazyMotion>
   )
 }

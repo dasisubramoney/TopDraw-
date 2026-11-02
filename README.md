@@ -667,3 +667,23 @@ Added six photos from Trevor's WhatsApp (navy shaker kitchen, grey oak-look ward
 **Prepared for:** Dasendhran Subramoney
 
 The Steel partner callout now says "Top Draw Projects"; Das removed Work from the header menus; `npm run deploy` and a stricter `npm run verify` are in place, with `CLAUDE.md` and a deny list for Claude Code.
+
+### Update: BoerBoel section hidden, FAQ added (2 November 2026)
+
+- The BoerBoel "Steel partner" section is hidden for now, to be used later. `Partner.jsx`, the `partner` content, the logo and the `.referral-callout` styles are all kept; to bring it back, import `Partner.jsx` in `src/App.jsx` and render `<Partner />` where `<Faq />` is. The "Installing BoerBoel steel or sheet metal work" option was taken out of the form's project types (a comment in `src/content.js` says where it goes back).
+- An FAQ section ("Questions, answered") takes its place, between Work and Contact. The 14 questions and answers are Trevor's, from the "Website FAQs" form he filled in, edited to the site's voice; they live in `faq` in `src/content.js`. The phone, email, hours and area in the answers are read from `contact`, so they stay in step.
+- The design is the shadcn "FAQ 1" accordion (`src/components/ui/faq1.tsx` and `src/components/ui/accordion.tsx`, new dependencies `@radix-ui/react-accordion` and `lucide-react`), re-themed to the site palette. One answer is open at a time and the first starts open. Every answer, closed ones included, is in the prerendered HTML for search engines; an opening answer fades in.
+- Still to confirm with Trevor: the FAQ says payment is "generally" up to 70% / roughly 20% / the balance (from his note), while the Process section shows a fixed 70 / 20 / 10; and whether Top Draw guarantees its own workmanship (the FAQ only mentions the 6-month supplier warranty on hardware).
+
+### Update: Bespoke gallery tab (2 November 2026)
+
+- A "Bespoke" tab after "Gallery" (desktop and mobile menus) opens a full-screen "Bespoke projects" gallery. It uses the same viewer as the Work gallery: `Gallery.jsx` now takes a set of photos, and `openGallery(index, set)` opens one.
+- The photos are every image in `src/assets/bespoke/` (see the README there). Drop a file in and rebuild; no code change is needed. The filename sets the order and the caption: `07-stainless-steel-pool-handrail.webp` is seventh, captioned "Stainless steel pool handrail". The tab hides itself while the folder is empty.
+- The first 17 photos came from Trevor's WhatsApp (31 October). The originals are in `design/photos/bespoke-2026-10-31/`; one exact duplicate was dropped, and three were cropped (a phone screenshot and two with side bars). Converted to WebP, up to 1600 px.
+- To confirm with Trevor: the four captions that say "stainless steel" (05, 06, 07, 13). Photo 01 has a faint, unrecognisable reflection of the photographer in the glass.
+
+### Session summary (2 November 2026)
+
+**Prepared for:** Dasendhran Subramoney
+
+The BoerBoel section is hidden and an FAQ with Trevor's 14 answers takes its place, as an accordion that keeps every answer in the page HTML; a new "Bespoke" tab shows 17 bespoke project photos from a drop-in folder.

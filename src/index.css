@@ -587,6 +587,12 @@ html[data-intro="play"] .skip-intro { display: inline-flex; align-items: center;
 }
 @media (min-width: 640px) { .referral-callout { padding: 28px 32px 30px; } }
 
+/* FAQ accordion (components/ui/accordion.tsx): an opening answer fades in and drops a few pixels.
+   Not a height slide: the panels are force-mounted, so Radix never measures a height to slide to.
+   Reduced motion: the global rule below sets the duration to 0. */
+@utility animate-accordion-down { animation: accordion-down 0.25s cubic-bezier(0.22, 1, 0.36, 1); }
+@keyframes accordion-down { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
+
 /* Lenis */
 html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
