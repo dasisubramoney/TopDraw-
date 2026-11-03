@@ -24,6 +24,7 @@ const raw = (process.env.VITE_SITE_URL || env.VITE_SITE_URL || '').trim()
 if (!raw) fail('VITE_SITE_URL is not set. Set it in .env or in the Netlify environment variables (it is required).')
 if (!/^https?:\/\/[^\s/]+$/.test(raw.replace(/\/+$/, ''))) fail(`VITE_SITE_URL must look like https://example.co.za (got "${raw}").`)
 const site = raw.replace(/\/+$/, '')
+if (/netlify\.app/i.test(site)) fail(`VITE_SITE_URL must be the production domain, not a netlify.app address (got "${raw}").`)
 
 // 2. Site content (single source of truth for facts).
 const { contact, services, trevor, nav, whatsappHref } = await import(pathToFileURL(resolve('src/content.js')).href)

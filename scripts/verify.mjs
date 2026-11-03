@@ -9,7 +9,7 @@
 //   1. /build-commit.txt equals local `git rev-parse HEAD`
 //   2. real content is in the raw HTML (fetched with no JavaScript)
 //   3. /robots.txt, /sitemap.xml, /llms.txt return 200 with the expected content
-//   4. X-Robots-Tag: noindex on the *.netlify.app hostname
+//   4. X-Robots-Tag: noindex on the *.netlify.app hostname; on any other host, NO noindex header
 //   5. Lighthouse (mobile): full SEO audit list and full Performance detail
 //
 // --local   the address is a local server (e.g. `npm run preview`): skips the netlify.app header
@@ -259,14 +259,17 @@ check('llms.txt hours: Monday to Friday, 08:00 to 17:00, closed Saturday and Sun
 check('llms.txt does not contain a street address', !hasHiddenTerm(llms.text) && !/streetAddress|postalCode/.test(llms.text), hiddenNote)
 check('llms.txt names the business, phone, email and area', llms.text.startsWith('# Top Draw Projects') && llms.text.includes(contact.email) && llms.text.includes(contact.area) && /\+27\s?82\s?332\s?1112/.test(llms.text))
 
-// ---- 4. noindex on the *.netlify.app hostname only ---------------------------------------------
+// ---- 4. noindex: expected on the *.netlify.app hostname only; the production domain must not send it ----
 if (local) {
   console.log('SKIP  X-Robots-Tag check (--local: not a netlify.app address)')
 } else {
-  const host = opt('netlify-host') || (new URL(base).hostname.endsWith('.netlify.app') ? new URL(base).hostname : '')
-  if (!host) {
-    check('X-Robots-Tag noindex on the *.netlify.app hostname', false, 'BLOCKED: this address is not a netlify.app host; pass --netlify-host=<name>.netlify.app')
-  } else {
+  const onNetlify = new URL(base).hostname.endsWith('.netlify.app')
+  if (!onNetlify) {
+    const r = await get('/').catch((e) => ({ status: 0, headers: new Headers(), text: String(e) }))
+    check(`${new URL(base).hostname} sends no X-Robots-Tag: noindex`, r.status === 200 && !(r.headers.get('x-robots-tag') || '').toLowerCase().includes('noindex'), `got "${r.headers.get('x-robots-tag')}" (status ${r.status})`)
+  }
+  const host = opt('netlify-host') || (onNetlify ? new URL(base).hostname : '')
+  if (host) {
     const r = await get('/', host).catch((e) => ({ status: 0, headers: new Headers(), text: String(e) }))
     check(`${host} sends X-Robots-Tag: noindex`, (r.headers.get('x-robots-tag') || '').toLowerCase().includes('noindex'), `got "${r.headers.get('x-robots-tag')}" (status ${r.status})`)
   }
