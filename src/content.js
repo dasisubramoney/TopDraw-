@@ -3,12 +3,12 @@
 // photographs and need checking with Trevor.
 
 export const contact = {
-  phoneDisplay: '082 332 1112',
-  phoneHref: 'tel:+27823321112',
-  email: 'topdraw19@gmail.com',
+  phoneDisplay: '072 457 5940',
+  phoneHref: 'tel:+27724575940',
+  email: 'trevor@topdrawprojects.co.za',
   // WhatsApp number in international format without + or spaces.
-  // Assumed to be the same as the phone number; change it if Trevor uses another.
-  whatsappNumber: '27823321112',
+  // Same number as the phone (phone, email and WhatsApp updated November 2026).
+  whatsappNumber: '27724575940',
   whatsappMessage: 'Hi Trevor, I found Top Draw Projects online and would like to talk about a project.',
   area: 'Gauteng',
   // Consultation fee (Trevor, October 2026): first visit free, further visits hourly, agreed with the client.

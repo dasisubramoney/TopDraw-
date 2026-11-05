@@ -257,7 +257,7 @@ const llms = await get('/llms.txt')
 check('/llms.txt 200', llms.status === 200)
 check('llms.txt hours: Monday to Friday, 08:00 to 17:00, closed Saturday and Sunday', /Opening hours: Monday to Friday, 08:00 to 17:00\. Closed Saturday and Sunday\./.test(llms.text))
 check('llms.txt does not contain a street address', !hasHiddenTerm(llms.text) && !/streetAddress|postalCode/.test(llms.text), hiddenNote)
-check('llms.txt names the business, phone, email and area', llms.text.startsWith('# Top Draw Projects') && llms.text.includes(contact.email) && llms.text.includes(contact.area) && /\+27\s?82\s?332\s?1112/.test(llms.text))
+check('llms.txt names the business, phone, email and area', llms.text.startsWith('# Top Draw Projects') && llms.text.includes(contact.email) && llms.text.includes(contact.area) && llms.text.includes('+27 ' + contact.phoneDisplay.replace(/^0/, '')))
 
 // ---- 4. noindex: expected on the *.netlify.app hostname only; the production domain must not send it ----
 if (local) {

@@ -29,7 +29,7 @@ if (/netlify\.app/i.test(site)) fail(`VITE_SITE_URL must be the production domai
 // 2. Site content (single source of truth for facts).
 const { contact, services, trevor, nav, whatsappHref } = await import(pathToFileURL(resolve('src/content.js')).href)
 const today = new Date().toISOString().slice(0, 10)
-const phoneIntl = '+27 ' + contact.phoneDisplay.replace(/^0/, '') // e.g. +27 82 332 1112
+const phoneIntl = '+27 ' + contact.phoneDisplay.replace(/^0/, '') // e.g. +27 72 457 5940
 
 // 3. robots.txt: allow the search and AI crawlers by name, point at the sitemap.
 const bots = ['ClaudeBot', 'GPTBot', 'OAI-SearchBot', 'PerplexityBot', 'Google-Extended', 'Applebot-Extended', 'Bingbot']
@@ -88,21 +88,22 @@ try {
 }
 writeFileSync(join(dist, 'build-commit.txt'), commit + '\n')
 
-// 7. No placeholder (%VITE_SITE_URL%, %CONTACT_EMAIL%) may survive anywhere in dist/.
+// 7. No placeholder (%VITE_SITE_URL%, %CONTACT_EMAIL%, %CONTACT_PHONE%, %CONTACT_PHONE_INTL%) may
+// survive anywhere in dist/.
 const textExt = new Set(['.html', '.txt', '.xml', '.js', '.mjs', '.css', '.json', '.svg', '.webmanifest'])
 const hits = []
 const walk = (dir) => {
   for (const name of readdirSync(dir)) {
     const p = join(dir, name)
     if (statSync(p).isDirectory()) walk(p)
-    else if (textExt.has(extname(name)) && /%(VITE_SITE_URL|CONTACT_EMAIL)%/.test(readFileSync(p, 'utf8'))) hits.push(p.replace(dist, 'dist'))
+    else if (textExt.has(extname(name)) && /%(VITE_SITE_URL|CONTACT_EMAIL|CONTACT_PHONE(_INTL)?)%/.test(readFileSync(p, 'utf8'))) hits.push(p.replace(dist, 'dist'))
   }
 }
 walk(dist)
-if (hits.length) fail(`a placeholder (%VITE_SITE_URL% or %CONTACT_EMAIL%) is still present in: ${hits.join(', ')}`)
+if (hits.length) fail(`a placeholder (%VITE_SITE_URL%, %CONTACT_EMAIL% or %CONTACT_PHONE%) is still present in: ${hits.join(', ')}`)
 
 // 8. The canonical link must point at the site URL.
 const html = readFileSync(join(dist, 'index.html'), 'utf8')
 if (!html.includes(`<link rel="canonical" href="${site}/"`)) fail(`dist/index.html canonical link does not match ${site}/`)
 
-console.log(`SEO files written for ${site}: robots.txt, sitemap.xml, llms.txt, build-commit.txt (${commit.slice(0, 7)}). No %VITE_SITE_URL% left in dist/.`)
+console.log(`SEO files written for ${site}: robots.txt, sitemap.xml, llms.txt, build-commit.txt (${commit.slice(0, 7)}). No %VITE_SITE_URL% or %CONTACT_*% placeholders left in dist/.`)

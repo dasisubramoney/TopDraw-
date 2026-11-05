@@ -30,7 +30,6 @@ All copy and contact details are in `src/content.js`. Search the project for `[`
 
 - `[INSTAGRAM URL]`, `[FACEBOOK URL]`
 - `[SUBURB]` for each project caption
-- Confirm the WhatsApp number: it is set to the same number as the phone (082 332 1112)
 
 ## Images
 
@@ -594,7 +593,7 @@ Added a "Steel partner" section between Work and Contact recommending BoerBoel S
 
 **After connecting the repo in Netlify:**
 1. Build settings are read from `netlify.toml`; leave the build command and publish directory as they are.
-2. In Site configuration > Forms, turn on form detection, then redeploy, so the consultation form is picked up. Add a form notification to topdraw19@gmail.com so Trevor receives each request.
+2. In Site configuration > Forms, turn on form detection, then redeploy, so the consultation form is picked up. Add a form notification to trevor@topdrawprojects.co.za so Trevor receives each request (changed from topdraw19@gmail.com in November 2026: update it in Netlify too).
 3. Once the site has its real address, change `VITE_SITE_URL` in `.env` (canonical link, social sharing image, Google business details), commit and push.
 
 ### Mobile and tablet check (20 October 2026)
@@ -687,3 +686,15 @@ The Steel partner callout now says "Top Draw Projects"; Das removed Work from th
 **Prepared for:** Dasendhran Subramoney
 
 The BoerBoel section is hidden and an FAQ with Trevor's 14 answers takes its place, as an accordion that keeps every answer in the page HTML; a new "Bespoke" tab shows 17 bespoke project photos from a drop-in folder.
+
+### Update: new phone and email (5 November 2026)
+
+- Phone and WhatsApp are now 072 457 5940, and the email is trevor@topdrawprojects.co.za (was 082 332 1112 and topdraw19@gmail.com). They are set once, in `contact` in `src/content.js`; the page, the FAQ, the WhatsApp links and `llms.txt` all read from there.
+- `index.html` no longer types the phone number out: its structured data and no-JavaScript paragraph use `%CONTACT_PHONE_INTL%` and `%CONTACT_PHONE%`, which `vite.config.js` fills in from `content.js` at build time (as it already did for `%CONTACT_EMAIL%`). The build fails if any of these placeholders reaches `dist/`, and `npm run verify` checks `llms.txt` for the phone number from `content.js` instead of the old hard-coded one.
+- To do in Netlify: change the form notification address (Site configuration > Forms > Notifications) to trevor@topdrawprojects.co.za, and send a test email to the new address.
+
+### Session summary (5 November 2026)
+
+**Prepared for:** Dasendhran Subramoney
+
+The site's phone, WhatsApp and email are now 072 457 5940 and trevor@topdrawprojects.co.za, read from one place.

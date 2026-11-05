@@ -8,13 +8,17 @@ import { contact } from './src/content.js'
 const pkg = (names) => new RegExp(`[\\\\/]node_modules[\\\\/](${names.join('|')})[\\\\/]`)
 
 // index.html cannot import JavaScript, so facts it repeats (the structured data and the no-JavaScript
-// paragraph) are filled in here from src/content.js: change the email there and it changes everywhere.
-// Runs before Vite's own %ENV% replacement, which would otherwise warn about these names.
+// paragraph) are filled in here from src/content.js: change the email or phone there and it changes
+// everywhere. Runs before Vite's own %ENV% replacement, which would otherwise warn about these names.
 const contentPlaceholders = () => ({
   name: 'content-placeholders',
   transformIndexHtml: {
     order: 'pre',
-    handler: (html) => html.replaceAll('%CONTACT_EMAIL%', contact.email),
+    handler: (html) =>
+      html
+        .replaceAll('%CONTACT_EMAIL%', contact.email)
+        .replaceAll('%CONTACT_PHONE_INTL%', '+27 ' + contact.phoneDisplay.replace(/^0/, ''))
+        .replaceAll('%CONTACT_PHONE%', contact.phoneDisplay),
   },
 })
 
