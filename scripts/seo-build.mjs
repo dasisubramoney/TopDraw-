@@ -29,7 +29,7 @@ if (/netlify\.app/i.test(site)) fail(`VITE_SITE_URL must be the production domai
 // 2. Site content (single source of truth for facts).
 const { contact, services, trevor, nav, whatsappHref } = await import(pathToFileURL(resolve('src/content.js')).href)
 const today = new Date().toISOString().slice(0, 10)
-const phoneIntl = '+27 ' + contact.phoneDisplay.replace(/^0/, '') // e.g. +27 82 332 1112
+const phoneIntl = '+27 ' + contact.phoneDisplay.replace(/^0/, '') // e.g. +27 72 457 5940
 
 // 3. robots.txt: allow the search and AI crawlers by name, point at the sitemap.
 const bots = ['ClaudeBot', 'GPTBot', 'OAI-SearchBot', 'PerplexityBot', 'Google-Extended', 'Applebot-Extended', 'Bingbot']
@@ -53,12 +53,12 @@ writeFileSync(
 // Confirmed with the client: Monday to Friday, 08:00 to 17:00, closed Saturday and Sunday.
 const hours = `${contact.hours[0].days}, ${contact.hours[0].time}. Closed Saturday and Sunday.`
 const sections = nav.map((n) => `- [${n.label}](${site}/#${n.id})`).join('\n')
-const llms = `# Top Draw Projects
+const llms = `# TopDraw Projects
 
 > Bespoke cabinetry, kitchens, bathrooms and interiors in Gauteng, South Africa. Designed, built and installed by one team, led by craftsman Trevor.
 
 ## About
-Top Draw Projects designs, manufactures and installs bespoke cabinetry, furniture and interiors for residential and commercial projects. The work includes kitchens, bathrooms, dressing rooms and built-in cupboards, and full turnkey projects. Trevor, who leads the business, started as a boilermaker and sheet metal worker in stainless steel fabrication, moved into architectural metalwork and bespoke balustrading, and then into high-end furniture, cabinetry and interior design.
+TopDraw Projects designs, manufactures and installs bespoke cabinetry, furniture and interiors for residential and commercial projects. The work includes kitchens, bathrooms, dressing rooms and built-in cupboards, and full turnkey projects. Trevor, who leads the business, started as a boilermaker and sheet metal worker in stainless steel fabrication, moved into architectural metalwork and bespoke balustrading, and then into high-end furniture, cabinetry and interior design.
 
 ## Services
 ${services.map((s) => `- ${s.title}: ${s.text}`).join('\n')}

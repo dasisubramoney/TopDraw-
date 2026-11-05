@@ -96,7 +96,7 @@ export default function Header() {
           className={`flex min-h-11 items-center gap-3 no-underline transition-[opacity,visibility] duration-300 ${showBrand ? 'visible opacity-100' : 'invisible opacity-0'}`}
         >
           <img src={hero.mark.src} alt="" width={hero.mark.w} height={hero.mark.h} className="h-7 w-auto lg:h-8" />
-          <span className="whitespace-nowrap font-display text-[1.375rem] leading-none tracking-[-0.01em] lg:text-[1.5rem]">Top Draw</span>
+          <span className="whitespace-nowrap font-display text-[1.375rem] leading-none tracking-[-0.01em] lg:text-[1.5rem]">TopDraw</span>
           <span className="anno hidden whitespace-nowrap md:inline lg:hidden xl:inline">Bespoke interiors / Gauteng</span>
         </a>
 

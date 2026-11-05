@@ -3,13 +3,13 @@
 // photographs and need checking with Trevor.
 
 export const contact = {
-  phoneDisplay: '082 332 1112',
-  phoneHref: 'tel:+27823321112',
+  phoneDisplay: '072 457 5940',
+  phoneHref: 'tel:+27724575940',
   email: 'topdraw19@gmail.com',
   // WhatsApp number in international format without + or spaces.
-  // Assumed to be the same as the phone number; change it if Trevor uses another.
-  whatsappNumber: '27823321112',
-  whatsappMessage: 'Hi Trevor, I found Top Draw Projects online and would like to talk about a project.',
+  // The same number as the phone: Trevor's only number for calls and WhatsApp.
+  whatsappNumber: '27724575940',
+  whatsappMessage: 'Hi Trevor, I found TopDraw Projects online and would like to talk about a project.',
   area: 'Gauteng',
   // Consultation fee (Trevor, October 2026): first visit free, further visits hourly, agreed with the client.
   consultation: { first: 'First visit free', further: 'Further visits: hourly rate, agreed with you' },
@@ -74,7 +74,7 @@ export const hero = {
     srcSmall: '/images/logo-top-draw-sm.webp',
     w: 1308,
     h: 277,
-    alt: 'Top Draw Projects',
+    alt: 'TopDraw Projects',
   },
   mark: { src: '/images/logo-mark-200.webp', w: 200, h: 119 },
   // First frame of the intro video (the empty room it starts on), shown until the video paints its own
@@ -354,7 +354,7 @@ export const faq = {
     {
       q: 'Is there a guarantee on your work?',
       // Trevor's answer, as written: "Supplier warranty on hardware. 6 months." CONFIRM whether
-      // Top Draw also guarantees its own workmanship, and for how long.
+      // TopDraw also guarantees its own workmanship, and for how long.
       a: 'Hardware carries the supplier’s warranty of 6 months.',
     },
     {
@@ -385,8 +385,8 @@ export const partner = {
   cta: 'Visit BoerBoel',
   referral: {
     label: 'When you contact BoerBoel',
-    headline: 'Tell them Top Draw Projects referred you.',
-    text: 'Mention Top Draw Projects by name when you call, email or ask for a quote, so BoerBoel knows Trevor sent you.',
+    headline: 'Tell them TopDraw Projects referred you.',
+    text: 'Mention TopDraw Projects by name when you call, email or ask for a quote, so BoerBoel knows Trevor sent you.',
   },
   install: {
     label: 'Need it installed?',

@@ -1,6 +1,6 @@
-# Top Draw Projects
+# TopDraw Projects
 
-Marketing site for Top Draw Projects, bespoke cabinetry and interiors in Gauteng.
+Marketing site for TopDraw Projects, bespoke cabinetry and interiors in Gauteng.
 Vite + React 18, Tailwind CSS 4, GSAP ScrollTrigger, Lenis, Framer Motion (AnimatePresence, plus drag in the Projects gallery).
 
 - `PRODUCT.md`: brief, audiences, voice, content rules
@@ -30,7 +30,7 @@ All copy and contact details are in `src/content.js`. Search the project for `[`
 
 - `[INSTAGRAM URL]`, `[FACEBOOK URL]`
 - `[SUBURB]` for each project caption
-- Confirm the WhatsApp number: it is set to the same number as the phone (082 332 1112)
+- Confirm the WhatsApp number: it is set to the same number as the phone (072 457 5940)
 
 ## Images
 
@@ -143,11 +143,11 @@ and stored in `public/images`. To add a project, export the same two widths and 
 
 **Prepared for:** Dasendhran Subramoney
 
-- Re-themed the site from the old cool blue-grey to the Top Draw logo colours, measured from the logo file: blue #31378F, black #222222, beige #B2A696. Done on the `feature/brand-colours` branch.
+- Re-themed the site from the old cool blue-grey to the TopDraw logo colours, measured from the logo file: blue #31378F, black #222222, beige #B2A696. Done on the `feature/brand-colours` branch.
 - Token changes in `src/index.css` (names unchanged): `steel` #4A7FB0 to #31378F (CTAs, active states, focus, process nodes); `ink` #2B3642 to #222222 (text, dark contact/footer); `mist` #E9EEF3 to #F5F2ED (alternating sections); `rule` #B7C6D6 to #D2C9BC (hairlines, secondary text on dark). New `beige` #B2A696, used only for the primary button border on the dark section.
 - Blue on near-black is only 1.57:1, so on the dark contact section the primary button is white with dark text (resolved when this branch was merged with the logo-hero work, which made the same call; the beige-border idea was dropped). The beige token is reserved for dark-section accents and currently unused.
 - Also updated the hard-coded colours in `SectionDrawings.jsx`, the Process blueprint grid (an encoded colour inside `index.css`) and `public/favicon.svg`. `DESIGN.md` has the new palette and a re-measured contrast table. Text contrast is better everywhere (ink on paper 15.91:1; white on blue 9.67:1, so the old 19px-bold rule for button text no longer limits it).
-- Colour only: no layout, copy, type or motion changes. The logo artwork and the "Top Draw" wordmark in the header are unchanged. The hero video, photographs and the `og.jpg` social image are not recoloured.
+- Colour only: no layout, copy, type or motion changes. The logo artwork and the "TopDraw" wordmark in the header are unchanged. The hero video, photographs and the `og.jpg` social image are not recoloured.
 
 ### Update: Services sticky scroll reveal (13 October 2026)
 
@@ -158,7 +158,7 @@ and stored in `public/images`. To add a project, export the same two widths and 
 
 ### Update: Work section portal intro (13 October 2026)
 
-- Added a scroll-driven intro to Selected work, adapted from the MIT-licensed Glyph Portal (21st.dev, Christian Katzmann; licence notice kept at the top of `src/components/GlyphPortal.jsx`). The word PROJECTS (with "Top Draw" above it, like the logo) is set huge in blue, with a project photo showing through the letters; scrolling zooms into a letter until the blue fills the screen, then the six projects scroll over it. Pinned for 1.5 screens. Branch: `feature/work-glyph-portal`.
+- Added a scroll-driven intro to Selected work, adapted from the MIT-licensed Glyph Portal (21st.dev, Christian Katzmann; licence notice kept at the top of `src/components/GlyphPortal.jsx`). The word PROJECTS (with "TopDraw" above it, like the logo) is set huge in blue, with a project photo showing through the letters; scrolling zooms into a letter until the blue fills the screen, then the six projects scroll over it. Pinned for 1.5 screens. Branch: `feature/work-glyph-portal`.
 - Ported to JavaScript for this project (the original is TypeScript): the `inert` attribute is set the React 18 way, the root is a plain div, the default green background and no-JS poster are removed. No new packages; font is the existing self-hosted Schibsted Grotesk at weight 800; colours are the existing palette tokens (blue, black, white); the photo is one of the existing project photos.
 - Loads on demand: the portal is a separate 5.5 KB (gzip) chunk that only loads when the section is within a screen of the viewport and the font has loaded (1.5 s limit). Until then, with reduced motion, or without JavaScript, the section is the same plain project list as before, and that list is what the prerendered HTML contains. Checked: raw HTML contains the heading, captions and images; no external hosts are requested; desktop and 390 px behave; reduced motion stays static.
 - Lighthouse mobile, before and after this change: performance 98 to 99, LCP 2.3 s to 1.8 s, TBT 40 ms to 0 ms (within normal run-to-run noise). Lighthouse does not scroll, so it does not exercise the portal itself.
@@ -210,23 +210,23 @@ Branch `feature/seo-foundation`, not committed. Audited the existing site and fi
 - All of this is in `scripts/seo-build.mjs`, which runs at the end of `npm run build`.
 
 **Deploy and verification**
-- 17. `netlify/edge-functions/noindex-netlify-host.js` adds `X-Robots-Tag: noindex` only on `*.netlify.app` hostnames (netlify.toml cannot match on hostname). NOT yet tested on a real deploy; `verify.mjs` will confirm it after the first deploy.
-- 18-21 and 25. `npm run verify -- <site-url>` (`scripts/verify.mjs`) first compares `/build-commit.txt` with your local HEAD and stops with a loud failure on a mismatch. Then it checks the raw HTML (no JavaScript), `robots.txt`, `sitemap.xml` and `llms.txt`, the noindex header on the netlify.app host (`--netlify-host=<name>.netlify.app` if the URL is a custom domain; `--local` skips it), and runs Lighthouse (mobile). Reports are saved in `lighthouse-reports/` (git-ignored), and the full SEO list and Performance detail are printed.
-- 22-23. `scripts/verify-ssl.mjs` and `scripts/verify-domain.mjs` are written but have NOT been run. Run them only once the domain is live and `VITE_SITE_URL` has been switched.
+- 17. Removed at go-live (3 November 2026): the temporary noindex stopgap, a site-wide `X-Robots-Tag: noindex` header in `netlify.toml` plus the `noindex-netlify-host` edge function. The site is live on https://topdrawprojects.co.za and sends no noindex header. A redirect from the netlify.app address to the domain is set in `netlify.toml`.
+- 18-21 and 25. `npm run verify -- <site-url>` (`scripts/verify.mjs`) first compares `/build-commit.txt` with your local HEAD and stops with a loud failure on a mismatch. Then it checks the raw HTML (no JavaScript), `robots.txt`, `sitemap.xml` and `llms.txt`, that no `X-Robots-Tag: noindex` header is sent (`--local` skips this check; run it against https://topdrawprojects.co.za, because the old netlify.app noindex header no longer exists), and runs Lighthouse (mobile). Reports are saved in `lighthouse-reports/` (git-ignored), and the full SEO list and Performance detail are printed.
+- 22-23. `scripts/verify-ssl.mjs` and `scripts/verify-domain.mjs` were run on 5 Nov 2026 against https://topdrawprojects.co.za and passed.
 
 **Local verification (production build served locally):** every check passed. Lighthouse mobile: SEO 100, Performance 89 (FCP 2.4 s, LCP 3.3 s, TBT 40 ms, CLS 0). The LCP element is the first intro caption ("We design, build and install..."), which appears only when the hero intro reaches it, so its timing is the intro's timing; that was left alone as instructed. Other findings: a render-blocking stylesheet (about 450 ms), and unused-JavaScript coverage in the `gsap` and `motion` chunks at first load (they are needed later for scroll effects and the mobile menu).
 
 **Facts (updated 20 October 2026, see the next entry for what was confirmed)**
-- Still TODO: the final domain (`VITE_SITE_URL` is the temporary address and `https://topdraw.netlify.app` returned 404 when tested, so confirm the real *.netlify.app name), pricing, the FAQ and any street address. None of these is stated or invented anywhere.
+- Still TODO at that date: pricing and any street address. None of these is stated or invented anywhere. (Since then the final domain was set at go-live, https://topdrawprojects.co.za, and the FAQ was added.)
 
 
 ### Confirmed client facts applied (20 October 2026)
 
 Branch `feature/seo-foundation`, not committed.
 
-**Confirmed by the client:** business name Top Draw Projects; service area Gauteng; hours Monday to Friday, 08:00 to 17:00; phone +27 82 332 1112. **Not confirmed, unchanged:** the email address (topdraw19@gmail.com, may change), `VITE_SITE_URL` (domain undecided), street address, pricing and FAQ.
+**Confirmed by the client:** business name TopDraw Projects; service area Gauteng; hours Monday to Friday, 08:00 to 17:00; phone +27 82 332 1112. **Not confirmed, unchanged:** the email address (topdraw19@gmail.com, may change), `VITE_SITE_URL` (domain undecided), street address, pricing and FAQ.
 
-- **A. Name:** "Top Draw Projects" is now used in the page title, og:title, og:site_name, og:image:alt, the structured data name, the no-JavaScript paragraph, llms.txt, the hero logo's alt text, the README header and PRODUCT.md. The hero logo image itself already reads TOP DRAW / PROJECTS; the social sharing image (og.jpg) is a plain kitchen photo with no text. The short "Top Draw" in visible page copy was deliberately not changed (header wordmark, footer copyright, the line above PROJECTS, the WhatsApp message and the BoerBoel wording).
+- **A. Name:** "TopDraw Projects" is now used in the page title, og:title, og:site_name, og:image:alt, the structured data name, the no-JavaScript paragraph, llms.txt, the hero logo's alt text, the README header and PRODUCT.md. The hero logo image itself already reads TOP DRAW / PROJECTS; the social sharing image (og.jpg) is a plain kitchen photo with no text. The short "Top Draw" in visible page copy was deliberately not changed at that time (header wordmark, footer copyright, the line above PROJECTS, the WhatsApp message and the BoerBoel wording); the two-word spellings were later changed to the one-word "TopDraw" (see the 5 November 2026 entry).
 - **B. Area:** "Johannesburg" now says Gauteng where it described the area served: the title, description, og:description, the header tagline, the footer sentence, the README header and PRODUCT.md. The structured-data `addressLocality` has since been set to Roodepoort (see the next entry). Still open: the Contact map artwork, a street map of Rosebank and Sandton.
 - **C. Hours:** the visible hours now read "Monday to Friday" (they said "Mon to Fri"); the structured data (`Mo-Fr 08:00-17:00`) and llms.txt already matched, and llms.txt now states only the confirmed Monday to Friday hours. The footer also shows "Sat and Sun: Closed", which this confirmation did not cover.
 - **D. Email:** the address lives in `src/content.js`. `index.html` (structured data and the no-JavaScript paragraph) now takes it from there through a small plugin in `vite.config.js` (placeholder `%CONTACT_EMAIL%`), and llms.txt already did, so a later change is one edit. The build also fails if that placeholder survives in `dist/`. Still outside the code: the Netlify form notification (set in Netlify's settings) and README setup text.
@@ -239,7 +239,7 @@ Branch `feature/seo-foundation`, not committed.
 
 **Confirmed by the client:** the workshop is in Roodepoort, Gauteng; the street address is hidden and the service area (Gauteng) is public; hours are Monday to Friday, 08:00 to 17:00, closed Saturday and Sunday.
 
-- The footer copyright now reads "Top Draw Projects" (both mentions), and the pre-filled WhatsApp message says "I found Top Draw Projects online".
+- The footer copyright now reads "TopDraw Projects" (both mentions), and the pre-filled WhatsApp message says "I found TopDraw Projects online".
 - Structured data: `addressLocality` is Roodepoort, `addressRegion` Gauteng, `addressCountry` ZA. There is no street address, postal code or suburb. `openingHours` stays `Mo-Fr 08:00-17:00`; `areaServed` stays Gauteng.
 - llms.txt hours line: "Monday to Friday, 08:00 to 17:00. Closed Saturday and Sunday." llms.txt does not mention Roodepoort and states no street address.
 - The street address does not appear anywhere in the repository, its git history or any generated file (checked on the sources, `dist/`, `dist-ssr/` and the Lighthouse reports). `npm run verify` now also fails if it ever appears in the page or in llms.txt, or if the structured-data address contains anything beyond locality, region and country.
@@ -324,7 +324,7 @@ Branch `feature/seo-foundation`, not committed.
 - **Root cause:** seven portrait photos in the Work gallery (`vanityInstall`, `vanityOak`, `tallUnit`, `hutch`, `laundry`, `fridgeUnit`, `graniteKitchen`) are declared 1800x2400 or 1800x2064 in `src/content.js`, but the exported files are rounded: 800x1067 and 1600x2133 for 3:4, 800x917 and 1600x1835 for the vanity. A lazy `<img>` reserves space from the declared width/height, then switches to the file's own ratio on load. Each tile changed height by about 0.1 px (373.328 to 373.438 px at 1440 wide), the four-column gallery grew by 0.03 px, and the Work section's height drifted (3154.625 to 3154.656 px) while the page was mid-jump. `ScrollTrigger.refresh()` saves and restores the scroll position around that, so the restore landed 1 px off. The outline only changed when this happened, not the layout (the Contact section is 872.078 px tall with or without it).
 - **Fix:** `Picture` takes a `fixedRatio` prop that sets `aspect-ratio` to the declared size; the Work photo grid uses it. The image keeps the declared ratio after loading (the difference to the file is under 0.05 percent, not visible), so no tile changes height on load. Nothing else changed, and the hero intro was not touched.
 - **Check:** with the threshold at 3 px, all five jumps (Services, Process, Trevor, Work, hero button to Contact) land at exactly 72 px under the 72 px header, with one position change each, in three runs. The Contact jump also lands within a pixel at device pixel ratios 1.25, 1.5 and 2.625 and at 125 percent and 150 percent zoom (at 150 percent the viewport is 960 px wide and the header is 56 px).
-- BoerBoel wording in `src/content.js` now says "Top Draw Projects" in both the mention and the disclosure line; nothing else in them changed.
+- BoerBoel wording in `src/content.js` now says "TopDraw Projects" in both the mention and the disclosure line; nothing else in them changed.
 
 ### Session summary (12 October 2026)
 
@@ -352,8 +352,8 @@ Removed the hero measurement lines; fixed the hero headline overlapping the nav 
 
 **Prepared for:** Dasendhran Subramoney
 
-- The Top Draw Projects logo now replaces the hero text: after the intro, the logo wipes in from the left, followed by the two buttons. The headline sentence stays in the page heading for screen readers and search engines, but is no longer shown.
-- The TD mark sits beside "Top Draw" in the navigation bar.
+- The TopDraw Projects logo now replaces the hero text: after the intro, the logo wipes in from the left, followed by the two buttons. The headline sentence stays in the page heading for screen readers and search engines, but is no longer shown.
+- The TD mark sits beside "TopDraw" in the navigation bar.
 - The supplied JPEG was cropped and its white background removed (`public/images/logo-top-draw.webp`, `logo-top-draw-sm.webp`, `logo-mark.webp`). The original is kept in `design/logo/`.
 
 ### Update: hero polish (13 October 2026)
@@ -371,15 +371,15 @@ Removed the hero measurement lines; fixed the hero headline overlapping the nav 
 
 **Prepared for:** Dasendhran Subramoney
 
-Folded the Trevor closing statement into the drawing sequence as chapter 04 "Today" with a title block; added timed intro captions ("Bespoke design" and "White boxing") with reading pauses; replaced the hero text with the Top Draw Projects logo in a framed title block with a one-line descriptor; changed the site accent to the logo's blue; hid the nav brand over the hero; ended the intro on the finished kitchen. Still to supply: Instagram and Facebook links, project suburbs, confirmation that WhatsApp uses 082 332 1112, and whether the business name everywhere should be "Top Draw Projects".
+Folded the Trevor closing statement into the drawing sequence as chapter 04 "Today" with a title block; added timed intro captions ("Bespoke design" and "White boxing") with reading pauses; replaced the hero text with the TopDraw Projects logo in a framed title block with a one-line descriptor; changed the site accent to the logo's blue; hid the nav brand over the hero; ended the intro on the finished kitchen. Still to supply: Instagram and Facebook links, project suburbs, confirmation that WhatsApp uses 082 332 1112, and whether the business name everywhere should be "Top Draw Projects".
 
 ### Update: gallery backdrop black (14 October 2026)
 
 - The panel behind the gallery photos is now solid black (the logo black, `ink` #222222) instead of blue. The blue still shows during the zoom into PROJECTS; the black panel fades in over it as the zoom finishes. The photos' soft shadow is much fainter on black, as expected.
 
-### Update: PROJECTS black, Top Draw blue (14 October 2026)
+### Update: PROJECTS black, TopDraw blue (14 October 2026)
 
-- Swapped the colours of the Projects intro: the small "Top Draw" line above is now the logo blue and the huge PROJECTS word is black (the letters are windows onto the kitchen photo under a black overlay). The zoom into a letter now ends in black, which flows straight into the black gallery panel instead of crossing from blue to black.
+- Swapped the colours of the Projects intro: the small "TopDraw" line above is now the logo blue and the huge PROJECTS word is black (the letters are windows onto the kitchen photo under a black overlay). The zoom into a letter now ends in black, which flows straight into the black gallery panel instead of crossing from blue to black.
 
 ### Fix: bump at the end of the gallery (14 October 2026)
 
@@ -462,7 +462,7 @@ Folded the Trevor closing statement into the drawing sequence as chapter 04 "Tod
 
 - Every section heading now has a small label above it with that section's navigation name ("Services" above "Areas of Expertise", "Process" above "Concept to completion", "Trevor" above "The Artisan", "Work" above "Built and installed", "Contact" above "Book a site consultation"). The label comes from the navigation list, so it stays in step if a nav name changes.
 - All five headings are now exactly alike: same size (55 px desktop, 30 px phone), same regular weight, same spacing (measured: 49 px from the rule to the label and 12 px from the label to the title on desktop, identical in every section). Trevor's heading used to be larger and Services had its own centred spacing; both variants are gone. The Services heading still stays pinned while its cards stack, and the nav jumps still land with the section top under the header.
-- The Work heading is only visible in the plain list (no JavaScript or reduced motion); in the zoom, the "Top Draw / PROJECTS" lockup is that section's heading, unchanged.
+- The Work heading is only visible in the plain list (no JavaScript or reduced motion); in the zoom, the "TopDraw / PROJECTS" lockup is that section's heading, unchanged.
 
 
 ### Update: arrows on the section labels (15 October 2026)
@@ -493,9 +493,9 @@ Folded the Trevor closing statement into the drawing sequence as chapter 04 "Tod
 
 This branch has everything below, merged with the logo-hero work from `feature/marketing-site`. The local branches `feature/brand-colours` and `feature/services-sticky-scroll` never had commits of their own (their work is in this branch), so they can be deleted.
 
-- **Colours:** re-themed from blue-grey to the Top Draw logo colours: blue #31378F (measured from the original logo file), black #222222, beige #B2A696, with warm beige tints for sections and hairlines. Contrast re-measured in `DESIGN.md`; text and white-on-blue buttons now pass comfortably.
+- **Colours:** re-themed from blue-grey to the TopDraw logo colours: blue #31378F (measured from the original logo file), black #222222, beige #B2A696, with warm beige tints for sections and hairlines. Contrast re-measured in `DESIGN.md`; text and white-on-blue buttons now pass comfortably.
 - **Services:** the accordion became a sticky scroll reveal (adapted from 21st.dev). On desktop a photo stays pinned beside the services and swaps as each one scrolls into view; on phones each service carries its own photo.
-- **Projects (was Selected work):** a scroll-driven portal intro. The word PROJECTS, with "Top Draw" above it, is set huge in blue with a project photo showing through the letters; scrolling zooms into a letter until the blue fills the screen. You then land in an infinite drag gallery of all twelve project photos (scrolling moves it, mouse users can drag it in any direction, touch users drag sideways). The first and last views are aligned so no photo is ever cut by an edge, on any window size tested. The photos carry a soft shadow (the one shadow on the site).
+- **Projects (was Selected work):** a scroll-driven portal intro. The word PROJECTS, with "TopDraw" above it, is set huge in blue with a project photo showing through the letters; scrolling zooms into a letter until the blue fills the screen. You then land in an infinite drag gallery of all twelve project photos (scrolling moves it, mouse users can drag it in any direction, touch users drag sideways). The first and last views are aligned so no photo is ever cut by an edge, on any window size tested. The photos carry a soft shadow (the one shadow on the site).
 - **Fallbacks:** the plain captioned project list stays for visitors without JavaScript, with reduced motion, and in the prerendered HTML; screen readers get a text summary inside the portal. The portal and gallery load only when the section is near the screen (about 5 KB and 20 KB gzipped).
 - **Fixes:** hero headline no longer overlaps the nav on short windows; the hero measurement lines were removed.
 - **Process section:** a new five-stage process (with the R795 fee, the 30% / 50% / 20% payments, 7-10 working days for materials and a 4-6 week project) was drafted and sent to Trevor as a PDF. It is not on the site yet.
@@ -507,7 +507,7 @@ Still to supply or decide: Instagram and Facebook links, project suburbs, confir
 
 **Prepared for:** Dasendhran Subramoney
 
-Projects intro: PROJECTS is now black with "Top Draw" in blue above it, the "See the work" button is black, and the gallery sits on a solid black panel. Fixed a bump that happened as the gallery handed over to the next section (the grid now glides to its resting position in step with the scroll). Removed the small section labels ("A-0X / Name" and the right-hand notes) and every small index number on the site (service numbers, Stage 01 to 05, Trevor chapter numbers, W-01 to W-06, Fig. 02, menu codes, the footer sheet line). The Services heading is now "Areas of Expertise", centred between its two lines, and the Services photos and animation were removed in favour of a plain text list. Still to supply or decide: Instagram and Facebook links, project suburbs, confirmation that WhatsApp uses 082 332 1112, Trevor's reply on the Process wording and on the line under PROJECTS, the hero photo behind PROJECTS, and the logo typeface if one is chosen.
+Projects intro: PROJECTS is now black with "TopDraw" in blue above it, the "See the work" button is black, and the gallery sits on a solid black panel. Fixed a bump that happened as the gallery handed over to the next section (the grid now glides to its resting position in step with the scroll). Removed the small section labels ("A-0X / Name" and the right-hand notes) and every small index number on the site (service numbers, Stage 01 to 05, Trevor chapter numbers, W-01 to W-06, Fig. 02, menu codes, the footer sheet line). The Services heading is now "Areas of Expertise", centred between its two lines, and the Services photos and animation were removed in favour of a plain text list. Still to supply or decide: Instagram and Facebook links, project suburbs, confirmation that WhatsApp uses 082 332 1112, Trevor's reply on the Process wording and on the line under PROJECTS, the hero photo behind PROJECTS, and the logo typeface if one is chosen.
 ### Update: Process redesign (14 October 2026)
 
 
@@ -568,7 +568,7 @@ Process: the timeline notes became a "How long it takes" block with large workin
 
 **Prepared for:** Dasendhran Subramoney
 
-Added a "Steel partner" section between Work and Contact recommending BoerBoel Sheet Metal Fabrication (sheetmetal.co.za), with their services, a "Visit BoerBoel" button, their logo (recoloured to ink) linking to their site, and a disclosure that Top Draw may earn a referral fee. To do: agree a referral code or tracked link with BoerBoel, and confirm they are happy for their logo to be used.
+Added a "Steel partner" section between Work and Contact recommending BoerBoel Sheet Metal Fabrication (sheetmetal.co.za), with their services, a "Visit BoerBoel" button, their logo (recoloured to ink) linking to their site, and a disclosure that TopDraw may earn a referral fee. To do: agree a referral code or tracked link with BoerBoel, and confirm they are happy for their logo to be used.
 
 ### Update: Work link opens the gallery (20 October 2026)
 
@@ -622,7 +622,7 @@ Work link opens the gallery directly (and drops the zoom intro afterwards); new 
 
 ### Update: BoerBoel referral and installation (21 October 2026)
 
-- The referral reminder is now the main callout in the Steel partner section: a shaded panel with a blue edge, "When you contact BoerBoel / Tell them Top Draw referred you.", explaining that visitors should mention Top Draw by name when they call, email or ask for a quote. The "Visit BoerBoel" button and logo sit inside it; the referral-fee disclosure stays directly underneath.
+- The referral reminder is now the main callout in the Steel partner section: a shaded panel with a blue edge, "When you contact BoerBoel / Tell them TopDraw referred you.", explaining that visitors should mention TopDraw by name when they call, email or ask for a quote. The "Visit BoerBoel" button and logo sit inside it; the referral-fee disclosure stays directly underneath.
 - New "Need it installed? Trevor can fit it for you." block under BoerBoel's services: Trevor can install steel or sheet metal work that BoerBoel makes. Its "Ask Trevor about installation" button opens WhatsApp with a ready-made message; a second link goes to the consultation form.
 - Contact form: new project type "Installing BoerBoel steel or sheet metal work", so these enquiries are easy to spot.
 
@@ -632,7 +632,7 @@ Work link opens the gallery directly (and drops the zoom intro afterwards); new 
 
 **Prepared for:** Dasendhran Subramoney
 
-Added Trevor's consultation fee (first visit free, further visits hourly by agreement) to the contact details and Process stage 2; made the "Tell them Top Draw referred you" reminder the main panel in the BoerBoel section; added Trevor's offer to install work BoerBoel makes, with a WhatsApp button and a matching project type in the contact form; removed the referral-fee disclosure line at the owner's request.
+Added Trevor's consultation fee (first visit free, further visits hourly by agreement) to the contact details and Process stage 2; made the "Tell them TopDraw referred you" reminder the main panel in the BoerBoel section; added Trevor's offer to install work BoerBoel makes, with a WhatsApp button and a matching project type in the contact form; removed the referral-fee disclosure line at the owner's request.
 
 ### Update: new photos from WhatsApp (26 October 2026)
 
@@ -648,9 +648,9 @@ Added Trevor's consultation fee (first visit free, further visits hourly by agre
 
 Added six photos from Trevor's WhatsApp (navy shaker kitchen, grey oak-look wardrobes and shelving) to the Work grid and gallery, now 24 photos; removed the two thatched loft photos; changed the Work grid to square tiles so it ends in a straight edge.
 
-### Update: steel partner callout says "Top Draw Projects" (27 October 2026)
+### Update: steel partner callout says "TopDraw Projects" (27 October 2026)
 
-- The referral callout in the Steel partner section now reads "Tell them Top Draw Projects referred you." and asks visitors to mention Top Draw Projects by name when they call, email or ask for a quote. The wording is `partner.referral` in `src/content.js`. The header wordmark and the Work eyebrow still say "Top Draw" on purpose.
+- The referral callout in the Steel partner section now reads "Tell them TopDraw Projects referred you." and asks visitors to mention TopDraw Projects by name when they call, email or ask for a quote. The wording is `partner.referral` in `src/content.js`. At that point the header wordmark and the Work eyebrow still said "Top Draw" on purpose; both now say "TopDraw" (see the 5 November 2026 entry).
 
 ### Update: Work link removed from the menus (27 October 2026)
 
@@ -658,7 +658,7 @@ Added six photos from Trevor's WhatsApp (navy shaker kitchen, grey oak-look ward
 
 ### Update: tooling and deploy (26 to 27 October 2026)
 
-- `npm run deploy` deploys `dist` to the live site, with the Netlify site ID written into the script. Build first (`npm run build`), then deploy, then run `npm run verify -- https://topdrawprojects.netlify.app/`. Deploys are manual because Netlify builds triggered by Damian's pushes are blocked ("Unrecognized Git contributor"). The token is a Windows user environment variable, never a file in the repo.
+- `npm run deploy` deploys `dist` to the live site, with the Netlify site ID written into the script. Build first (`npm run build`), then deploy, then run `npm run verify -- https://topdrawprojects.co.za/`. Deploys are manual because Netlify builds triggered by Damian's pushes are blocked ("Unrecognized Git contributor"). The token is a Windows user environment variable, never a file in the repo.
 - `npm run verify` was upgraded: the live commit check is cache-busted and retried, and says what is wrong when it fails (wrong deploy published, a cached copy, or a fetch that failed). It also runs Lighthouse mobile and fails on any SEO problem, re-running once if Lighthouse times out fetching `robots.txt`. It reports STALE after a commit until the next deploy; that is correct.
 - `CLAUDE.md` holds the standing rules for working in this repo with Claude Code (checks before every commit, no push or deploy by Claude, the hidden-address rule, no secrets in `.env`). `.claude/settings.json` holds the deny list that backs them up.
 
@@ -666,14 +666,14 @@ Added six photos from Trevor's WhatsApp (navy shaker kitchen, grey oak-look ward
 
 **Prepared for:** Dasendhran Subramoney
 
-The Steel partner callout now says "Top Draw Projects"; Das removed Work from the header menus; `npm run deploy` and a stricter `npm run verify` are in place, with `CLAUDE.md` and a deny list for Claude Code.
+The Steel partner callout now says "TopDraw Projects"; Das removed Work from the header menus; `npm run deploy` and a stricter `npm run verify` are in place, with `CLAUDE.md` and a deny list for Claude Code.
 
 ### Update: BoerBoel section hidden, FAQ added (2 November 2026)
 
 - The BoerBoel "Steel partner" section is hidden for now, to be used later. `Partner.jsx`, the `partner` content, the logo and the `.referral-callout` styles are all kept; to bring it back, import `Partner.jsx` in `src/App.jsx` and render `<Partner />` where `<Faq />` is. The "Installing BoerBoel steel or sheet metal work" option was taken out of the form's project types (a comment in `src/content.js` says where it goes back).
 - An FAQ section ("Questions, answered") takes its place, between Work and Contact. The 14 questions and answers are Trevor's, from the "Website FAQs" form he filled in, edited to the site's voice; they live in `faq` in `src/content.js`. The phone, email, hours and area in the answers are read from `contact`, so they stay in step.
 - The design is the shadcn "FAQ 1" accordion (`src/components/ui/faq1.tsx` and `src/components/ui/accordion.tsx`, new dependencies `@radix-ui/react-accordion` and `lucide-react`), re-themed to the site palette. One answer is open at a time and the first starts open. Every answer, closed ones included, is in the prerendered HTML for search engines; an opening answer fades in.
-- Still to confirm with Trevor: the FAQ says payment is "generally" up to 70% / roughly 20% / the balance (from his note), while the Process section shows a fixed 70 / 20 / 10; and whether Top Draw guarantees its own workmanship (the FAQ only mentions the 6-month supplier warranty on hardware).
+- Still to confirm with Trevor: the FAQ says payment is "generally" up to 70% / roughly 20% / the balance (from his note), while the Process section shows a fixed 70 / 20 / 10; and whether TopDraw guarantees its own workmanship (the FAQ only mentions the 6-month supplier warranty on hardware).
 
 ### Update: Bespoke gallery tab (2 November 2026)
 
@@ -687,3 +687,18 @@ The Steel partner callout now says "Top Draw Projects"; Das removed Work from th
 **Prepared for:** Dasendhran Subramoney
 
 The BoerBoel section is hidden and an FAQ with Trevor's 14 answers takes its place, as an accordion that keeps every answer in the page HTML; a new "Bespoke" tab shows 17 bespoke project photos from a drop-in folder.
+
+### Update: business name is "TopDraw Projects" (5 November 2026)
+
+- The business name is now written "TopDraw Projects" (one word), with the short form "TopDraw", everywhere the site uses it: the page title and social tags, the structured data, `llms.txt`, the footer, the pre-filled WhatsApp message, the referral callout, the header wordmark and the Work eyebrow above PROJECTS. The structured data also carries `alternateName` "Top Draw Projects", so searches typed with a space still match. `npm run verify` now expects the new spelling and the alternate name.
+- Not changed: the domain, the email address, the repo and package names, and image file names such as `logo-top-draw-sm.webp`. The logo artwork itself still reads "TOP DRAW PROJECTS" (two words) because it is an image. `PRODUCT.md` and `DESIGN.md` were updated to the new spelling afterwards.
+- Earlier entries in this log were updated to the new spelling where they name the business, so quotations of old site copy now show it too.
+
+### Update: Trevor's phone number (5 November 2026)
+
+- 5 Nov 2026: Trevor's number changed to 072 457 5940; the old number was retired.
+
+### Update: intro timer test, reverted (5 November 2026)
+
+- On 5 Nov 2026 the inline fallback in `Hero.jsx` (the script next to the video) was tested at 1.5 s instead of 2.5 s (`Math.max(0, 1500 - performance.now())`). The test was reverted: the timer stays at 2.5 s (`Math.max(0, 2500 - performance.now())`). Nothing else in the intro was changed. The separate React-side `stalled` timer further down in `Hero.jsx` was not touched and is also 2.5 s.
+- Result, from local applied-throttling runs (mobile, five runs each, the 2.5 s and 1.5 s builds alternating, medians): Performance 80 vs 77, LCP 2.54 s vs 2.27 s, TBT 619 ms vs 880 ms; FCP and CLS unchanged. LCP improved by about 0.27 s, but TBT and the score got worse and the cause was not found, so the timer stays at 2.5 s. These are local numbers from a noisy test machine, not the live site.

@@ -578,7 +578,7 @@ html[data-intro="play"] .skip-intro { display: inline-flex; align-items: center;
 }
 
 /* BoerBoel referral callout (Partner.jsx): a framed panel with a steel edge, so visitors
-   remember to tell BoerBoel that Top Draw referred them. */
+   remember to tell BoerBoel that TopDraw referred them. */
 .referral-callout {
   padding: 24px 24px 26px;
   background: var(--color-mist);

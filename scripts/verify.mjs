@@ -220,8 +220,8 @@ check('Home page returns 200', home.status === 200, `status ${home.status}`)
 const text = html.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/g, ' ')
 const h1s = [...html.matchAll(/<h1[\s>]/g)].length
 check('Exactly one <h1> in the raw HTML', h1s === 1, `${h1s} found`)
-check('<h1> carries the business name "Top Draw Projects"', /top draw projects/i.test(/<h1[\s\S]*?<\/h1>/.exec(html)?.[0] || ''))
-check('<title> and og:title use "Top Draw Projects"', /<title>Top Draw Projects/.test(html) && /og:title" content="Top Draw Projects/.test(html) && /og:site_name" content="Top Draw Projects"/.test(html))
+check('<h1> carries the business name "TopDraw Projects"', /topdraw projects/i.test(/<h1[\s\S]*?<\/h1>/.exec(html)?.[0] || ''))
+check('<title> and og:title use "TopDraw Projects"', /<title>TopDraw Projects/.test(html) && /og:title" content="TopDraw Projects/.test(html) && /og:site_name" content="TopDraw Projects"/.test(html))
 check('Hours read Monday to Friday, 08:00 to 17:00 in the page', /Monday to Friday/.test(text) && text.includes('08:00 to 17:00'))
 check('Several <h2> section headings in raw HTML', [...html.matchAll(/<h2[\s>]/g)].length >= 4, `${[...html.matchAll(/<h2[\s>]/g)].length} found`)
 for (const s of services) check(`Service in raw HTML: "${s.title}"`, text.includes(s.title))
@@ -239,7 +239,7 @@ check('Canonical link points at VITE_SITE_URL', local ? canon?.startsWith('http'
 let ld = null
 try { ld = JSON.parse(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/.exec(html)?.[1] || '') } catch {}
 check('JSON-LD parses and has name, telephone, areaServed', !!(ld && ld.name && ld.telephone && ld.areaServed))
-check('JSON-LD: name is Top Draw Projects, areaServed Gauteng, hours Mo-Fr 08:00-17:00, email from content.js', ld?.name === 'Top Draw Projects' && ld?.areaServed === 'Gauteng' && ld?.openingHours === 'Mo-Fr 08:00-17:00' && ld?.email === contact.email)
+check('JSON-LD: name is TopDraw Projects, alternateName Top Draw Projects, areaServed Gauteng, hours Mo-Fr 08:00-17:00, email from content.js', ld?.name === 'TopDraw Projects' && ld?.alternateName === 'Top Draw Projects' && ld?.areaServed === 'Gauteng' && ld?.openingHours === 'Mo-Fr 08:00-17:00' && ld?.email === contact.email)
 check('JSON-LD address is Roodepoort, Gauteng, ZA only (no street, postal code or suburb)', ld?.address?.addressLocality === 'Roodepoort' && ld?.address?.addressRegion === 'Gauteng' && ld?.address?.addressCountry === 'ZA' && !ld?.address?.streetAddress && !ld?.address?.postalCode)
 const imgs = [...html.matchAll(/<img\b[^>]*>/g)].map((m) => m[0])
 check('Every <img> has an alt attribute', imgs.every((i) => /\balt=/.test(i)), `${imgs.length} images`)
@@ -257,7 +257,7 @@ const llms = await get('/llms.txt')
 check('/llms.txt 200', llms.status === 200)
 check('llms.txt hours: Monday to Friday, 08:00 to 17:00, closed Saturday and Sunday', /Opening hours: Monday to Friday, 08:00 to 17:00\. Closed Saturday and Sunday\./.test(llms.text))
 check('llms.txt does not contain a street address', !hasHiddenTerm(llms.text) && !/streetAddress|postalCode/.test(llms.text), hiddenNote)
-check('llms.txt names the business, phone, email and area', llms.text.startsWith('# Top Draw Projects') && llms.text.includes(contact.email) && llms.text.includes(contact.area) && /\+27\s?82\s?332\s?1112/.test(llms.text))
+check('llms.txt names the business, phone, email and area', llms.text.startsWith('# TopDraw Projects') && llms.text.includes(contact.email) && llms.text.includes(contact.area) && /\+27\s?72\s?457\s?5940/.test(llms.text))
 
 // ---- 4. noindex: expected on the *.netlify.app hostname only; the production domain must not send it ----
 if (local) {

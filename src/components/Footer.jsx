@@ -131,7 +131,7 @@ export default function Footer() {
         </div>
 
         <div className="anno mt-12 flex flex-col gap-3 border-t border-rule pt-6 text-ink sm:flex-row sm:items-center sm:justify-between lg:mt-16">
-          <span>© {new Date().getFullYear()} Top Draw Projects. All work shown designed, built and installed by Top Draw Projects.</span>
+          <span>© {new Date().getFullYear()} TopDraw Projects. All work shown designed, built and installed by TopDraw Projects.</span>
           <a href="#top" className="link-underline inline-flex min-h-11 items-center">
             Back to top ↑
           </a>

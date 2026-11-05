@@ -214,7 +214,7 @@ export default function Work() {
           }
           front={
             <>
-              <p className="label gp-eyebrow">Top Draw</p>
+              <p className="label gp-eyebrow">TopDraw</p>
               {/* TODO: confirm this line with Trevor. */}
               <p className="gp-support">Measured on site. Built in our workshop. Professionally installed.</p>
             </>

@@ -1,7 +1,7 @@
-# PRODUCT.md — Top Draw Projects
+# PRODUCT.md — TopDraw Projects
 
 ## One line
-Top Draw Projects designs, builds and installs high-end bespoke cabinetry, furniture and interiors in Gauteng. One team, led by one craftsman, from site measure to final completion.
+TopDraw Projects designs, builds and installs high-end bespoke cabinetry, furniture and interiors in Gauteng. One team, led by one craftsman, from site measure to final completion.
 
 ## Owner
 Trevor, owner and lead craftsman. Former boilermaker and sheet metal worker (stainless steel fabrication for food and beverage), then architectural metalwork specialising in custom balustrading, then high-end furniture, bespoke cabinetry and interior design. He brings an engineer's tolerances to joinery. Hands-on. Gets it right the first time. Goes the extra mile.
@@ -23,7 +23,7 @@ Trevor, owner and lead craftsman. Former boilermaker and sheet metal worker (sta
 Get a qualified visitor to book a site consultation (primary) or start a WhatsApp conversation with Trevor (secondary).
 
 ## Above-the-fold contract (375px and 1440px)
-> Revised 13 October 2026 at the owner's request: the hero now shows the Top Draw Projects logo and the two buttons only. The headline sentence remains in the page heading for screen readers and search engines. The points below are now carried by the intro captions and the sections that follow.
+> Revised 13 October 2026 at the owner's request: the hero now shows the TopDraw Projects logo and the two buttons only. The headline sentence remains in the page heading for screen readers and search engines. The points below are now carried by the intro captions and the sections that follow.
 
 - WHAT: bespoke cabinetry, kitchens, bathrooms and full turnkey interiors, designed, made and installed by one team
 - WHO: homeowners, plus designers and architects

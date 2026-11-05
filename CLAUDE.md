@@ -22,7 +22,7 @@ Standing rules for every task in this repo.
 
 - Never write the workshop's suburb, street or postal code into any tracked file, comment or commit message. The terms live in the gitignored `.hidden-terms` file; never stage it.
 - The hero video and intro animation are untouched unless a task explicitly says otherwise.
-- Netlify's Prerender extension stays OFF (this is an SSR prerender build). The site-wide noindex stopgap in `netlify.toml` and the edge function stay until the go-live rebuild.
+- Netlify's Prerender extension stays OFF (this is an SSR prerender build). The site is live on https://topdrawprojects.co.za and the noindex stopgap (the `netlify.toml` header and the edge function) is gone; do not add a noindex header back.
 - After any commit, `npm run verify` against the live site reports STALE until the next deploy. That is correct; do not try to work around it.
 - Performance comparisons: build, run `npm run preview`, and run Lighthouse mobile 5 times on each side. Compare medians, never single runs.
 - Windows machine, PowerShell. The prerender is server-side rendering (scripts/prerender.mjs) and launches no browser. Checklist items 2-11 (Playwright postinstall) and 2-16 (Edge launch) do not apply to this build.
