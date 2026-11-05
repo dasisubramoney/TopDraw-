@@ -5,9 +5,9 @@
 export const contact = {
   phoneDisplay: '072 457 5940',
   phoneHref: 'tel:+27724575940',
-  email: 'topdraw19@gmail.com',
+  email: 'trevor@topdrawprojects.co.za',
   // WhatsApp number in international format without + or spaces.
-  // The same number as the phone: Trevor's only number for calls and WhatsApp.
+  // Same number as the phone (phone, email and WhatsApp updated November 2026).
   whatsappNumber: '27724575940',
   whatsappMessage: 'Hi Trevor, I found TopDraw Projects online and would like to talk about a project.',
   area: 'Gauteng',
