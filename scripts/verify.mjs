@@ -225,7 +225,7 @@ check('<title> and og:title use "TopDraw Projects"', /<title>TopDraw Projects/.t
 check('Hours read Monday to Friday, 08:00 to 17:00 in the page', /Monday to Friday/.test(text) && text.includes('08:00 to 17:00'))
 check('Several <h2> section headings in raw HTML', [...html.matchAll(/<h2[\s>]/g)].length >= 4, `${[...html.matchAll(/<h2[\s>]/g)].length} found`)
 for (const s of services) check(`Service in raw HTML: "${s.title}"`, text.includes(s.title))
-check('Phone number in raw HTML', text.includes(contact.phoneDisplay))
+check('WhatsApp number in raw HTML', text.includes(contact.phoneDisplay))
 check('Email in raw HTML', text.includes(contact.email))
 check(`Service area "${contact.area}" in raw HTML`, text.includes(contact.area))
 check('No "[PLACEHOLDER]" text visible', !/\[(SUBURB|INSTAGRAM URL|FACEBOOK URL|PHONE|EMAIL|AREA)\]/.test(text))
@@ -257,7 +257,7 @@ const llms = await get('/llms.txt')
 check('/llms.txt 200', llms.status === 200)
 check('llms.txt hours: Monday to Friday, 08:00 to 17:00, closed Saturday and Sunday', /Opening hours: Monday to Friday, 08:00 to 17:00\. Closed Saturday and Sunday\./.test(llms.text))
 check('llms.txt does not contain a street address', !hasHiddenTerm(llms.text) && !/streetAddress|postalCode/.test(llms.text), hiddenNote)
-check('llms.txt names the business, phone, email and area', llms.text.startsWith('# TopDraw Projects') && llms.text.includes(contact.email) && llms.text.includes(contact.area) && llms.text.includes('+27 ' + contact.phoneDisplay.replace(/^0/, '')))
+check('llms.txt names the business, WhatsApp number, email and area', llms.text.startsWith('# TopDraw Projects') && llms.text.includes(contact.email) && llms.text.includes(contact.area) && llms.text.includes('+27 ' + contact.phoneDisplay.replace(/^0/, '')))
 
 // ---- 4. noindex: expected on the *.netlify.app hostname only; the production domain must not send it ----
 if (local) {

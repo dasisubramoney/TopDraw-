@@ -162,7 +162,7 @@ export default function Contact() {
   const last = step === steps.length - 1
 
   const details = [
-    ['Phone', contact.phoneHref ? <a className="link-underline" href={contact.phoneHref}>{contact.phoneDisplay}</a> : contact.phoneDisplay],
+    ['WhatsApp', <a className="link-underline" href={whatsappHref()} target="_blank" rel="noopener">{contact.phoneDisplay}<span className="sr-only"> (opens WhatsApp)</span></a>],
     ['Email', <a className="link-underline" href={`mailto:${contact.email}`}>{contact.email}</a>],
     ['Area', contact.area],
     [
@@ -212,7 +212,7 @@ export default function Contact() {
             <div role="status" className="mt-8">
               <p className="font-display text-display-m">Thanks, {values.name.trim().split(' ')[0]}.</p>
               <p className="mt-4 max-w-[46ch] text-body-l">
-                Trevor will call you on {values.phone} to arrange a site visit. If it’s urgent, WhatsApp him directly.
+                Trevor will WhatsApp you on {values.phone} or email you to arrange a site visit. If it’s urgent, WhatsApp him directly.
               </p>
             </div>
           ) : (

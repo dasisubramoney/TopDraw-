@@ -67,7 +67,7 @@ ${services.map((s) => `- ${s.title}: ${s.text}`).join('\n')}
 ${contact.area}, South Africa. No street address is published; Trevor visits the site to measure up.
 
 ## How to reach it
-- Phone: ${phoneIntl}
+- WhatsApp number: ${phoneIntl}
 - WhatsApp: ${whatsappHref()}
 - Email: ${contact.email}
 - Enquiry form: ${site}/#contact

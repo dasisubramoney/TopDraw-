@@ -34,7 +34,8 @@ export const nav = [
   { id: 'trevor', code: 'A-03', label: 'Trevor' },
   // Not in the header menus (the Gallery button replaces it); kept here for the section eyebrow.
   { id: 'work', code: 'A-04', label: 'Work', menu: false },
-  { id: 'contact', code: 'A-05', label: 'Contact' },
+  { id: 'faq', code: 'A-05', label: 'FAQ' },
+  { id: 'contact', code: 'A-06', label: 'Contact' },
 ]
 
 // Images: `sizes` lists the widths actually exported to /public/images.
@@ -363,7 +364,7 @@ export const faq = {
     },
     {
       q: 'How do I get a quote?',
-      a: `Call or WhatsApp Trevor on ${contact.phoneDisplay}, or email ${contact.email}. Tell us what you want built and where, and we will arrange your free first consultation visit. We are available ${contact.hours[0].days}, ${contact.hours[0].time}.`,
+      a: `WhatsApp Trevor on ${contact.phoneDisplay}, or email ${contact.email}. Tell us what you want built and where, and we will arrange your free first consultation visit. We are available ${contact.hours[0].days}, ${contact.hours[0].time}.`,
     },
     {
       q: 'Do you take on work outside your usual scope?',

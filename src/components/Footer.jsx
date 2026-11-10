@@ -29,7 +29,7 @@ export default function Footer() {
           <div className="sm:col-span-2 lg:col-span-5">
             <h2 className="font-display text-display-m">Let’s talk about your project.</h2>
             <p className="mt-4 max-w-[40ch] text-[0.9375rem] text-ink">
-              Bespoke cabinetry, furniture and interiors in Gauteng. Call, message or book a site visit.
+              Bespoke cabinetry, furniture and interiors in Gauteng. WhatsApp or email us, or book a site visit.
             </p>
             <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <a href="#contact" className="btn btn-primary">
@@ -59,14 +59,11 @@ export default function Footer() {
             <p className="anno text-ink">Contact us</p>
             <address className="mt-3 flex flex-col gap-3 not-italic">
               <div>
-                <p className="anno text-ink">Phone</p>
-                {contact.phoneHref ? (
-                  <a className="link-underline inline-flex min-h-11 items-center" href={contact.phoneHref}>
-                    {contact.phoneDisplay}
-                  </a>
-                ) : (
-                  <p>{contact.phoneDisplay}</p>
-                )}
+                <p className="anno text-ink">WhatsApp</p>
+                <a className="link-underline inline-flex min-h-11 items-center" href={whatsappHref()} target="_blank" rel="noopener">
+                  {contact.phoneDisplay}
+                  <span className="sr-only"> (opens WhatsApp)</span>
+                </a>
               </div>
               <div>
                 <p className="anno text-ink">Email</p>

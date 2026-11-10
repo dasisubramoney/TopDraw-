@@ -717,3 +717,18 @@ The BoerBoel section is hidden and an FAQ with Trevor's 14 answers takes its pla
 **Prepared for:** Dasendhran Subramoney
 
 The site's phone, WhatsApp and email are now 072 457 5940 and trevor@topdrawprojects.co.za, read from one place.
+
+### Update: favicon, FAQ in the menu, WhatsApp-only contact wording (10 November 2026)
+
+- **Favicon:** the site icon is now the TD mark on a square white background, from the original logo (`design/logo/Top_Draw_logo_original.jpeg`, cropped to the mark only, about 6% padding left and right). `public/favicon.ico` holds 16, 32 and 48 px; there are also `favicon-48.png`, `icon-192.png` and `apple-touch-icon.png` (180 px), all linked in `index.html`. `favicon.svg` is kept but no longer linked. At 16 px the blue T and black D read as a small blue-and-black mark but the beige drawer detail blurs; 32 px and up are clear. The icon is an opaque white square, so it shows as a white tile on dark browser tabs.
+- **FAQ in the menu:** "FAQ" is now a menu item, after Trevor, in the desktop header, the mobile menu and the footer quick links. It jumps to the FAQ section and highlights while you are in it. It is the `faq` entry in `nav` in `src/content.js`, so `llms.txt` lists it too.
+- **WhatsApp only:** Trevor's number is a WhatsApp number, not a phone line. The footer and Contact section rows that said "Phone" now say "WhatsApp" and open WhatsApp (the same wa.me link as the WhatsApp buttons), so the page has no `tel:` links. Wording that said "call" now says WhatsApp or email: the footer sentence, the FAQ answer to "How do I get a quote?", the form's confirmation message and the no-JavaScript paragraph. `llms.txt` says "WhatsApp number:" and the `verify.mjs` check labels were renamed to match.
+- **Left as it was:** the structured data key `telephone` (schema.org needs that name), the form's "Contact number" field (the visitor's own number; its internal name is `phone`), and the hidden BoerBoel callout text, which still says "call" and would need the same change if that section returns.
+- **To confirm with Trevor:** the form confirmation now says "Trevor will WhatsApp you on {number} or email you to arrange a site visit." That sentence was written for this change, so check it matches how he follows up.
+- Not deployed yet. After the next deploy, run `npm run verify -- https://topdrawprojects.co.za/`.
+
+### Session summary (10 November 2026)
+
+**Prepared for:** Dasendhran Subramoney
+
+New TD favicon set; "FAQ" added to the menus and footer links; the contact number is now presented as WhatsApp only, with every "call" and "phone" wording replaced by WhatsApp or email.
