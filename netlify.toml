@@ -6,6 +6,9 @@
   # Vite 8 needs Node 20.19 or newer.
   NODE_VERSION = "22"
 
+[functions]
+  directory = "netlify/functions"
+
 [[headers]]
   for = "/assets/*"
   [headers.values]
