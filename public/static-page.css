@@ -1,0 +1,147 @@
+/* Shared by the two plain pages in /public: 404.html and privacy.html.
+   They are static files (not built by Vite), so this mirrors the site's tokens from src/index.css by hand:
+   palette, type, spacing, header, footer and buttons. Keep the two in step if the site's look changes.
+   Paths are absolute because 404.html is served for any unknown URL, however deep. */
+
+@font-face { font-family: "Newsreader"; src: url("/fonts/newsreader-opsz-400.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Schibsted Grotesk"; src: url("/fonts/schibsted-grotesk-wght.woff2") format("woff2"); font-weight: 400 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "IBM Plex Mono"; src: url("/fonts/plex-mono-400.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "IBM Plex Mono"; src: url("/fonts/plex-mono-500.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+
+:root {
+  --paper: #ffffff;
+  --mist: #f5f2ed;
+  --rule: #d2c9bc;
+  --steel: #31378f;
+  --ink: #222222;
+  --font-display: "Newsreader", "Iowan Old Style", Georgia, serif;
+  --font-sans: "Schibsted Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --margin: clamp(20px, 5vw, 80px);
+  --gutter: clamp(16px, 2vw, 24px);
+  --header-h: 56px;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+@media (min-width: 1024px) { :root { --header-h: 72px; } }
+
+*, *::before, *::after { box-sizing: border-box; border-radius: 0; }
+html { -webkit-text-size-adjust: 100%; scroll-padding-top: var(--header-h); }
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+main { flex: 1 0 auto; }
+h1, h2 { margin: 0; font-family: var(--font-display); font-weight: 400; text-wrap: balance; font-variation-settings: "opsz" 72; }
+p { margin: 0; text-wrap: pretty; }
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--steel); outline-offset: 3px; }
+::selection { background: var(--ink); color: var(--paper); }
+
+.wrap { max-width: 1360px; margin-inline: auto; padding-inline: var(--margin); }
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.anno { font-family: var(--font-mono); font-size: 0.75rem; line-height: 1.45; letter-spacing: 0.01em; font-variant-numeric: tabular-nums; }
+.link-underline {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--rule);
+  transition: text-decoration-color 180ms var(--ease-out);
+}
+.link-underline:hover { text-decoration-color: currentColor; }
+
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+.skip {
+  position: fixed; left: 16px; top: 16px; z-index: 50;
+  transform: translateY(-96px);
+  background: var(--ink); color: var(--paper);
+  padding: 12px 16px;
+}
+.skip:focus { transform: none; }
+
+/* Header: the site's bar, solid. */
+.bar { position: sticky; top: 0; z-index: 40; background: var(--paper); border-bottom: 1px solid var(--rule); padding-top: env(safe-area-inset-top, 0px); }
+.bar-inner { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: var(--header-h); }
+.brand { display: flex; align-items: center; gap: 12px; min-height: 44px; text-decoration: none; }
+.brand img { height: 28px; width: auto; }
+.brand-name { font-family: var(--font-display); font-size: 1.375rem; line-height: 1; letter-spacing: -0.01em; white-space: nowrap; }
+@media (min-width: 1024px) { .brand img { height: 32px; } .brand-name { font-size: 1.5rem; } }
+.bar-nav { display: flex; align-items: center; gap: 28px; }
+.bar-nav a { display: inline-flex; align-items: center; min-height: 44px; text-decoration: none; border-bottom: 2px solid transparent; padding-top: 2px; transition: border-color 200ms; }
+.bar-nav a:hover { border-bottom-color: var(--rule); }
+.bar-nav .more { display: none; }
+@media (min-width: 1024px) { .bar-nav .more { display: inline-flex; } }
+
+/* Buttons: rectangular, as on the site. */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+  min-height: 54px; padding: 14px 24px;
+  font: 700 1.1875rem/1.2 var(--font-sans);
+  text-decoration: none;
+  border: 1px solid var(--ink); color: var(--ink); background: var(--paper);
+  cursor: pointer;
+  transition: background-color 180ms var(--ease-out), color 180ms var(--ease-out), border-color 180ms var(--ease-out), transform 120ms var(--ease-out);
+}
+.btn:active { transform: scale(0.98); }
+.btn-primary { background: var(--steel); border-color: var(--steel); color: var(--paper); }
+@media (hover: hover) {
+  .btn-primary:hover { background: var(--ink); border-color: var(--ink); }
+  .btn-secondary:hover { background: var(--ink); color: var(--paper); }
+}
+.actions { display: flex; flex-direction: column; gap: 12px; margin-top: 40px; }
+@media (min-width: 640px) { .actions { flex-direction: row; flex-wrap: wrap; } }
+
+/* Page body */
+.page { padding-block: clamp(56px, 8vw, 112px); }
+.eyebrow { color: var(--steel); }
+.page h1 { margin-top: 12px; font-size: clamp(2.125rem, 1.45rem + 2.9vw, 4.25rem); line-height: 1.03; letter-spacing: -0.02em; }
+.lede { margin-top: 24px; max-width: 40rem; font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem); line-height: 1.5; }
+
+.prose { max-width: 44rem; }
+.prose h2 { margin-top: 48px; font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem); line-height: 1.2; letter-spacing: -0.01em; }
+.prose h2 + p { margin-top: 12px; }
+.prose p { font-size: 1.0625rem; line-height: 1.6; }
+.prose p + p { margin-top: 16px; }
+.prose .lede { margin-top: 24px; font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem); line-height: 1.5; }
+.prose .cookies { margin-top: 40px; }
+.prose .anno { margin-top: 48px; padding-top: 16px; border-top: 1px solid var(--rule); font-size: 0.75rem; line-height: 1.45; }
+.back { display: inline-flex; align-items: center; min-height: 44px; margin-bottom: 8px; }
+
+/* Footer: the site's footer, without the form shortcuts. */
+.foot { background: var(--paper); border-top: 1px solid var(--rule); color: var(--ink); padding-bottom: calc(32px + env(safe-area-inset-bottom, 0px)); }
+.foot-grid { display: grid; gap: 40px; padding-top: 48px; }
+@media (min-width: 640px) { .foot-grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1024px) { .foot-grid { grid-template-columns: 5fr 3fr 3fr; column-gap: var(--gutter); padding-top: 64px; } }
+.foot h2 { font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.25rem); line-height: 1.32; }
+.foot-pitch p { margin-top: 16px; max-width: 40ch; font-size: 0.9375rem; }
+.foot dl { margin: 12px 0 0; display: flex; flex-direction: column; gap: 12px; }
+.foot dt { font-family: var(--font-mono); font-size: 0.75rem; line-height: 1.45; letter-spacing: 0.01em; }
+.foot dd { margin: 0; }
+.foot dd a { display: inline-flex; align-items: center; min-height: 44px; }
+.foot-base {
+  display: flex; flex-direction: column; gap: 12px;
+  margin-top: 48px; padding-top: 24px; border-top: 1px solid var(--rule);
+}
+@media (min-width: 640px) { .foot-base { flex-direction: row; align-items: center; justify-content: space-between; } }
+.foot-base a { display: inline-flex; align-items: center; min-height: 44px; }
+.foot-links { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0ms !important; animation-duration: 0ms !important; scroll-behavior: auto !important; }
+}

@@ -50,7 +50,7 @@ function WorkContent() {
                 <figcaption className="mt-3 border-b border-rule pb-3">
                   <div className="flex items-baseline justify-between gap-4">
                     <h3 className="label">{w.type}</h3>
-                    {!w.place.startsWith('[') && <span className="anno">{w.place}</span>}
+                    {w.place && <span className="anno">{w.place}</span>}
                   </div>
                   <p className="mt-1.5 text-[0.9375rem] leading-[1.5]">{w.text}</p>
                 </figcaption>

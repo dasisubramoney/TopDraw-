@@ -1,6 +1,6 @@
 // Run ONLY once the custom domain is live AND VITE_SITE_URL has been changed to it and redeployed.
 //
-//   node scripts/verify-domain.mjs https://topdraw.co.za
+//   node scripts/verify-domain.mjs https://topdrawprojects.co.za
 //
 // Confirms the go-live switch is complete: every address in the page and the crawler files uses the
 // final domain, nothing mentions the temporary *.netlify.app address, and the custom domain is NOT

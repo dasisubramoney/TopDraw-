@@ -18,8 +18,9 @@ export const contact = {
     { days: 'Sat and Sun', time: 'Closed' },
   ],
   social: [
-    { label: 'Instagram', href: '[INSTAGRAM URL]' },
-    { label: 'Facebook', href: '[FACEBOOK URL]' },
+    // Empty until real addresses are supplied: the footer shows an icon only for an https:// address.
+    { label: 'Instagram', href: '' },
+    { label: 'Facebook', href: '' },
   ],
 }
 
@@ -293,12 +294,12 @@ export const trevor = {
 }
 
 export const work = [
-  { key: 'W-01', type: 'Kitchen', image: 'kitchenTile', text: 'Patterned tile splashback, painted doors, open shelving', place: '[SUBURB]' },
-  { key: 'W-02', type: 'Bathroom', image: 'vanityOak', text: 'Wall-hung vanity with matching floating shelves', place: '[SUBURB]' },
-  { key: 'W-03', type: 'Furniture', image: 'dining', text: 'Dining table and bench, steel frames, timber tops', place: '[SUBURB]' },
-  { key: 'W-04', type: 'Dressing room', image: 'wardrobe', text: 'Full-height wardrobe and desk under a sloping ceiling', place: '[SUBURB]' },
-  { key: 'W-05', type: 'Kitchen', image: 'navyKitchen', text: 'Navy shaker-style kitchen, stone worktops, patterned tile splashback', place: '[SUBURB]' },
-  { key: 'W-06', type: 'Furniture', image: 'benchFrame', text: 'Steel frame, timber top', place: '[SUBURB]' },
+  { key: 'W-01', type: 'Kitchen', image: 'kitchenTile', text: 'Patterned tile splashback, painted doors, open shelving' },
+  { key: 'W-02', type: 'Bathroom', image: 'vanityOak', text: 'Wall-hung vanity with matching floating shelves' },
+  { key: 'W-03', type: 'Furniture', image: 'dining', text: 'Dining table and bench, steel frames, timber tops' },
+  { key: 'W-04', type: 'Dressing room', image: 'wardrobe', text: 'Full-height wardrobe and desk under a sloping ceiling' },
+  { key: 'W-05', type: 'Kitchen', image: 'navyKitchen', text: 'Navy shaker-style kitchen, stone worktops, patterned tile splashback' },
+  { key: 'W-06', type: 'Furniture', image: 'benchFrame', text: 'Steel frame, timber top' },
 ]
 
 export const sectors = ['Residential', 'Commercial']

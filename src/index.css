@@ -445,7 +445,7 @@ html[data-intro="play"] .skip-intro { display: inline-flex; align-items: center;
   border: 0;
   border-radius: 0;
 }
-.cs-input::placeholder { color: var(--color-beige); opacity: 0.55; }
+.cs-input::placeholder { color: var(--color-beige); opacity: 1; }
 .cs-input:focus-visible { outline: none; }
 .cs-field:focus-within .cs-progress span[data-state="current"] { background: var(--color-paper); }
 .cs-textarea { font-family: var(--font-sans); font-size: var(--text-body-l); line-height: 1.5; resize: vertical; }

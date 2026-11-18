@@ -29,6 +29,9 @@
   [headers.values]
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=()"
+    # Only stops other sites framing this one. Deliberately not a full policy (no script-src and so on).
+    Content-Security-Policy = "frame-ancestors 'self'"
 
 [[redirects]]
   from = "https://topdrawprojects.netlify.app/*"

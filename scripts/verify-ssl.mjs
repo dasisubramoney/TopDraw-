@@ -1,6 +1,6 @@
 // Run ONLY once the custom domain is live. Checks the certificate and the redirects.
 //
-//   node scripts/verify-ssl.mjs <domain>        e.g. node scripts/verify-ssl.mjs topdraw.co.za
+//   node scripts/verify-ssl.mjs <domain>        e.g. node scripts/verify-ssl.mjs topdrawprojects.co.za
 //
 //   - certificate is valid, trusted, covers the domain and www, and has more than 14 days left
 //   - TLS 1.2 or newer

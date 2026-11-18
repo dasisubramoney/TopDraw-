@@ -293,6 +293,12 @@ export default function Contact() {
                   </button>
                 </div>
               )}
+              <p className="mt-6 text-[0.8125rem] text-rule">
+                {/* New tab, so a half-finished enquiry is not lost. */}
+                <a className="link-underline" href="/privacy" target="_blank" rel="noopener">
+                  Privacy notice<span className="sr-only"> (opens in a new tab)</span>
+                </a>
+              </p>
             </form>
           )}
         </div>
