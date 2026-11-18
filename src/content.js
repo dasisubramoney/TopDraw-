@@ -56,7 +56,8 @@ export const img = {
   glossKitchen: { name: 'kitchen-white-gloss-pendants', widths: [800, 1600], w: 2400, h: 1800, alt: 'Kitchen with white gloss wall units, timber-look base units, a black granite peninsula, a metro tile splashback and three glass pendant lights' },
   laundry: { name: 'laundry-white-charcoal', widths: [800, 1600], w: 1800, h: 2400, alt: 'Laundry room with white wall cupboards, charcoal base units, a marble-look worktop with a double sink and a herringbone timber-look floor' },
   fridgeUnit: { name: 'tall-unit-fridge-surround', widths: [800, 1600], w: 1800, h: 2400, alt: 'Pale oak-look tall cabinets built around a stainless steel fridge, with a microwave shelf and a bank of drawers' },
-  longVanity: { name: 'bathroom-long-vanity', widths: [800, 1600], w: 2400, h: 1800, alt: 'Long bathroom vanity with pale drawers and doors, a stone top with two basins and a framed mirror above, beside a corner bath' },
+  // Cropped about 14% off the right edge (a hanging garment); the file names carry the new widths.
+  longVanity: { name: 'bathroom-long-vanity', widths: [690, 1379], w: 2069, h: 1800, alt: 'Long bathroom vanity with pale drawers and doors, a stone top with two basins and a framed mirror above, beside a corner bath' },
   graniteKitchen: { name: 'kitchen-black-granite', widths: [800, 1600], w: 1800, h: 2400, alt: 'Light woodgrain kitchen with a black granite worktop, full-height wall units, a hob and an eye-level oven' },
   wardrobeWall: { name: 'wardrobe-wall-white', widths: [800, 1600], w: 2400, h: 1800, alt: 'Wall of floor-to-ceiling white wardrobe doors with brushed metal handles' },
   // Added 22 October 2026 from Trevor's WhatsApp photos.
@@ -314,7 +315,7 @@ export const faq = {
   items: [
     {
       q: 'Is the first consultation free?',
-      a: 'Yes. The first consultation visit is free. If you need more visits, they are charged at an hourly rate that we agree with you first.',
+      a: 'Yes. The first consultation is free. Should additional visits be required, these will be charged at an applicable hourly rate, determined by the nature and size of the project. The rate will be communicated to you in advance.',
     },
     {
       q: 'Which areas do you work in?',
@@ -322,7 +323,11 @@ export const faq = {
     },
     {
       q: 'How much does a custom kitchen cost?',
-      a: 'Every project is quoted on its own after a site visit, because the price depends on the job. The main things that move it are the size of the space, how detailed the design is, the materials and finishes you choose, the hardware, and how much of the installation we take on. The first consultation is free, and your approved quotation sets out every milestone and amount.',
+      // Two paragraphs: an answer given as an array is shown one paragraph per entry (components/ui/faq1.tsx).
+      a: [
+        'The cost of a kitchen varies depending on the size and complexity of the project, the design, choice of materials, finishes, fittings and accessories. The anticipated installation timeframe and any specific requirements will also be taken into consideration when determining the final price.',
+        'Each kitchen is individually designed and quoted to suit your space, requirements and budget. We will provide a detailed quotation once the design and specifications have been established.',
+      ],
     },
     {
       q: 'How long does it take?',
@@ -342,7 +347,7 @@ export const faq = {
     },
     {
       q: 'What is white boxing, or shell preparation?',
-      a: 'We prepare the shell of the room to suit the new design, and prepare the footprint for your new kitchen, so the installation goes smoothly.',
+      a: 'We prepare the shell of the room to suit the new design, and prepare the footprint for your new kitchen, so the installation goes smoothly. This is quoted for separately.',
     },
     {
       q: 'Do you only do kitchens, and can I see your work?',

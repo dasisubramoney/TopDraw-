@@ -12,7 +12,7 @@ import {
 
 export interface FaqItem {
   question: string
-  answer: string
+  answer: string | string[] // a list is shown one paragraph per entry
 }
 
 export interface FAQSectionProps {
@@ -43,7 +43,15 @@ export default function FAQSection({ id = "faq", eyebrow = "FAQ", heading, descr
                 <AccordionTrigger className="text-left font-display text-[1.375rem] font-normal leading-snug">
                   {faq.question}
                 </AccordionTrigger>
-                <AccordionContent className="max-w-[60ch] break-words">{faq.answer}</AccordionContent>
+                <AccordionContent className="max-w-[60ch] break-words">
+                  {Array.isArray(faq.answer)
+                    ? faq.answer.map((paragraph, i) => (
+                        <p key={i} className={i > 0 ? "mt-3" : undefined}>
+                          {paragraph}
+                        </p>
+                      ))
+                    : faq.answer}
+                </AccordionContent>
               </AccordionItem>
             ))}
           </Accordion>
